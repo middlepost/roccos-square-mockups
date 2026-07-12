@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option B — Forno Nero | Rocco's Italian Sourdough Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #ffca09;
+    --black: #0d0b09;
+    --char: #17140f;
+    --smoke: #211d17;
+    --bone: #f2ede3;
+    --grey: #a49c8d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Archivo', sans-serif; background: var(--black); color: var(--bone); }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  .topbar {
+    display: flex; justify-content: center; gap: 40px; padding: 10px;
+    background: var(--yellow); color: var(--black); font-size: 12px;
+    font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  }
+
+  header { position: sticky; top: 0; z-index: 50; background: rgba(13,11,9,.92); backdrop-filter: blur(10px); border-bottom: 1px solid #2a251d; }
+  .nav { max-width: 1240px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .nav img { height: 42px; }
+  .nav ul { display: flex; gap: 30px; list-style: none; font-size: 13.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .nav ul a:hover { color: var(--yellow); }
+  .btn {
+    display: inline-block; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    font-size: 13.5px; padding: 15px 30px; transition: all .15s ease;
+  }
+  .btn-yellow { background: var(--yellow); color: var(--black); }
+  .btn-yellow:hover { background: #ffd84d; }
+  .btn-ghost { border: 2px solid var(--bone); }
+  .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  .hero { position: relative; min-height: 88vh; display: grid; place-items: center; overflow: hidden; }
+  .hero .bg {
+    position: absolute; inset: 0; background: url('assets/real-spread.jpg') center/cover no-repeat;
+    filter: brightness(.45) saturate(1.05);
+  }
+  .hero .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,11,9,.55) 0%, rgba(13,11,9,.15) 45%, rgba(13,11,9,.92) 100%); }
+  .hero .content { position: relative; text-align: center; padding: 96px 24px; max-width: 1000px; }
+  .hero .rating { font-size: 12.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--yellow); font-weight: 800; margin-bottom: 26px; }
+  .hero h1 {
+    font-family: 'Archivo Black', sans-serif; font-size: clamp(52px, 8.4vw, 118px);
+    line-height: .95; text-transform: uppercase; letter-spacing: -.01em;
+  }
+  .hero h1 .y { color: var(--yellow); }
+  .hero p { margin: 28px auto 38px; font-size: 18px; line-height: 1.65; color: #d8d1c4; max-width: 56ch; font-weight: 500; }
+  .hero .row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .hero .scroll { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--grey); }
+
+  .ticker { background: var(--yellow); color: var(--black); overflow: hidden; white-space: nowrap; }
+  .ticker-track { display: inline-block; padding: 13px 0; font-family: 'Archivo Black', sans-serif; font-size: 15px; text-transform: uppercase; letter-spacing: .06em; animation: slide 28s linear infinite; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  section.wrap { max-width: 1240px; margin: 0 auto; padding: 96px 24px; }
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 52px; flex-wrap: wrap; }
+  .head h2 { font-family: 'Archivo Black', sans-serif; font-size: clamp(34px, 4.6vw, 58px); text-transform: uppercase; line-height: .98; }
+  .head h2 span { color: var(--yellow); }
+  .head p { color: var(--grey); max-width: 40ch; font-size: 15.5px; line-height: 1.6; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card { background: var(--char); border: 1px solid #2a251d; overflow: hidden; transition: transform .18s ease, border-color .18s ease; }
+  .card:hover { transform: translateY(-5px); border-color: var(--yellow); }
+  .card .img { aspect-ratio: 4/3; overflow: hidden; }
+  .card .img img { width: 100%; height: 100%; object-fit: cover; }
+  .card .pad { padding: 22px 22px 26px; }
+  .card .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .card h3 { font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+  .card .price { color: var(--yellow); font-weight: 800; font-size: 19px; }
+  .card p { color: var(--grey); font-size: 14.5px; margin-top: 9px; line-height: 1.55; }
+  .card .add { margin-top: 18px; display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--yellow); border-bottom: 2px solid var(--yellow); padding-bottom: 3px; }
+
+  .why { background: var(--char); border-top: 1px solid #2a251d; border-bottom: 1px solid #2a251d; }
+  .why-inner { max-width: 1240px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  .why-item .num { font-family: 'Archivo Black', sans-serif; color: var(--yellow); font-size: 44px; }
+  .why-item h3 { font-size: 19px; text-transform: uppercase; letter-spacing: .08em; margin: 14px 0 10px; font-weight: 800; }
+  .why-item p { color: var(--grey); font-size: 15px; line-height: 1.65; }
+
+  .split { max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .split img { border: 1px solid #2a251d; }
+  .split .kick { color: var(--yellow); font-size: 12.5px; font-weight: 800; letter-spacing: .26em; text-transform: uppercase; }
+  .split h2 { font-family: 'Archivo Black', sans-serif; font-size: clamp(30px, 3.8vw, 46px); text-transform: uppercase; line-height: 1; margin: 16px 0 22px; }
+  .split p { color: #cfc7b8; line-height: 1.75; margin-bottom: 14px; font-size: 16px; }
+  .split .quote { border-left: 3px solid var(--yellow); padding-left: 18px; font-weight: 700; font-size: 17px; color: var(--bone); margin-top: 22px; font-style: italic; }
+
+  .locs { background: var(--yellow); color: var(--black); }
+  .locs-inner { max-width: 1240px; margin: 0 auto; padding: 92px 24px; }
+  .locs h2 { font-family: 'Archivo Black', sans-serif; font-size: clamp(34px, 4.6vw, 56px); text-transform: uppercase; margin-bottom: 46px; }
+  .locs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .loc { background: var(--black); color: var(--bone); padding: 34px 34px 38px; }
+  .loc .tag { color: var(--yellow); font-size: 12px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+  .loc h3 { font-family: 'Archivo Black', sans-serif; font-size: 28px; text-transform: uppercase; margin: 10px 0 14px; }
+  .loc p { color: var(--grey); line-height: 1.7; font-size: 15.5px; }
+  .loc .hours { color: var(--bone); font-weight: 700; margin-top: 10px; }
+  .loc .row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .loc .btn { padding: 12px 22px; font-size: 12px; }
+
+  footer { border-top: 1px solid #2a251d; }
+  .foot { max-width: 1240px; margin: 0 auto; padding: 52px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; }
+  .foot img { height: 38px; }
+  .foot ul { display: flex; gap: 24px; list-style: none; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; flex-wrap: wrap; }
+  .foot ul a:hover { color: var(--yellow); }
+  .foot .fine { width: 100%; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: #6d6555; font-size: 12.5px; padding-top: 18px; border-top: 1px solid #221d16; }
+
+  @media (max-width: 950px) {
+    .nav ul { display: none; }
+    .cards, .why-inner { grid-template-columns: 1fr; }
+    .split, .locs-grid { grid-template-columns: 1fr; }
+    .hero { min-height: 74vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"><span>Pickup · Kidman Park</span><span>Delivery · 7 days</span><span>Sourdough only</span></div>
+
+<header>
+  <nav class="nav">
+    <a href="#top"><img src="assets/logo-dark-text.png" alt="Rocco's Italian Sourdough Pizza"></a>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#why">Why Sourdough</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#locations">Locations</a></li>
+    </ul>
+    <a class="btn btn-yellow" href="#menu">Order Now</a>
+  </nav>
+</header>
+
+<div class="hero" id="top">
+  <div class="bg"></div>
+  <div class="grad"></div>
+  <div class="content">
+    <div class="rating">★★★★★ &nbsp;Adelaide's sourdough pizzeria</div>
+    <h1>Saving the world<br>from <span class="y">bad pizza</span></h1>
+    <p>Roman-style bases fermented for days from Rocco's own sourdough mother. Light, blistered, easy to digest — so light, you could eat two.</p>
+    <div class="row">
+      <a class="btn btn-yellow" href="#menu">Order Pickup</a>
+      <a class="btn btn-ghost" href="#menu">Order Delivery</a>
+    </div>
+  </div>
+  <div class="scroll">Scroll ↓</div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-track">
+    &nbsp;Fermented 72+ hours ★ Sourdough mother est. from scratch ★ Roman style ★ Italian trained ★ Findon Rd &amp; Grange Rd ★ Fermented 72+ hours ★ Sourdough mother est. from scratch ★ Roman style ★ Italian trained ★ Findon Rd &amp; Grange Rd ★&nbsp;
+  </div>
+</div>
+
+<section class="wrap" id="menu">
+  <div class="head">
+    <h2>The <span>lineup</span></h2>
+    <p>Just pizza, kept simple. Every base from the same mother, every pizza made to order.</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="img"><img src="assets/real-margherita.jpg" alt="Margherita"></div>
+      <div class="pad">
+        <div class="top"><h3>Margherita</h3><span class="price">$19</span></div>
+        <p>San Marzano tomato, fior di latte, fresh basil, olive oil.</p>
+        <a class="add" href="#">Add to order</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img"><img src="assets/real-salami-olive.jpg" alt="Salami e Olive"></div>
+      <div class="pad">
+        <div class="top"><h3>Salami e Olive</h3><span class="price">$24</span></div>
+        <p>Hot salami, kalamata olives, pesto. The crowd favourite.</p>
+        <a class="add" href="#">Add to order</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img"><img src="assets/real-gamberi.jpg" alt="Gamberi"></div>
+      <div class="pad">
+        <div class="top"><h3>Gamberi</h3><span class="price">$27</span></div>
+        <p>Prawns, Italian sausage, roast peppers, pesto. Chef's pick.</p>
+        <a class="add" href="#">Add to order</a>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top: 48px;"><a class="btn btn-ghost" href="#">View full menu →</a></div>
+</section>
+
+<div class="why" id="why">
+  <div class="why-inner">
+    <div class="why-item">
+      <div class="num">01</div>
+      <h3>The Mother</h3>
+      <p>Rocco built his sourdough starter from scratch and it leavens every single base. No commercial yeast, ever.</p>
+    </div>
+    <div class="why-item">
+      <div class="num">02</div>
+      <h3>Days, not hours</h3>
+      <p>Long, cold fermentation breaks the dough down properly. That's why it's light and easy to digest — no bloat.</p>
+    </div>
+    <div class="why-item">
+      <div class="num">03</div>
+      <h3>Rome rules</h3>
+      <p>Trained in Italy, built on the Roman idea that pizza should be simple, honest and eaten often.</p>
+    </div>
+  </div>
+</div>
+
+<div class="split" id="story">
+  <img src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases" style="aspect-ratio: 1/1.1; object-fit: cover; width: 100%;">
+  <div>
+    <div class="kick">The Story</div>
+    <h2>It started with Mrs. Rocco</h2>
+    <p>When Mrs. Rocco developed a food sensitivity that made her give up pizza, Rocco went to work. He crafted a sourdough mother from scratch, inoculated the dough, and fermented it for days until pizza was back on her table.</p>
+    <p>Years of training in Italy, hi-tech Italian ovens imported to Adelaide, a pizzeria on Findon Road and a sourdough lab on Grange Road later — the mission hasn't changed.</p>
+    <div class="quote">"You're only as good as your last pizza."</div>
+  </div>
+</div>
+
+<div class="locs" id="locations">
+  <div class="locs-inner">
+    <h2>Find your nearest slice</h2>
+    <div class="locs-grid">
+      <div class="loc">
+        <span class="tag">Open 7 days</span>
+        <h3>Findon Road</h3>
+        <p>336 Findon Road, Kidman Park SA 5025<br>(08) 7078 4471</p>
+        <p class="hours">Mon – Sun · 5:00pm – 9:30pm</p>
+        <div class="row">
+          <a class="btn btn-yellow" href="#">Order pickup</a>
+          <a class="btn btn-ghost" href="#">Book a table</a>
+        </div>
+      </div>
+      <div class="loc">
+        <span class="tag">Wed – Sun</span>
+        <h3>Grange Road</h3>
+        <p>466 Grange Road, Fulham Gardens SA 5024<br>(08) 7078 4471</p>
+        <p class="hours">Wed – Sun · 5:00pm – 9:00pm</p>
+        <div class="row">
+          <a class="btn btn-yellow" href="#">Order pickup</a>
+          <a class="btn btn-ghost" href="#">Book a table</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot">
+    <img src="assets/logo-dark-text.png" alt="Rocco's">
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#">Gift Cards</a></li>
+      <li><a href="#">Instagram</a></li>
+    </ul>
+    <div class="fine">
+      <span>© 2026 Rocco's Italian Sourdough Pizza</span>
+      <span>Built on Square Online · Menu synced with Square POS</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

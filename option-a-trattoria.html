@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option A — Trattoria | Rocco's Italian Sourdough Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #ffca09;
+    --ink: #171310;
+    --cream: #faf6ef;
+    --warm: #f3ead9;
+    --muted: #6e6558;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; color: var(--ink); background: var(--cream); }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: 'Fraunces', serif; }
+
+  .announce {
+    background: var(--ink); color: var(--cream); text-align: center;
+    font-size: 13px; letter-spacing: .12em; text-transform: uppercase; padding: 9px 16px;
+  }
+  .announce b { color: var(--yellow); font-weight: 600; }
+
+  header {
+    position: sticky; top: 0; z-index: 50; background: rgba(250,246,239,.94);
+    backdrop-filter: blur(8px); border-bottom: 1px solid #e5dcc9;
+  }
+  .nav {
+    max-width: 1200px; margin: 0 auto; display: flex; align-items: center;
+    justify-content: space-between; padding: 14px 24px; gap: 24px;
+  }
+  .nav img.logo { height: 44px; width: auto; }
+  .nav ul { display: flex; gap: 28px; list-style: none; font-weight: 600; font-size: 15px; }
+  .nav ul a:hover { color: #a08300; }
+  .nav .actions { display: flex; align-items: center; gap: 14px; }
+  .cart { font-size: 20px; position: relative; }
+  .cart::after {
+    content: "0"; position: absolute; top: -7px; right: -11px; background: var(--yellow);
+    font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%;
+    display: grid; place-items: center; font-family: 'Barlow', sans-serif;
+  }
+  .btn {
+    display: inline-block; font-weight: 700; font-size: 15px; letter-spacing: .02em;
+    padding: 13px 28px; border-radius: 999px; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-solid { background: var(--ink); color: #fff; }
+  .btn-yellow { background: var(--yellow); color: var(--ink); box-shadow: 0 2px 0 rgba(23,19,16,.2); }
+  .btn-outline { border: 2px solid var(--ink); color: var(--ink); padding: 11px 26px; }
+
+  .hero { max-width: 1200px; margin: 0 auto; padding: 72px 24px 56px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .hero .kicker { text-transform: uppercase; letter-spacing: .22em; font-weight: 700; font-size: 13px; color: #a08300; margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(42px, 5vw, 64px); line-height: 1.04; font-weight: 900; margin-bottom: 20px; }
+  .hero h1 em { font-style: italic; color: #a08300; }
+  .hero p.lead { font-size: 19px; line-height: 1.6; color: var(--muted); max-width: 46ch; margin-bottom: 30px; }
+  .hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .hero .photo { position: relative; }
+  .hero .photo img.main { border-radius: 18px; box-shadow: 0 30px 60px -20px rgba(23,19,16,.35); aspect-ratio: 4/3.4; object-fit: cover; }
+  .hero .stamp {
+    position: absolute; top: -34px; right: -20px; width: 110px; transform: rotate(12deg);
+    filter: drop-shadow(0 6px 12px rgba(23,19,16,.25));
+  }
+  .strip { background: var(--ink); color: var(--cream); }
+  .strip-inner {
+    max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: center; gap: 14px 38px; font-size: 14px;
+    letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+  }
+  .strip .dot { color: var(--yellow); }
+
+  section.block { max-width: 1200px; margin: 0 auto; padding: 84px 24px; }
+  .sec-head { text-align: center; margin-bottom: 52px; }
+  .sec-head .kicker { text-transform: uppercase; letter-spacing: .22em; font-weight: 700; font-size: 12px; color: #a08300; }
+  .sec-head h2 { font-size: clamp(32px, 3.6vw, 44px); font-weight: 900; margin-top: 10px; }
+  .sec-head p { color: var(--muted); margin-top: 12px; font-size: 17px; }
+
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 64px; }
+  .menu-item { display: flex; align-items: baseline; gap: 12px; padding: 18px 4px; border-bottom: 1px dashed #d8cdb6; }
+  .menu-item .name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; white-space: nowrap; }
+  .menu-item .dots { flex: 1; border-bottom: 2px dotted #cfc3a8; transform: translateY(-4px); }
+  .menu-item .price { font-weight: 700; font-size: 18px; }
+  .menu-item .desc { display: block; color: var(--muted); font-size: 14.5px; margin-top: 5px; }
+  .menu-cta { text-align: center; margin-top: 44px; }
+  .tag {
+    display: inline-block; background: var(--yellow); font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 999px; letter-spacing: .06em; text-transform: uppercase; margin-left: 8px;
+    transform: translateY(-2px);
+  }
+
+  .story { background: var(--warm); }
+  .story-inner { max-width: 1200px; margin: 0 auto; padding: 90px 24px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
+  .story-inner img { border-radius: 16px; aspect-ratio: 1/1.05; object-fit: cover; box-shadow: 0 24px 48px -18px rgba(23,19,16,.3); }
+  .story-inner h2 { font-size: clamp(30px, 3.4vw, 42px); font-weight: 900; margin-bottom: 20px; }
+  .story-inner p { font-size: 17px; line-height: 1.75; color: #4c443a; margin-bottom: 16px; }
+  .story-inner .sig { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; margin-top: 10px; }
+
+  .gift { background: var(--yellow); }
+  .gift-inner { max-width: 1200px; margin: 0 auto; padding: 60px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+  .gift h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 900; }
+  .gift p { font-weight: 500; margin-top: 8px; color: #3d3200; }
+
+  .locs { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .loc-card { background: #fff; border: 1px solid #e8dfcc; border-radius: 18px; overflow: hidden; box-shadow: 0 14px 34px -18px rgba(23,19,16,.18); }
+  .loc-card .map {
+    height: 190px; background:
+      linear-gradient(rgba(23,19,16,.08), rgba(23,19,16,.08)),
+      repeating-linear-gradient(0deg, #ece4d2 0 1px, transparent 1px 44px),
+      repeating-linear-gradient(90deg, #ece4d2 0 1px, transparent 1px 44px),
+      #f6f0e2;
+    position: relative;
+  }
+  .loc-card .pin {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%);
+    width: 34px; height: 34px; background: var(--yellow); border: 3px solid var(--ink); border-radius: 50% 50% 50% 0;
+    rotate: -45deg;
+  }
+  .loc-card .body { padding: 26px 28px 30px; }
+  .loc-card h3 { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
+  .loc-card .badge { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #a08300; }
+  .loc-card p { color: var(--muted); margin-top: 12px; line-height: 1.65; font-size: 15.5px; }
+  .loc-card .hours { margin-top: 12px; font-weight: 600; color: var(--ink); }
+  .loc-card .row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .loc-card .btn { padding: 10px 20px; font-size: 14px; }
+
+  footer { background: var(--ink); color: #cfc6b8; }
+  .foot-inner { max-width: 1200px; margin: 0 auto; padding: 56px 24px 30px; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; padding-bottom: 36px; border-bottom: 1px solid #33291f; }
+  .foot-top img { height: 40px; }
+  .foot-top ul { list-style: none; display: flex; gap: 26px; font-size: 14.5px; font-weight: 500; flex-wrap: wrap; }
+  .foot-top ul a:hover { color: var(--yellow); }
+  .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; font-size: 13px; color: #8d8272; }
+  .foot-bottom .sq { color: #b9ae9c; }
+
+  @media (max-width: 900px) {
+    .nav ul { display: none; }
+    .hero, .story-inner { grid-template-columns: 1fr; padding-top: 48px; }
+    .menu-grid, .locs { grid-template-columns: 1fr; }
+    .hero .stamp { top: auto; bottom: -26px; right: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">Now taking online orders — pickup &amp; delivery · <b>Free garlic focaccia</b> on pickup orders over $60</div>
+
+<header>
+  <nav class="nav">
+    <a href="#top"><img class="logo" src="assets/logo-alt.png" alt="Rocco's Italian Sourdough Pizza"></a>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#gift">Gift Cards</a></li>
+    </ul>
+    <div class="actions">
+      <a class="cart" href="#" aria-label="Cart">🛒</a>
+      <a class="btn btn-yellow" href="#menu">Order Now</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div>
+    <div class="kicker">Kidman Park · Fulham Gardens</div>
+    <h1>Roman sourdough, <em>fermented for days.</em> Devoured in minutes.</h1>
+    <p class="lead">Rocco crafted his sourdough “mother” from scratch and ferments every base for days — pizza so light you could eat two. That's not a dare. It's a warning.</p>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#menu">Order Pickup</a>
+      <a class="btn btn-outline" href="#menu">Order Delivery</a>
+      <a href="#locations" style="font-weight:700; text-decoration: underline; text-underline-offset: 4px;">Book a table →</a>
+    </div>
+  </div>
+  <div class="photo">
+    <img class="main" src="assets/real-margherita.jpg" alt="Rocco's sourdough margherita">
+    <img class="stamp" src="assets/pizza-icon.png" alt="">
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-inner">
+    <span>Sourdough only</span><span class="dot">●</span>
+    <span>Fermented 72+ hours</span><span class="dot">●</span>
+    <span>Italian-trained</span><span class="dot">●</span>
+    <span>Saving the world from bad pizza</span>
+  </div>
+</div>
+
+<section class="block" id="menu">
+  <div class="sec-head">
+    <div class="kicker">The Menu</div>
+    <h2>Just pizza. Kept simple.</h2>
+    <p>“You're only as good as your last pizza.” — Rocco</p>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-item"><div><span class="name">Margherita</span><span class="desc">San Marzano tomato, fior di latte, basil</span></div><div class="dots"></div><div class="price">$19</div></div>
+    <div class="menu-item"><div><span class="name">Marinara</span><span class="desc">Tomato, garlic, oregano, olive oil — no cheese</span></div><div class="dots"></div><div class="price">$16</div></div>
+    <div class="menu-item"><div><span class="name">Diavola <span class="tag">Popular</span></span><span class="desc">Spicy salami, fior di latte, chilli honey</span></div><div class="dots"></div><div class="price">$24</div></div>
+    <div class="menu-item"><div><span class="name">Gamberi</span><span class="desc">Prawns, roast peppers, pesto, spinach</span></div><div class="dots"></div><div class="price">$26</div></div>
+    <div class="menu-item"><div><span class="name">Funghi</span><span class="desc">Field mushrooms, garlic cream, fresh herbs</span></div><div class="dots"></div><div class="price">$23</div></div>
+    <div class="menu-item"><div><span class="name">Prosciutto</span><span class="desc">Prosciutto crudo, rocket, ricotta, olives</span></div><div class="dots"></div><div class="price">$26</div></div>
+    <div class="menu-item"><div><span class="name">Patate e Rosmarino</span><span class="desc">Potato, rosemary, garlic oil, sea salt</span></div><div class="dots"></div><div class="price">$21</div></div>
+    <div class="menu-item"><div><span class="name">Rocco's Special <span class="tag">Chef's pick</span></span><span class="desc">Hot salami, 'nduja, stracciatella, basil</span></div><div class="dots"></div><div class="price">$27</div></div>
+  </div>
+  <div class="menu-cta"><a class="btn btn-yellow" href="#">See full menu &amp; order online</a></div>
+</section>
+
+<div class="story" id="story">
+  <div class="story-inner">
+    <img src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases">
+    <div>
+      <div class="kicker" style="text-transform:uppercase; letter-spacing:.22em; font-weight:700; font-size:12px; color:#a08300; margin-bottom:14px;">Our Story</div>
+      <h2>Why sourdough? Blame Mrs. Rocco.</h2>
+      <p>When Mrs. Rocco developed a food sensitivity that made her give up pizza, Rocco went looking for an answer. He crafted his “mother” from scratch, inoculated the dough, and fermented it for days. The result was light, delicious, and easy to digest — pizza she could love again.</p>
+      <p>As a teen in Rome, Rocco ate pizza most days for pocket change — simple and delicious. After training in Italy for years, he returned to Adelaide, imported hi-tech Italian equipment, and opened on Findon Road, followed by his sourdough production lab on Grange Road.</p>
+      <p class="sig">Many say ours is the only pizza they can eat without bloating — or that it's so light, they could eat two.</p>
+    </div>
+  </div>
+</div>
+
+<div class="gift" id="gift">
+  <div class="gift-inner">
+    <div>
+      <h2>Gift a dinner at Rocco's</h2>
+      <p>e-Gift cards, delivered instantly. The tastiest email they'll get all year.</p>
+    </div>
+    <a class="btn btn-solid" href="#">Buy an e-gift card</a>
+  </div>
+</div>
+
+<section class="block" id="locations">
+  <div class="sec-head">
+    <div class="kicker">Find Us</div>
+    <h2>Two homes. One dough.</h2>
+  </div>
+  <div class="locs">
+    <div class="loc-card">
+      <div class="map"><div class="pin"></div></div>
+      <div class="body">
+        <span class="badge">Open 7 days</span>
+        <h3>Findon Road</h3>
+        <p>336 Findon Road<br>Kidman Park SA 5025<br>(08) 7078 4471</p>
+        <p class="hours">Mon – Sun · 5:00pm – 9:30pm</p>
+        <div class="row">
+          <a class="btn btn-yellow" href="#">Order from here</a>
+          <a class="btn btn-outline" href="#">Book a table</a>
+        </div>
+      </div>
+    </div>
+    <div class="loc-card">
+      <div class="map"><div class="pin"></div></div>
+      <div class="body">
+        <span class="badge">Wed – Sun · Sourdough lab</span>
+        <h3>Grange Road</h3>
+        <p>466 Grange Road<br>Fulham Gardens SA 5024<br>(08) 7078 4471</p>
+        <p class="hours">Wed – Sun · 5:00pm – 9:00pm</p>
+        <div class="row">
+          <a class="btn btn-yellow" href="#">Order from here</a>
+          <a class="btn btn-outline" href="#">Book a table</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <img src="assets/logo-dark-text.png" alt="Rocco's">
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#gift">Gift Cards</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Rocco's Italian Sourdough Pizza · Adelaide, South Australia</span>
+      <span class="sq">Built on Square Online · POS-synced menu &amp; gift cards</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

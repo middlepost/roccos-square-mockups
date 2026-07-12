@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocco's × Square Online — Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root { --yellow: #ffca09; --ink: #14110d; --paper: #faf7f0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Archivo', sans-serif; background: var(--ink); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .top { max-width: 1280px; margin: 0 auto; padding: 64px 28px 40px; display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .top img { height: 54px; }
+  .top h1 { font-family: 'Archivo Black', sans-serif; font-size: clamp(30px, 4vw, 52px); text-transform: uppercase; line-height: 1; margin-top: 22px; }
+  .top h1 span { color: var(--yellow); }
+  .top p { color: #a89e8d; margin-top: 14px; max-width: 62ch; line-height: 1.65; font-size: 16px; }
+  .kicker { color: var(--yellow); font-weight: 800; letter-spacing: .24em; text-transform: uppercase; font-size: 12px; }
+
+  .grid { max-width: 1280px; margin: 0 auto; padding: 12px 28px 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .opt { background: #1d1912; border: 1px solid #322b20; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; transition: transform .16s ease, border-color .16s ease; }
+  .opt:hover { transform: translateY(-5px); border-color: var(--yellow); }
+  .frame-wrap { position: relative; aspect-ratio: 16/10.6; overflow: hidden; background: #000; }
+  .frame-wrap iframe {
+    width: 1280px; height: 860px; border: 0; transform-origin: 0 0; pointer-events: none;
+    position: absolute; top: 0; left: 0;
+  }
+  .opt .pad { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .opt .letter { display: inline-block; background: var(--yellow); color: var(--ink); font-family: 'Archivo Black', sans-serif; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; font-size: 17px; }
+  .opt h2 { font-size: 21px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; }
+  .opt p { color: #a89e8d; font-size: 14.5px; line-height: 1.6; flex: 1; }
+  .opt .open { margin-top: 14px; display: inline-block; text-align: center; background: var(--yellow); color: var(--ink); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; padding: 13px 18px; border-radius: 10px; }
+  .opt .open:hover { background: #ffd84d; }
+
+  .notes { max-width: 1280px; margin: 0 auto; padding: 22px 28px 80px; }
+  .notes .box { background: #1d1912; border: 1px solid #322b20; border-radius: 18px; padding: 30px 32px; }
+  .notes h3 { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-size: 17px; letter-spacing: .04em; margin-bottom: 14px; color: var(--yellow); }
+  .notes ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 36px; }
+  .notes li { color: #cfc6b6; font-size: 15px; line-height: 1.6; padding-left: 22px; position: relative; }
+  .notes li::before { content: "✓"; position: absolute; left: 0; color: var(--yellow); font-weight: 800; }
+
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: 1fr; }
+    .notes ul { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <img src="assets/logo-dark-text.png" alt="Rocco's Italian Sourdough Pizza">
+    <div class="kicker" style="margin-top:26px;">New website · Built on Square Online</div>
+    <h1>Three directions.<br>Pick your <span>favourite</span>.</h1>
+    <p>Each concept below is a full homepage design using Rocco's real branding, story and locations — and each one maps directly to layouts Square Online supports, so what you pick is what gets built. Click any option to view it full-screen.</p>
+  </div>
+</div>
+
+<div class="grid">
+  <a class="opt" href="option-a-trattoria.html" target="_blank">
+    <div class="frame-wrap"><iframe src="option-a-trattoria.html" scrolling="no" tabindex="-1"></iframe></div>
+    <div class="pad">
+      <span class="letter">A</span>
+      <h2>Trattoria</h2>
+      <p>Warm, cream-and-charcoal neighbourhood Italian. Serif headlines, a classic dotted-line menu, and the yellow used as a considered accent. Feels established and family-run.</p>
+      <span class="open">View Option A</span>
+    </div>
+  </a>
+  <a class="opt" href="option-b-forno-nero.html" target="_blank">
+    <div class="frame-wrap"><iframe src="option-b-forno-nero.html" scrolling="no" tabindex="-1"></iframe></div>
+    <div class="pad">
+      <span class="letter">B</span>
+      <h2>Forno Nero</h2>
+      <p>Moody and premium: charcoal black, full-bleed photography, big condensed type, yellow burning through like oven fire. Feels like a destination pizzeria with a cult following.</p>
+      <span class="open">View Option B</span>
+    </div>
+  </a>
+  <a class="opt" href="option-c-giallo.html" target="_blank">
+    <div class="frame-wrap"><iframe src="option-c-giallo.html" scrolling="no" tabindex="-1"></iframe></div>
+    <div class="pad">
+      <span class="letter">C</span>
+      <h2>Giallo</h2>
+      <p>The logo's yellow turned all the way up. Playful, bold, sticker-style cards and thick outlines — leans into "Saving the world from bad pizza". Feels fun, fast and famous on Instagram.</p>
+      <span class="open">View Option C</span>
+    </div>
+  </a>
+</div>
+
+<div class="notes">
+  <div class="box">
+    <h3>Included in every option — powered by Square</h3>
+    <ul>
+      <li>Online ordering for pickup &amp; delivery, synced live with the Square POS menu — change a price once, it updates everywhere</li>
+      <li>Both locations (Findon Rd &amp; Grange Rd) with separate hours, each with its own ordering flow</li>
+      <li>e-Gift cards sold straight from the site (Rocco's already uses Square gift cards today)</li>
+      <li>Table bookings, replacing the third-party foodbooking.com links</li>
+      <li>Mobile-first: every layout collapses cleanly for phones</li>
+      <li>One dashboard for in-store + online sales, inventory and customers</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function fitFrames() {
+    document.querySelectorAll('.frame-wrap').forEach(w => {
+      const f = w.querySelector('iframe');
+      const scale = w.clientWidth / 1280;
+      f.style.transform = `scale(${scale})`;
+      f.style.height = (w.clientHeight / scale) + 'px';
+    });
+  }
+  addEventListener('load', fitFrames);
+  addEventListener('resize', fitFrames);
+</script>
+
+</body>
+</html>
