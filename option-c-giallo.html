@@ -37,6 +37,13 @@
   .btn-light { background: var(--paper); color: var(--ink); box-shadow: 4px 4px 0 rgba(25,20,16,.28); }
   .btn-light:hover { transform: translate(-1px,-1px); box-shadow: 6px 6px 0 rgba(25,20,16,.28); }
 
+  .dlv { display: flex; justify-content: center; align-items: center; gap: 12px; font-weight: 900; font-size: 14px; flex-wrap: wrap; }
+  .ppill { display: inline-flex; align-items: center; gap: 8px; border: 3px solid var(--ink); border-radius: 999px; padding: 9px 18px; font-weight: 900; font-size: 14px; background: #fff; box-shadow: 3px 3px 0 rgba(25,20,16,.25); transition: transform .12s; }
+  .ppill:hover { transform: translate(-1px,-1px); }
+  .ppill .d { width: 9px; height: 9px; border-radius: 50%; }
+  .d-uber { background: #06C167; }
+  .d-dd { background: #EB1700; }
+
   .hero { background: var(--yellow); position: relative; overflow: hidden; }
   .hero-inner { max-width: 1200px; margin: 0 auto; padding: 84px 24px 0; text-align: center; position: relative; }
   .hero .slogan {
@@ -124,7 +131,7 @@
 </head>
 <body>
 
-<div class="announce">🍕 Free garlic focaccia on pickup orders over $60 — this week only</div>
+<div class="announce">🍕 Order pickup direct from Rocco's — delivery with Uber Eats &amp; DoorDash</div>
 
 <header>
   <nav class="nav">
@@ -144,9 +151,13 @@
     <div class="slogan">SAVING THE WORLD FROM BAD PIZZA</div>
     <h1>Sourdough pizza <span class="outline">so light</span> you'll order two</h1>
     <p>Fermented for days from Rocco's own mother culture. Roman style, Italian trained, Adelaide made. No bloat, all blister.</p>
-    <div class="row">
+    <div class="row" style="margin-bottom: 18px;">
       <a class="btn btn-dark" href="#menu">Order Pickup</a>
-      <a class="btn btn-light" href="#menu">Order Delivery</a>
+      <a class="btn btn-light" href="#locations">Book a Table</a>
+    </div>
+    <div class="dlv" style="margin-bottom: 54px;">Delivery by
+      <a class="ppill" href="#locations"><span class="d d-uber"></span>Uber Eats</a>
+      <a class="ppill" href="#locations"><span class="d d-dd"></span>DoorDash</a>
     </div>
     <div class="photo-wrap">
       <img class="badge-spin" src="assets/pizza-icon.png" alt="">
@@ -160,7 +171,7 @@
     <span><span class="y">★</span> Fermented 72+ hrs</span>
     <span><span class="y">★</span> Real sourdough mother</span>
     <span><span class="y">★</span> Easy to digest</span>
-    <span><span class="y">★</span> Two Adelaide locations</span>
+    <span><span class="y">★</span> Delivery via Uber Eats &amp; DoorDash</span>
   </div>
 </div>
 
@@ -226,8 +237,12 @@
       <p>336 Findon Road, Kidman Park SA 5025<br>(08) 7078 4471</p>
       <p class="hours"><b>Mon – Sun · 5:00pm – 9:30pm</b></p>
       <div class="row">
-        <a class="btn btn-dark" href="#">Order here</a>
+        <a class="btn btn-dark" href="#">Order pickup</a>
         <a class="btn btn-light" href="#">Book a table</a>
+      </div>
+      <div class="row">
+        <a class="ppill" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA"><span class="d d-uber"></span>Uber Eats</a>
+        <a class="ppill" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/"><span class="d d-dd"></span>DoorDash</a>
       </div>
     </div>
     <div class="lcard">
@@ -236,8 +251,12 @@
       <p>466 Grange Road, Fulham Gardens SA 5024<br>(08) 7078 4471</p>
       <p class="hours"><b>Wed – Sun · 5:00pm – 9:00pm</b></p>
       <div class="row">
-        <a class="btn btn-dark" href="#">Order here</a>
+        <a class="btn btn-dark" href="#">Order pickup</a>
         <a class="btn btn-light" href="#">Book a table</a>
+      </div>
+      <div class="row">
+        <a class="ppill" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q"><span class="d d-uber"></span>Uber Eats</a>
+        <a class="ppill" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/"><span class="d d-dd"></span>DoorDash</a>
       </div>
     </div>
   </div>
@@ -267,7 +286,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Rocco's Italian Sourdough Pizza · Adelaide SA</span>
-      <span>Built on Square Online · POS-synced menu, ordering &amp; gift cards</span>
+      <span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span>
     </div>
   </div>
 </footer>

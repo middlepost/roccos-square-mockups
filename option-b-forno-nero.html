@@ -41,6 +41,13 @@
   .btn-ghost { border: 2px solid var(--bone); }
   .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
 
+  .dlv { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 24px; font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--grey); font-weight: 700; flex-wrap: wrap; }
+  .pbtn { display: inline-flex; align-items: center; gap: 9px; border: 1px solid #453d31; padding: 11px 20px; font-weight: 800; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--bone); transition: all .15s; }
+  .pbtn:hover { border-color: var(--yellow); color: var(--yellow); }
+  .pbtn .d { width: 8px; height: 8px; border-radius: 50%; }
+  .d-uber { background: #06C167; }
+  .d-dd { background: #EB1700; }
+
   .hero { position: relative; min-height: 88vh; display: grid; place-items: center; overflow: hidden; }
   .hero .bg {
     position: absolute; inset: 0; background: url('assets/real-spread.jpg') center/cover no-repeat;
@@ -122,7 +129,7 @@
 </head>
 <body>
 
-<div class="topbar"><span>Pickup · Kidman Park</span><span>Delivery · 7 days</span><span>Sourdough only</span></div>
+<div class="topbar"><span>Pickup · Direct from Rocco's</span><span>Delivery · Uber Eats &amp; DoorDash</span><span>Sourdough only</span></div>
 
 <header>
   <nav class="nav">
@@ -146,7 +153,11 @@
     <p>Roman-style bases fermented for days from Rocco's own sourdough mother. Light, blistered, easy to digest — so light, you could eat two.</p>
     <div class="row">
       <a class="btn btn-yellow" href="#menu">Order Pickup</a>
-      <a class="btn btn-ghost" href="#menu">Order Delivery</a>
+      <a class="btn btn-ghost" href="#locations">Book a Table</a>
+    </div>
+    <div class="dlv">Delivery via
+      <a class="pbtn" href="#locations"><span class="d d-uber"></span>Uber Eats</a>
+      <a class="pbtn" href="#locations"><span class="d d-dd"></span>DoorDash</a>
     </div>
   </div>
   <div class="scroll">Scroll ↓</div>
@@ -154,7 +165,7 @@
 
 <div class="ticker">
   <div class="ticker-track">
-    &nbsp;Fermented 72+ hours ★ Sourdough mother est. from scratch ★ Roman style ★ Italian trained ★ Findon Rd &amp; Grange Rd ★ Fermented 72+ hours ★ Sourdough mother est. from scratch ★ Roman style ★ Italian trained ★ Findon Rd &amp; Grange Rd ★&nbsp;
+    &nbsp;Fermented 72+ hours ★ Roman style ★ Italian trained ★ Pickup direct ★ Delivery via Uber Eats + DoorDash ★ Fermented 72+ hours ★ Roman style ★ Italian trained ★ Pickup direct ★ Delivery via Uber Eats + DoorDash ★&nbsp;
   </div>
 </div>
 
@@ -236,6 +247,10 @@
           <a class="btn btn-yellow" href="#">Order pickup</a>
           <a class="btn btn-ghost" href="#">Book a table</a>
         </div>
+        <div class="row">
+          <a class="pbtn" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA"><span class="d d-uber"></span>Uber Eats</a>
+          <a class="pbtn" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/"><span class="d d-dd"></span>DoorDash</a>
+        </div>
       </div>
       <div class="loc">
         <span class="tag">Wed – Sun</span>
@@ -245,6 +260,10 @@
         <div class="row">
           <a class="btn btn-yellow" href="#">Order pickup</a>
           <a class="btn btn-ghost" href="#">Book a table</a>
+        </div>
+        <div class="row">
+          <a class="pbtn" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q"><span class="d d-uber"></span>Uber Eats</a>
+          <a class="pbtn" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/"><span class="d d-dd"></span>DoorDash</a>
         </div>
       </div>
     </div>
@@ -263,7 +282,7 @@
     </ul>
     <div class="fine">
       <span>© 2026 Rocco's Italian Sourdough Pizza</span>
-      <span>Built on Square Online · Menu synced with Square POS</span>
+      <span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span>
     </div>
   </div>
 </footer>
