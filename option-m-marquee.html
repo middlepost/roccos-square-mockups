@@ -80,11 +80,11 @@
 <!--
   BRAND SWAP — logo files, alt text, title.
   PLACEHOLDER HREFS — Order Now is href="#" for Square Online. Header delivery links are href="#". Locations use A–C partner URLs.
-  SAMPLE OFFERS — bundle prices, savings, the delivery bar, and the menu-arrival offer are placeholder copy. Pizza prices match A–C.
+  DEAL PRICES — filled from offers.js. Pizza prices match A–C.
   Marquee type, slice, and divider are inline SVG/CSS. Photos are from assets/.
 -->
 <a class="skip" href="#menu">Skip to menu</a>
-<div class="ticker"><span class="ex-tag">Example offers</span><span id="rot">Example meal prices are samples</span></div>
+<div class="ticker"><span id="rot" data-ro-ticker="threeFor pizzaNight twoFor">3 pizzas for $54</span></div>
 <header>
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="#top"><img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza"></a>
@@ -118,11 +118,11 @@
   </section>
   <div class="wrap">
     <section id="deals">
-      <h2 style="margin:8px 0 12px;">Meal deals <span class="ex-tag">Example offer</span></h2>
+      <h2 style="margin:8px 0 12px;">Meal deals</h2>
       <div class="deals">
-        <article class="deal"><h3>Margherita</h3><p>Menu price $19.</p><p class="flash">Example: save $4</p><p><b>Sample bundle $22</b></p><a class="btn" href="#">Order Now</a></article>
-        <article class="deal"><h3>Funghi</h3><p>Menu price $23.</p><p class="flash">Example: save $3</p><p><b>Sample bundle $27</b></p><a class="btn" href="#">Order Now</a></article>
-        <article class="deal"><h3>Prosciutto</h3><p>Menu price $26.</p><p class="flash">Example: save $5</p><p><b>Sample bundle $30</b></p><a class="btn" href="#">Order Now</a></article>
+        <article class="deal"><h3 data-ro="threeFor" data-ro-part="headline">3 pizzas for $54</h3><p data-ro="threeFor" data-ro-part="rule"></p><p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="threeFor" data-ro-part="was"></s> <strong data-ro="threeFor" data-ro-part="now"></strong> <span class="ro-save" data-ro="threeFor" data-ro-part="save"></span></p><a class="btn" href="#">Order Now</a></article>
+        <article class="deal"><h3 data-ro="pizzaNight" data-ro-part="headline">Pizza night</h3><p data-ro="pizzaNight" data-ro-part="rule"></p><p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="pizzaNight" data-ro-part="was"></s> <strong data-ro="pizzaNight" data-ro-part="now"></strong> <span class="ro-save" data-ro="pizzaNight" data-ro-part="save"></span></p><a class="btn" href="#">Order Now</a></article>
+        <article class="deal"><h3 data-ro="twoFor" data-ro-part="headline">2 pizzas for $32</h3><p data-ro="twoFor" data-ro-part="rule"></p><p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="twoFor" data-ro-part="was"></s> <strong data-ro="twoFor" data-ro-part="now"></strong> <span class="ro-save" data-ro="twoFor" data-ro-part="save"></span></p><a class="btn" href="#">Order Now</a></article>
       </div>
     </section>
     <section class="menu" id="menu">
@@ -134,13 +134,12 @@
       <article><h3>Rocco's Special</h3><span class="price">$27</span></article>
     </section>
     <div class="upsell">
-      <div><span class="ex-tag">Example offer</span><p style="margin-top:6px;">Example: add a side or a drink. No price — those items are not on the menu.</p></div>
-      <button class="btn" type="button">Example add</button>
-    </div>
-    <div style="margin-top:14px;">
-      <span class="ex-tag">Example offer</span>
-      <p style="margin-top:8px;">Example: free delivery over $40. Sample bar only. Delivery is Uber Eats and DoorDash.</p>
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="40" aria-valuenow="16" aria-label="Example progress, sample basket $16 of $40"><span></span></div>
+      <div>
+        <p data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</p>
+        <p style="margin-top:6px;" data-ro="buyTwo" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
+      </div>
+      <a class="btn" href="#">Order Now</a>
     </div>
     <section class="locs" id="locations">
       <article class="loc"><h3>Findon Road</h3><p>336 Findon Road, Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Mon – Sun · 5:00pm – 9:30pm</p><div class="row" style="margin-top:8px;"><a class="btn" href="#">Order Now</a><a class="partner" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA">Uber Eats</a><a class="partner" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/">DoorDash</a></div></article>
@@ -152,17 +151,13 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off, now that you're at the menu</h2>
-  <p>This card opens when the menu scrolls into view. Sample code MENU5.</p>
+  <h2 id="offer-title" data-ro="today" data-ro-part="headline">Today's deal</h2>
+  <p data-ro="today" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="today" data-ro-part="was"></s> <strong data-ro="today" data-ro-part="now"></strong> <span class="ro-save" data-ro="today" data-ro-part="save"></span></p>
+  <p class="count" data-ro-countdown hidden></p>
   <div class="row" style="margin-top:10px;"><a class="btn" href="#">Order Now</a><button class="btn" type="button" data-close style="background:#12100e;color:#ffca09;">Close</button></div>
 </div>
 <script>
-(function () {
-  var lines = ['Example meal prices are samples', 'Example: $5 off is not a live code', 'Pickup direct · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot');
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 3300);
-})();
 (function () {
   var KEY = 'example-offer-m', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button')); }
@@ -199,5 +194,6 @@
   }
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

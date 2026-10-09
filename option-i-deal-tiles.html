@@ -90,10 +90,10 @@
 <!--
   BRAND SWAP — replace assets/logo-lockup-on-dark.png, assets/logo-lockup-on-light.png, alt text, and the title to rebrand (for example to Margherita).
   PLACEHOLDER HREFS — Order Now is href="#" for Square Online. Header Uber Eats and DoorDash are href="#". Location cards use the partner URLs from A–C.
-  SAMPLE OFFERS — discounts, bundle prices, the countdown, the delivery bar, upsells, and the code are placeholder copy. Item prices match options A–C.
+  DEAL PRICES — filled from offers.js. Item prices match options A–C.
 -->
 <a class="skip" href="#deals">Skip to deals</a>
-<div class="ticker"><span class="ex-tag">Example offers</span><span id="rot">Example: two-pizza sample tile</span></div>
+<div class="ticker"><span id="rot" data-ro-ticker="pizzaNight weekend weekday">Pizza night</span></div>
 <header>
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="#top"><img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza"></a>
@@ -112,11 +112,9 @@
   <div class="wrap">
     <section class="hero-deal" id="deals">
       <div class="copy">
-        <span class="ex-tag">Example offer</span>
-        <h1>Deal of the day <span>is a sample.</span></h1>
-        <p>Diavola is $24 on the menu and already marked popular. The saving beside it is not a real discount.</p>
-        <p class="flash">Example: save $6</p>
-        <p class="count" data-count>Example timer</p>
+        <h1 data-ro="pizzaNight" data-ro-part="headline">Pizza night</h1>
+        <p data-ro="pizzaNight" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="pizzaNight" data-ro-part="was"></s> <strong data-ro="pizzaNight" data-ro-part="now"></strong> <span class="ro-save" data-ro="pizzaNight" data-ro-part="save"></span></p>
         <div class="row">
           <a class="btn" href="#">Order Now</a>
           <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
@@ -128,26 +126,23 @@
     <div class="tiles">
       <article class="tile hot">
         <img src="assets/real-margherita.jpg" alt="Margherita pizza">
-        <span class="ex-tag">Example offer</span>
-        <h3>Meal tile · Margherita</h3>
-        <p>Menu price <span class="real">$19</span>. Sample side and drink are not on the menu.</p>
-        <p class="flash">Example: save $4</p>
-        <p><b>Sample bundle $22</b></p>
+        <h3 data-ro="twoFor" data-ro-part="headline">2 pizzas for $32</h3>
+        <p data-ro="twoFor" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="twoFor" data-ro-part="was"></s> <strong data-ro="twoFor" data-ro-part="now"></strong> <span class="ro-save" data-ro="twoFor" data-ro-part="save"></span></p>
         <a class="btn" href="#">Order Now</a>
       </article>
       <article class="tile">
-        <img src="assets/real-funghi.jpg" alt="Funghi pizza">
-        <span class="ex-tag">Example offer</span>
-        <h3>Meal tile · Funghi</h3>
-        <p>Menu price <span class="real">$23</span>.</p>
-        <p class="flash">Example: save $3</p>
-        <p><b>Sample bundle $27</b></p>
+        <img src="assets/real-funghi.jpg" alt="">
+        <h3 data-ro="family" data-ro-part="headline">Family deal</h3>
+        <p data-ro="family" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="family" data-ro-part="was"></s> <strong data-ro="family" data-ro-part="now"></strong> <span class="ro-save" data-ro="family" data-ro-part="save"></span></p>
         <a class="btn" href="#">Order Now</a>
       </article>
       <article class="tile hot">
         <img src="assets/real-prosciutto.jpg" alt="Prosciutto pizza">
-        <h3>Prosciutto</h3>
-        <p>Menu price <span class="real">$26</span>. Prosciutto crudo, rocket, ricotta, olives.</p>
+        <h3 data-ro="weekday" data-ro-item="prosciutto" data-ro-part="headline">Weekday Lunch Rate</h3>
+        <p data-ro="weekday" data-ro-part="rule"></p>
+        <p>Prosciutto. <span class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="weekday" data-ro-item="prosciutto" data-ro-part="was"></s> <strong data-ro="weekday" data-ro-item="prosciutto" data-ro-part="now"></strong> <span class="ro-save" data-ro="weekday" data-ro-item="prosciutto" data-ro-part="save"></span></span></p>
         <a class="btn" href="#">Order Now</a>
       </article>
     </div>
@@ -159,27 +154,16 @@
     </div>
     <div class="upsell">
       <div>
-        <span class="ex-tag">Example offer</span>
-        <p style="margin-top:6px;">Example: add a side or a drink. No price, because those items are not on the pizza menu.</p>
+        <p style="margin-top:6px;" data-ro="buyTwo" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
       </div>
-      <div class="row">
-        <button class="btn" type="button" style="background:#111;color:#ffca09;">Example side</button>
-        <button class="btn" type="button" style="background:#111;color:#ffca09;">Example drink</button>
-      </div>
-    </div>
-    <div class="progress">
-      <span class="ex-tag">Example offer</span>
-      <h2 class="sec" style="margin-top:8px;">Example: free delivery over $40</h2>
-      <p>Sample basket only. Real delivery is Uber Eats and DoorDash, not a house threshold.</p>
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="40" aria-valuenow="18" aria-label="Example progress, sample basket $18 of $40"><span></span></div>
-      <p style="margin-top:8px;font-weight:800;">Example basket $18 of $40</p>
+      <a class="btn" href="#" style="background:#111;color:#ffca09;">Order Now</a>
     </div>
     <form class="loyalty" action="#" onsubmit="return false;">
-      <span class="ex-tag">Example offer</span>
-      <h2 class="sec" style="margin-top:8px;">Example rewards</h2>
-      <p>Sample sign-up. Nothing is stored.</p>
-      <label>Email <input type="email" placeholder="name@example.com" aria-label="Sample email"></label>
-      <button class="btn" type="submit">Sample sign-up</button>
+      <h2 class="sec" style="margin-top:8px;">Email me the deals</h2>
+      <p>Weekday lunch prices and the weekend 2-for, straight to your inbox.</p>
+      <label>Email <input type="email" placeholder="name@example.com" aria-label="Email for deals"></label>
+      <button class="btn" type="submit">Email me</button>
     </form>
     <h2 class="sec" id="locations">Two homes. One dough.</h2>
     <div class="locs">
@@ -218,28 +202,16 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off when you scroll in</h2>
-  <p>Sample code only.</p>
-  <label>Sample code <input readonly value="TILES5" aria-label="Sample code TILES5"></label>
+  <h2 id="offer-title" data-ro="weekend" data-ro-part="headline">Weekend Rate</h2>
+  <p data-ro="weekend" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="weekend" data-ro-part="was"></s> <strong data-ro="weekend" data-ro-part="now"></strong> <span class="ro-save" data-ro="weekend" data-ro-part="save"></span></p>
+  <p class="count" data-ro-countdown="weekend" hidden></p>
   <div class="row">
     <a class="btn" href="#">Order Now</a>
     <button class="btn btn-ghost" type="button" data-close>Close</button>
   </div>
 </div>
 <script>
-(function () {
-  var lines = ['Example: two-pizza sample tile', 'Example: save flashes are not real discounts', 'Pickup direct · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot');
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 3200);
-  var end = Date.now() + 90 * 60 * 1000, el = document.querySelector('[data-count]');
-  function tick() {
-    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
-    el.textContent = 'Example ends in ' + String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-  }
-  tick(); if (!reduce) setInterval(tick, 1000);
-})();
 (function () {
   var KEY = 'example-offer-i', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
@@ -271,5 +243,6 @@
   addEventListener('scroll', function () { if (scrollY > innerHeight * 0.35) open(false); }, { passive: true });
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

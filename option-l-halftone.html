@@ -74,11 +74,11 @@
 <!--
   BRAND SWAP — logo files, alt text, title.
   PLACEHOLDER HREFS — Order Now href="#" is Square Online. Header delivery links are href="#". Locations use A–C partner URLs.
-  SAMPLE OFFERS — deal price, saving, countdown, delivery bar, rewards, and the exit offer are placeholder copy. Menu prices match A–C.
+  DEAL PRICES — filled from offers.js. Menu prices match A–C.
   Halftone, torn edge, sunburst, and oven are inline SVG/CSS. The hero photo is assets/real-spread.jpg.
 -->
-<a class="skip" href="#deal">Skip to the sample deal</a>
-<div class="ticker"><span class="ex-tag">Example offers</span><span id="rot">Example: deal of the day is not on the menu</span></div>
+<a class="skip" href="#deal">Skip to the deal</a>
+<div class="ticker"><span id="rot" data-ro-ticker="weekend today family">Weekend Rate</span></div>
 <header>
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
@@ -117,12 +117,11 @@
     <section class="deal" id="deal">
       <img src="assets/real-margherita.jpg" alt="Margherita pizza">
       <div>
-        <span class="ex-tag">Example offer</span>
         <h2 style="margin:8px 0;">Deal of the day</h2>
-        <p>Margherita menu price <b>$19</b>. The bundle is a sample, not a listed special.</p>
-        <p class="flash" style="display:inline-block;margin:8px 0;">Example: save $4</p>
-        <p><b>Sample bundle $22</b></p>
-        <p class="count" data-count>Example timer</p>
+        <p data-ro="weekend" data-ro-part="headline">Weekend Rate</p>
+        <p data-ro="weekend" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="weekend" data-ro-part="was"></s> <strong data-ro="weekend" data-ro-part="now"></strong> <span class="ro-save" data-ro="weekend" data-ro-part="save"></span></p>
+        <p class="count" data-ro-countdown="weekend" hidden></p>
         <a class="btn" href="#" style="margin-top:8px;">Order Now</a>
       </div>
     </section>
@@ -140,18 +139,17 @@
         <p style="margin-top:8px;">“You're only as good as your last pizza.”</p>
       </div>
     </div>
-    <div style="margin-top:16px;">
-      <span class="ex-tag">Example offer</span>
-      <h2 style="margin:8px 0;">Example: free delivery over $40</h2>
-      <p>Sample progress only. Delivery stays with Uber Eats and DoorDash.</p>
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="40" aria-valuenow="22" aria-label="Example progress, sample basket $22 of $40"><span></span></div>
+    <div class="upsell" style="margin-top:16px;">
+      <h2 style="margin:8px 0;" data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</h2>
+      <p data-ro="buyTwo" data-ro-part="rule"></p>
+      <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
+      <a class="btn" href="#" style="margin-top:8px;">Order Now</a>
     </div>
     <form class="loyalty" action="#" onsubmit="return false;">
-      <span class="ex-tag">Example offer</span>
-      <h2 style="margin:8px 0;">Example rewards</h2>
-      <p>Sample sign-up. No account is created.</p>
-      <label>Email <input type="email" placeholder="name@example.com" aria-label="Sample email"></label>
-      <button class="btn" type="submit">Sample sign-up</button>
+      <h2 style="margin:8px 0;">Email me the deals</h2>
+      <p>Weekday lunch prices and the weekend 2-for, straight to your inbox.</p>
+      <label>Email <input type="email" placeholder="name@example.com" aria-label="Email for deals"></label>
+      <button class="btn" type="submit">Email me</button>
     </form>
     <section class="locs" id="locations">
       <article class="loc"><h2>Findon Road</h2><p>336 Findon Road, Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Mon – Sun · 5:00pm – 9:30pm</p><div class="row" style="margin-top:8px;"><a class="btn" href="#">Order Now</a><a class="partner" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA">Uber Eats</a><a class="partner dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/">DoorDash</a></div></article>
@@ -163,24 +161,12 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: before you go, $5 off</h2>
-  <p>Desktop: this opens if the pointer leaves toward the top. Phone: it opens as a sheet after a short scroll. Sample code.</p>
-  <p style="font-weight:800;margin:8px 0;">EXIT5</p>
+  <h2 id="offer-title" data-ro="pizzaNight" data-ro-part="headline">Pizza night</h2>
+  <p data-ro="pizzaNight" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="pizzaNight" data-ro-part="was"></s> <strong data-ro="pizzaNight" data-ro-part="now"></strong> <span class="ro-save" data-ro="pizzaNight" data-ro-part="save"></span></p>
   <div class="row"><a class="btn" href="#">Order Now</a><button class="btn-y btn" type="button" data-close>Close</button></div>
 </div>
 <script>
-(function () {
-  var lines = ['Example: deal of the day is not on the menu', 'Example timer is not a real deadline', 'Pickup direct · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 3600);
-  var end = Date.now() + 3 * 60 * 60 * 1000, el = document.querySelector('[data-count]');
-  function tick() {
-    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
-    el.textContent = 'Example ends in ' + String(Math.floor(s / 3600)).padStart(2, '0') + ':' + String(Math.floor((s % 3600) / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-  }
-  tick(); if (!reduce) setInterval(tick, 1000);
-})();
 (function () {
   var KEY = 'example-offer-l', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null, armed = false;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button')); }
@@ -220,5 +206,6 @@
   }, { passive: true });
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

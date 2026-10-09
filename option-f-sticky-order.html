@@ -202,7 +202,7 @@
 </header>
 
 <div class="orderbar" role="region" aria-label="Order">
-  <p><span class="ex-tag">Example offer</span> <span class="count" data-count>Sample timer</span></p>
+  <p><span data-ro="today" data-ro-part="bar">Today's deal</span> <span class="count" data-ro-countdown hidden></span></p>
   <!-- PLACEHOLDER: Square Online ordering URL -->
   <a class="obar" href="#">Order Online</a>
   <!-- PLACEHOLDER: Uber Eats -->
@@ -330,9 +330,10 @@
       <!-- PLACEHOLDER: Square gift card link -->
       <a href="#">Buy an e-gift card</a>
       <form action="#" onsubmit="return false;" style="width:100%;">
-        <!-- SAMPLE rewards sign-up. Does not create an account. -->
-        <p style="margin-top:8px;"><span class="ex-tag">Example offer</span> Example rewards — sample email only.</p>
-        <input type="email" placeholder="name@example.com" aria-label="Sample rewards email" style="margin-top:6px;padding:8px;border:2px solid #171310;font:inherit;">
+        <p style="margin-top:8px;font-weight:700;">Email me the deals</p>
+        <p>Weekday lunch prices and the weekend 2-for, straight to your inbox.</p>
+        <input type="email" placeholder="name@example.com" aria-label="Email for deals" style="margin-top:6px;padding:8px;border:2px solid #171310;font:inherit;">
+        <button type="submit" style="margin-top:8px;font:inherit;font-weight:800;background:#171310;color:#ffca09;border:0;padding:8px 12px;">Email me</button>
       </form>
     </div>
   </div>
@@ -358,11 +359,10 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <!-- SAMPLE. The bar timer is the same placeholder clock, not a real cutoff. -->
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off while the sample timer runs</h2>
-  <p>Opens on a delay. The order bar stays above this card.</p>
-  <label>Sample code <input readonly value="TIMER5" aria-label="Sample code TIMER5"></label>
+  <h2 id="offer-title" data-ro="today" data-ro-part="headline">Today's deal</h2>
+  <p data-ro="today" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="today" data-ro-part="was"></s> <strong data-ro="today" data-ro-part="now"></strong> <span class="ro-save" data-ro="today" data-ro-part="save"></span></p>
+  <p class="count" data-ro-countdown hidden></p>
   <div class="row" style="margin-top:10px;">
     <a class="head-order" href="#">Order Now</a>
     <button type="button" data-close class="partner">Close</button>
@@ -370,13 +370,6 @@
 </div>
 <script>
 (function () {
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var end = Date.now() + 2 * 60 * 60 * 1000, el = document.querySelector('[data-count]');
-  function tick() {
-    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
-    el.textContent = 'Example ends ' + String(Math.floor(s / 3600)).padStart(2, '0') + ':' + String(Math.floor((s % 3600) / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-  }
-  tick(); if (!reduce) setInterval(tick, 1000);
   var KEY = 'example-offer-f', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
   function open(force) {
@@ -406,5 +399,6 @@
   setTimeout(function () { open(false); }, 3200);
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

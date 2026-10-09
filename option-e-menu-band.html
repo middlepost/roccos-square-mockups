@@ -182,7 +182,7 @@
   placeholders, as in those mockups.
 -->
 <a class="skip" href="#menu">Skip to menu</a>
-<div class="announce"><span class="ex-tag">Example offers</span> <span id="rot">Tagged example offers only · Pickup direct · Uber Eats &amp; DoorDash</span></div>
+<div class="announce"><span id="rot" data-ro-ticker="buyTwo weekday weekend">Buy 2, save $6</span></div>
 
 <header>
   <nav class="nav" aria-label="Primary">
@@ -301,7 +301,7 @@
           <p>Hot salami, 'nduja, stracciatella, basil</p>
         </article>
       </div>
-      <p style="margin-top:18px;"><span class="ex-tag">Example offer</span> <span style="margin-left:8px;">Example: add a side or a drink — no price, those items are not on the menu. Example basket toward a sample $40 delivery bar: $19 of $40.</span></p>
+      <p style="margin-top:18px;"><strong data-ro="family" data-ro-part="headline">Family deal</strong> <span data-ro="family" data-ro-part="rule"></span> <span class="ro-prices" style="display:inline;"><span class="ro-sr">Usually </span><s data-ro="family" data-ro-part="was"></s> <strong data-ro="family" data-ro-part="now"></strong> <span class="ro-save" data-ro="family" data-ro-part="save"></span></span></p>
       <div class="cta on-dark">
         <!-- PLACEHOLDER: Square Online ordering URL -->
         <a class="btn btn-yellow btn-sq" href="#">Order Online</a>
@@ -402,11 +402,10 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <!-- SAMPLE sheet. On a phone it sits at the bottom; on a wide screen it is a card. -->
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off your first online order</h2>
-  <p>Sample code only.</p>
-  <label>Sample code <input readonly value="BAND5" aria-label="Sample code BAND5"></label>
+  <h2 id="offer-title" data-ro="weekend" data-ro-part="headline">Weekend Rate</h2>
+  <p data-ro="weekend" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="weekend" data-ro-part="was"></s> <strong data-ro="weekend" data-ro-part="now"></strong> <span class="ro-save" data-ro="weekend" data-ro-part="save"></span></p>
+  <p class="count" data-ro-countdown="weekend" hidden></p>
   <div class="row" style="margin-top:12px;">
     <a class="btn btn-yellow" href="#">Order Now</a>
     <button class="btn btn-line" type="button" data-close>Close</button>
@@ -414,9 +413,6 @@
 </div>
 <script>
 (function () {
-  var lines = ['Tagged example offers only · menu prices are the real list', 'Example: $5 off is a sample code', 'Pickup direct · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot');
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 4000);
   var KEY = 'example-offer-e', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
   function open(force) {
@@ -446,5 +442,6 @@
   setTimeout(function () { if (innerWidth < 801) open(false); }, 2400);
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

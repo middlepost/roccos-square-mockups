@@ -208,8 +208,8 @@
   body { padding-bottom: 78px; }
   .ex-tag { display: inline-flex; background: var(--ink); color: var(--yellow); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 8px; }
   .announce { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; }
-  .sample-box { max-width: 1200px; margin: 0 auto 28px; padding: 0 24px; }
-  .sample-box .in { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .deal-box { max-width: 1200px; margin: 0 auto 28px; padding: 0 24px; }
+  .deal-box .in { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
   .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--yellow); color: var(--ink); font-weight: 800; border-radius: 999px; padding: 14px 16px; min-height: 48px; }
   @media (max-width: 640px) { body.offer-open .float-order { top: 12px; bottom: auto; z-index: 120; } }
   .offer-back { position: fixed; inset: 0; background: rgba(23,19,16,.5); z-index: 100; }
@@ -237,7 +237,7 @@
   placeholders, as in those mockups.
 -->
 <a class="skip" href="#menu">Skip to menu</a>
-<div class="announce"><span class="ex-tag">Example offers</span> <span id="rot">Example: $5 off a first online order · Pickup direct · Uber Eats &amp; DoorDash</span></div>
+<div class="announce"><span id="rot" data-ro-ticker="today twoFor family">Today's deal</span></div>
 
 <header>
   <nav class="nav" aria-label="Primary">
@@ -355,11 +355,14 @@
         <p class="desc">Hot salami, 'nduja, stracciatella, basil</p>
       </article>
     </div>
-    <div class="sample-box">
+    <div class="deal-box">
       <div class="in">
-        <!-- SAMPLE upsell. Sides and drinks are not on the existing menu, so there is no price. -->
-        <div><span class="ex-tag">Example offer</span><p style="margin-top:6px;">Example: add a side or a drink with the order.</p></div>
-        <button class="btn btn-outline" type="button">Example add</button>
+        <div>
+          <h3 data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</h3>
+          <p style="margin-top:6px;" data-ro="buyTwo" data-ro-part="rule"></p>
+          <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
+        </div>
+        <a class="btn btn-outline" href="#">Order Now</a>
       </div>
     </div>
     <div class="menu-cta">
@@ -485,11 +488,10 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <!-- SAMPLE welcome offer, not a live discount. -->
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off your first online order</h2>
-  <p>Opens after you scroll. Sample code only.</p>
-  <label>Sample code <input readonly value="SCROLL5" aria-label="Sample code SCROLL5"></label>
+  <h2 id="offer-title" data-ro="today" data-ro-part="headline">Today's deal</h2>
+  <p data-ro="today" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="today" data-ro-part="was"></s> <strong data-ro="today" data-ro-part="now"></strong> <span class="ro-save" data-ro="today" data-ro-part="save"></span></p>
+  <p class="count" data-ro-countdown hidden></p>
   <div class="row" style="margin-top:12px;">
     <a class="btn btn-yellow" href="#">Order Now</a>
     <button class="btn btn-outline" type="button" data-close>Close</button>
@@ -497,9 +499,6 @@
 </div>
 <script>
 (function () {
-  var lines = ['Example: $5 off a first online order', 'Example upsell has no price — sides are not on the menu', 'Pickup direct · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot');
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 4000);
   var KEY = 'example-offer-d', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
   function open(force) {
@@ -529,5 +528,6 @@
   addEventListener('scroll', function () { if (scrollY > 640) open(false); }, { passive: true });
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

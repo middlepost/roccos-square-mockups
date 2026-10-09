@@ -81,11 +81,11 @@
 <!--
   BRAND SWAP — logo files, alt text, and the document title.
   PLACEHOLDER HREFS — Order Now is Square Online href="#". Header delivery links are href="#". Locations use the A–C partner URLs.
-  SAMPLE OFFERS — the sticker welcome, upsell, and any saving are placeholder copy. Pizza prices match A–C.
+  DEAL PRICES — filled from offers.js. Pizza prices match A–C.
   Graphics are inline SVG. Photos are the real files in assets/.
 -->
 <a class="skip" href="#menu">Skip to menu</a>
-<div class="ticker" aria-hidden="true"><div class="ticker-track">Example offers · $5 off is a sample · Fermented 72+ hours ★ Roman style ★ Sourdough only ★ Pickup direct ★ Uber Eats ★ DoorDash ★ Example offers · $5 off is a sample · Fermented 72+ hours ★ Roman style ★ Sourdough only ★ Pickup direct ★ Uber Eats ★ DoorDash ★</div></div>
+<div class="ticker" aria-hidden="true"><div class="ticker-track" data-ro-marquee="weekday twoFor pizzaNight">Weekday Lunch Rate ★ 2 pizzas ★ Pizza night ★</div></div>
 <header>
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
@@ -147,10 +147,10 @@
       <article><h3>Margherita</h3><b>$19</b></article>
     </section>
     <div class="pop">
-      <span class="ex-tag">Example offer</span>
-      <h2 style="margin:8px 0;">Add a side or a drink</h2>
-      <p>Sample upsell. No price — sides and drinks are not on the pizza list.</p>
-      <div class="row" style="margin-top:10px;"><button class="btn btn-y" type="button">Example side</button><button class="btn btn-y" type="button">Example drink</button></div>
+      <h2 style="margin:8px 0;" data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</h2>
+      <p data-ro="buyTwo" data-ro-part="rule"></p>
+      <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
+      <div class="row" style="margin-top:10px;"><a class="btn btn-y" href="#">Order Now</a></div>
     </div>
     <div class="story" id="story">
       <img src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases">
@@ -170,10 +170,10 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off, stuck on the page</h2>
-  <p>A small sticker, not a full-screen takeover. Sample code only.</p>
-  <p style="font-weight:800;margin:8px 0;">SAMPLE5</p>
+  <h2 id="offer-title" data-ro="weekday" data-ro-part="headline">Weekday Lunch Rate</h2>
+  <p data-ro="weekday" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="weekday" data-ro-part="was"></s> <strong data-ro="weekday" data-ro-part="now"></strong> <span class="ro-save" data-ro="weekday" data-ro-part="save"></span></p>
+  <p class="count" data-ro-countdown="weekday" hidden></p>
   <div class="row"><a class="btn" href="#">Order Now</a><button class="btn btn-y" type="button" data-close>Close</button></div>
 </div>
 <script>
@@ -207,5 +207,6 @@
   setTimeout(function () { open(false); }, 2600);
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>

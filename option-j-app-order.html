@@ -65,10 +65,10 @@
 <!--
   BRAND SWAP — logos, alt text, and the title are the rebrand points (for example to Margherita).
   PLACEHOLDER HREFS — Order buttons are href="#" for Square Online. Header delivery links are href="#". Location rows use the A–C partner URLs.
-  SAMPLE OFFERS — the cart is a sample counter, not Square. Bundle prices, savings, the code, the timer, and the delivery bar are placeholder copy. Listed pizza prices match A–C.
+  DEAL PRICES — filled from offers.js. Listed pizza prices match A–C. The cart adds those menu prices; it is not Square checkout.
 -->
 <a class="skip" href="#panel-pizzas">Skip to menu</a>
-<div class="ticker"><span class="ex-tag">Example offers</span> <span id="rot">Example: $3 off this sample order</span></div>
+<div class="ticker"><span id="rot" data-ro-ticker="today threeFor buyTwo">Today's deal</span></div>
 <header>
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
@@ -82,58 +82,55 @@
   <section>
     <div class="tabs" role="tablist" aria-label="Menu categories">
       <button role="tab" id="tab-pizzas" aria-selected="true" aria-controls="panel-pizzas">Pizzas</button>
-      <button role="tab" id="tab-deals" aria-selected="false" aria-controls="panel-deals">Example deals</button>
+      <button role="tab" id="tab-deals" aria-selected="false" aria-controls="panel-deals">Deals</button>
       <button role="tab" id="tab-locs" aria-selected="false" aria-controls="panel-locs">Locations</button>
     </div>
     <div id="panel-pizzas" role="tabpanel" aria-labelledby="tab-pizzas">
-      <article class="item"><img src="assets/real-margherita.jpg" alt=""><div><h3>Margherita</h3><p>$19 · San Marzano, fior di latte, basil</p></div><button class="add" type="button" data-add="Margherita" data-price="19" aria-label="Add Margherita, $19, to the sample cart">+</button></article>
-      <article class="item"><div class="ph" aria-hidden="true">M</div><div><h3>Marinara</h3><p>$16 · tomato, garlic, oregano, olive oil</p></div><button class="add" type="button" data-add="Marinara" data-price="16" aria-label="Add Marinara, $16, to the sample cart">+</button></article>
-      <article class="item"><div class="ph" aria-hidden="true">D</div><div><h3>Diavola <span class="badge">Most popular</span></h3><p>$24 · spicy salami, fior di latte, chilli honey</p></div><button class="add" type="button" data-add="Diavola" data-price="24" aria-label="Add Diavola, $24, to the sample cart">+</button></article>
-      <article class="item"><img src="assets/real-gamberi.jpg" alt=""><div><h3>Gamberi</h3><p>$26 · prawns, roast peppers, pesto, spinach</p></div><button class="add" type="button" data-add="Gamberi" data-price="26" aria-label="Add Gamberi, $26, to the sample cart">+</button></article>
-      <article class="item"><img src="assets/real-funghi.jpg" alt=""><div><h3>Funghi</h3><p>$23 · field mushrooms, garlic cream, herbs</p></div><button class="add" type="button" data-add="Funghi" data-price="23" aria-label="Add Funghi, $23, to the sample cart">+</button></article>
-      <!-- SAMPLE merchandising label, not a measured ranking. Diavola is the existing Popular item. -->
-      <article class="item"><img src="assets/real-prosciutto.jpg" alt=""><div><h3>Prosciutto <span class="badge">Best seller</span></h3><p>$26 · prosciutto crudo, rocket, ricotta, olives</p></div><button class="add" type="button" data-add="Prosciutto" data-price="26" aria-label="Add Prosciutto, $26, to the sample cart">+</button></article>
-      <article class="item"><img src="assets/real-patate.jpg" alt=""><div><h3>Patate e Rosmarino</h3><p>$21 · potato, rosemary, garlic oil</p></div><button class="add" type="button" data-add="Patate e Rosmarino" data-price="21" aria-label="Add Patate e Rosmarino, $21, to the sample cart">+</button></article>
-      <article class="item"><div class="ph" aria-hidden="true">R</div><div><h3>Rocco's Special</h3><p>$27 · hot salami, 'nduja, stracciatella, basil</p></div><button class="add" type="button" data-add="Special" data-price="27" aria-label="Add the chef's special, $27, to the sample cart">+</button></article>
+      <article class="item"><img src="assets/real-margherita.jpg" alt=""><div><h3>Margherita</h3><p>$19 · San Marzano, fior di latte, basil</p></div><button class="add" type="button" data-add="Margherita" data-menu="margherita" data-price="19" aria-label="Add Margherita, $19, to your order">+</button></article>
+      <article class="item"><div class="ph" aria-hidden="true">M</div><div><h3>Marinara</h3><p>$16 · tomato, garlic, oregano, olive oil</p></div><button class="add" type="button" data-add="Marinara" data-menu="marinara" data-price="16" aria-label="Add Marinara, $16, to your order">+</button></article>
+      <article class="item"><div class="ph" aria-hidden="true">D</div><div><h3>Diavola <span class="badge">Most popular</span></h3><p>$24 · spicy salami, fior di latte, chilli honey</p></div><button class="add" type="button" data-add="Diavola" data-menu="diavola" data-price="24" aria-label="Add Diavola, $24, to your order">+</button></article>
+      <article class="item"><img src="assets/real-gamberi.jpg" alt=""><div><h3>Gamberi</h3><p>$26 · prawns, roast peppers, pesto, spinach</p></div><button class="add" type="button" data-add="Gamberi" data-menu="gamberi" data-price="26" aria-label="Add Gamberi, $26, to your order">+</button></article>
+      <article class="item"><img src="assets/real-funghi.jpg" alt=""><div><h3>Funghi</h3><p>$23 · field mushrooms, garlic cream, herbs</p></div><button class="add" type="button" data-add="Funghi" data-menu="funghi" data-price="23" aria-label="Add Funghi, $23, to your order">+</button></article>
+      <article class="item"><img src="assets/real-prosciutto.jpg" alt=""><div><h3>Prosciutto</h3><p>$26 · prosciutto crudo, rocket, ricotta, olives</p></div><button class="add" type="button" data-add="Prosciutto" data-menu="prosciutto" data-price="26" aria-label="Add Prosciutto, $26">+</button></article>
+      <article class="item"><img src="assets/real-patate.jpg" alt=""><div><h3>Patate e Rosmarino</h3><p>$21 · potato, rosemary, garlic oil</p></div><button class="add" type="button" data-add="Patate e Rosmarino" data-menu="patate" data-price="21" aria-label="Add Patate e Rosmarino, $21, to your order">+</button></article>
+      <article class="item"><div class="ph" aria-hidden="true">R</div><div><h3>Rocco's Special</h3><p>$27 · hot salami, 'nduja, stracciatella, basil</p></div><button class="add" type="button" data-add="Special" data-menu="special" data-price="27" aria-label="Add the chef's special, $27, to your order">+</button></article>
     </div>
     <div id="panel-deals" role="tabpanel" aria-labelledby="tab-deals" hidden>
       <article class="deal">
-        <span class="ex-tag">Example offer</span>
-        <h3>Deal of the day · sample</h3>
-        <p>Margherita menu price $19. <span class="flash">Example: save $4</span> on a sample side. <b>Sample bundle $22.</b></p>
-        <p class="count" data-count>Example timer</p>
+        <h3 data-ro="today" data-ro-part="headline">Today's deal</h3>
+        <p data-ro="today" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="today" data-ro-part="was"></s> <strong data-ro="today" data-ro-part="now"></strong> <span class="ro-save" data-ro="today" data-ro-part="save"></span></p>
+        <p class="count" data-ro-countdown hidden></p>
         <a class="btn btn-yellow" href="#">Order Now</a>
       </article>
       <article class="deal">
-        <span class="ex-tag">Example offer</span>
-        <h3>Example meal · Funghi</h3>
-        <p>Menu price $23. <span class="flash">Example: save $3.</span> Sample bundle $27.</p>
+        <h3 data-ro="threeFor" data-ro-part="headline">3 pizzas for $54</h3>
+        <p data-ro="threeFor" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="threeFor" data-ro-part="was"></s> <strong data-ro="threeFor" data-ro-part="now"></strong> <span class="ro-save" data-ro="threeFor" data-ro-part="save"></span></p>
       </article>
-      <div class="deal">
-        <span class="ex-tag">Example offer</span>
-        <h3>Add a side or a drink</h3>
-        <p>Sample upsell. No price, because sides and drinks are not on this menu.</p>
-        <button class="btn" type="button" id="upsell">Example: add a drink line</button>
-      </div>
+      <article class="deal">
+        <h3 data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</h3>
+        <p data-ro="buyTwo" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
+      </article>
     </div>
     <div id="panel-locs" role="tabpanel" aria-labelledby="tab-locs" hidden>
       <article class="item" style="grid-template-columns:1fr;"><div><h3>Findon Road</h3><p>336 Findon Road, Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Mon – Sun · 5:00pm – 9:30pm</p><p style="margin-top:8px;"><a class="partner" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA">Uber Eats</a> <a class="partner" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/">DoorDash</a></p></div></article>
       <article class="item" style="grid-template-columns:1fr;"><div><h3>Grange Road</h3><p>466 Grange Road, Fulham Gardens SA 5024<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Wed – Sun · 5:00pm – 9:00pm</p><p style="margin-top:8px;"><a class="partner" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q">Uber Eats</a> <a class="partner" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/">DoorDash</a></p></div></article>
     </div>
   </section>
-  <aside class="rail" aria-label="Sample cart">
-    <span class="ex-tag">Example offer</span>
-    <h2>Sample cart</h2>
-    <p id="cart-empty">Nothing added. Prices below are the real menu prices of what you tap.</p>
+  <aside class="rail" aria-label="Your order">
+    <h2>Your order</h2>
+    <p id="cart-empty">Nothing added yet. Prices are the menu prices.</p>
     <div id="cart-lines"></div>
     <p style="margin-top:8px;font-weight:800;">Menu total <span id="cart-total">$0</span></p>
-    <p style="color:var(--muted);font-size:14px;margin-top:8px;">Example: free delivery over $40. Not a real rule — delivery is Uber Eats and DoorDash.</p>
-    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0" id="bar" aria-label="Example progress toward a sample $40 threshold"><span id="bar-fill" style="width:0%"></span></div>
+    <p id="pair-hint" style="color:var(--muted);font-size:14px;margin-top:8px;"></p>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="2" aria-valuenow="0" id="bar" aria-label="Pizzas toward Buy 2, save $6"><span id="bar-fill" style="width:0%"></span></div>
     <form action="#" onsubmit="return false;">
-      <h2>Example rewards</h2>
-      <p>Sample sign-up. No account is created.</p>
-      <input type="email" placeholder="name@example.com" aria-label="Sample rewards email">
-      <button class="btn" type="submit">Sample sign-up</button>
+      <h2>Email me the deals</h2>
+      <p>Weekday lunch prices and the weekend 2-for, straight to your inbox.</p>
+      <input type="email" placeholder="name@example.com" aria-label="Email for deals">
+      <button class="btn" type="submit">Email me</button>
     </form>
     <a class="btn btn-yellow" href="#" style="width:100%;margin-top:8px;">Order Now</a>
   </aside>
@@ -151,15 +148,15 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $3 off this order</h2>
-  <p>App-style sheet. Sample code, not a live discount. <span class="count" data-count></span></p>
-  <label>Sample code <input readonly value="APP3" aria-label="Sample code APP3"></label>
+  <h2 id="offer-title" data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</h2>
+  <p data-ro="buyTwo" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
   <div style="display:flex;gap:8px;flex-wrap:wrap;">
     <a class="btn btn-yellow" href="#">Order Now</a>
     <button class="btn" type="button" data-close style="background:#fff;color:var(--ink);border:1px solid var(--line);">Close</button>
   </div>
 </div>
+<script src="offers.js"></script>
 <script>
 (function () {
   var tabs = document.querySelectorAll('[role="tab"]');
@@ -172,18 +169,26 @@
       });
     });
   });
-  var total = 0, lines = document.getElementById('cart-lines'), sum = document.getElementById('cart-total'), empty = document.getElementById('cart-empty'), fill = document.getElementById('bar-fill'), bar = document.getElementById('bar');
+  var total = 0, count = 0, lines = document.getElementById('cart-lines'), sum = document.getElementById('cart-total'), empty = document.getElementById('cart-empty'), fill = document.getElementById('bar-fill'), bar = document.getElementById('bar'), hint = document.getElementById('pair-hint');
+  function deal() { return window.RoccoOffers ? RoccoOffers.present('buyTwo') : { off: 6, saveText: 'Save $6' }; }
   function paint() {
+    var off = deal().off;
     sum.textContent = '$' + total;
-    var pct = Math.min(100, Math.round((total / 40) * 100));
-    fill.style.width = pct + '%';
-    bar.setAttribute('aria-valuenow', String(Math.min(total, 40)));
-    empty.hidden = total > 0;
+    var toward = Math.min(count, 2);
+    fill.style.width = (toward / 2 * 100) + '%';
+    bar.setAttribute('aria-valuenow', String(toward));
+    empty.hidden = count > 0;
+    if (count === 0) hint.textContent = 'Add two pizzas and save $' + off + ' at checkout.';
+    else if (count === 1) hint.textContent = 'Add one more pizza and save $' + off + ' at checkout.';
+    else hint.textContent = 'Buy 2, save $' + off + ' comes off at checkout. You pay $' + (total - off) + '.';
   }
   document.querySelectorAll('[data-add]').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var name = btn.getAttribute('data-add'), price = Number(btn.getAttribute('data-price'));
+      var name = btn.getAttribute('data-add');
+      var menuId = btn.getAttribute('data-menu');
+      var price = menuId && window.RoccoOffers ? RoccoOffers.priceOf(menuId) : Number(btn.getAttribute('data-price'));
       total += price;
+      count += 1;
       var row = document.createElement('p');
       row.className = 'cart-line';
       row.textContent = name + '  $' + price;
@@ -191,22 +196,7 @@
       paint();
     });
   });
-  document.getElementById('upsell').addEventListener('click', function () {
-    var row = document.createElement('p');
-    row.className = 'cart-line';
-    row.textContent = 'Example drink — no price';
-    lines.appendChild(row);
-    empty.hidden = true;
-  });
-  var linesT = ['Example: $3 off this sample order', 'Example deals use sample bundle prices', 'Pickup on Square · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) setInterval(function () { i = (i + 1) % linesT.length; rot.textContent = linesT[i]; }, 3400);
-  var end = Date.now() + 45 * 60 * 1000, clock = document.querySelector('[data-count]');
-  function tick() {
-    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
-    clock.textContent = 'Example ends in ' + String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-  }
-  tick(); if (!reduce) setInterval(tick, 1000);
+  paint();
 })();
 (function () {
   var KEY = 'example-offer-j', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;

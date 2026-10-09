@@ -213,8 +213,7 @@
 
   <div class="claims">
     <div class="claims-inner">
-      <span class="ex-tag">Example offers</span>
-      <span id="rot">Example: $5 off is a sample</span><b>·</b>
+      <span id="rot" data-ro-ticker="pizzaNight weekend threeFor">Pizza night</span><b>·</b>
       <span>Fermented 72+ hours</span><b>·</b>
       <span>Italian-trained</span><b>·</b>
       <span>Saving the world from bad pizza</span>
@@ -374,10 +373,9 @@
 <a class="float-order" href="#">Order Now</a>
 <div class="offer-back" id="offer-back" hidden></div>
 <div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
-  <!-- SAMPLE. Wide screens: a corner card. Phones: a bottom sheet after scroll. -->
-  <span class="ex-tag">Example offer</span>
-  <h2 id="offer-title">Example: $5 off your first online order</h2>
-  <p>Sample code SHEET5.</p>
+  <h2 id="offer-title" data-ro="family" data-ro-part="headline">Family deal</h2>
+  <p data-ro="family" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="family" data-ro-part="was"></s> <strong data-ro="family" data-ro-part="now"></strong> <span class="ro-save" data-ro="family" data-ro-part="save"></span></p>
   <div class="row" style="margin-top:10px;">
     <a class="btn btn-yellow" href="#">Order Now</a>
     <button class="btn btn-line" type="button" data-close>Close</button>
@@ -385,9 +383,6 @@
 </div>
 <script>
 (function () {
-  var lines = ['Example: $5 off is a sample', 'Example: add a side — no listed price', 'Pickup direct · Uber Eats & DoorDash'];
-  var i = 0, rot = document.getElementById('rot');
-  if (rot && !matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 3800);
   var KEY = 'example-offer-g', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
   function nodes() { return [].slice.call(root.querySelectorAll('a,button')); }
   function open(force) {
@@ -418,5 +413,6 @@
   else addEventListener('scroll', function () { if (scrollY > 420) open(false); }, { passive: true });
 })();
 </script>
+<script src="offers.js"></script>
 </body>
 </html>
