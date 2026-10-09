@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option L — Halftone | Rocco's Italian Sourdough Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Archivo:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --yellow: #ffca09; --ink: #171310; --cream: #f7f1e6; --muted: #5c564c; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Archivo', sans-serif; background: var(--cream); color: var(--ink); padding-bottom: 80px; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2 { font-family: 'Fraunces', serif; text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+  .skip { position: absolute; left: 8px; top: -40px; background: var(--yellow); padding: 8px 12px; z-index: 120; font-weight: 800; }
+  .skip:focus { top: 8px; }
+  .ticker { display: flex; gap: 10px; justify-content: center; align-items: center; background: var(--ink); color: #fff; padding: 8px 12px; font-weight: 700; font-size: 14px; }
+  .ex-tag { display: inline-flex; background: var(--yellow); color: var(--ink); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 7px; }
+  header { position: sticky; top: 0; z-index: 110; background: var(--cream); }
+  .nav { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 8px 16px; }
+  .brand { margin-right: auto; } .brand img { height: 66px; }
+  .desk { display: flex; gap: 14px; list-style: none; font-weight: 700; }
+  .mob { display: none; position: relative; }
+  .mob summary { list-style: none; cursor: pointer; font-weight: 800; border-bottom: 2px solid var(--ink); }
+  .mob summary::-webkit-details-marker { display: none; }
+  .mob ul { display: block; position: absolute; right: 0; background: #fff; list-style: none; min-width: 150px; padding: 6px; border: 1px solid #ddd; }
+  details.mob:not([open]) > ul { display: none; }
+  .mob a { display: block; padding: 8px; font-weight: 700; }
+  .btn { display: inline-flex; align-items: center; min-height: 46px; padding: 10px 16px; background: var(--ink); color: var(--yellow); font-weight: 800; }
+  .btn-y { background: var(--yellow); color: var(--ink); }
+  .partner { color: #fff; background: #111; min-height: 40px; padding: 8px 12px; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; }
+  .dd { background: #9d1208; }
+  .hero { position: relative; min-height: 520px; display: grid; place-items: center; overflow: hidden; background: #1a1612; color: #fff; }
+  .hero .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .45; }
+  .halftone { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,202,9,.85) 1.1px, transparent 1.2px); background-size: 8px 8px; mix-blend-mode: multiply; pointer-events: none; }
+  .sun { position: absolute; width: 420px; height: 420px; right: -80px; top: -80px; }
+  .hero .copy { position: relative; text-align: center; padding: 40px 16px; max-width: 720px; }
+  .hero h1 { font-size: clamp(42px, 6vw, 72px); line-height: .95; }
+  .torn { height: 28px; background: radial-gradient(circle at 12px 0, transparent 12px, var(--cream) 13px) left top / 24px 28px repeat-x; margin-top: -1px; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 20px 16px 40px; }
+  .deal { display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center; background: #fff; padding: 12px; border: 1px solid #e4d9c6; }
+  .deal img { width: 100%; height: 160px; object-fit: cover; }
+  .count { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 20px; }
+  .flash { background: #9d1208; color: #fff; font-weight: 800; padding: 3px 7px; }
+  .oven { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: center; margin-top: 18px; }
+  .bar { height: 12px; background: #e4d9c6; margin-top: 8px; }
+  .bar span { display: block; width: 55%; height: 100%; background: var(--ink); }
+  .loyalty { margin-top: 16px; padding: 14px; background: var(--yellow); }
+  .loyalty input { font: inherit; padding: 8px; border: 2px solid var(--ink); width: min(280px, 100%); margin: 8px 0; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .locs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .loc { padding: 12px 0; border-top: 3px solid var(--ink); }
+  footer { background: var(--ink); color: #f4efe6; }
+  .foot { max-width: 1000px; margin: 0 auto; padding: 20px 16px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .foot img { height: 78px; }
+  .fine { width: 100%; color: #d9d1c3; font-size: 13px; }
+  .float-order { position: fixed; z-index: 110; left: 16px; bottom: 16px; background: var(--yellow); color: var(--ink); font-weight: 800; padding: 12px 16px; border: 3px solid var(--ink); }
+  .offer-back { position: fixed; inset: 0; background: rgba(23,19,16,.5); z-index: 100; }
+  .offer-card { position: fixed; z-index: 101; top: 128px; right: 16px; width: min(320px, calc(100vw - 28px)); background: var(--cream); padding: 18px; border: 3px solid var(--ink); }
+  .offer-card h2 { font-size: 30px; margin: 8px 0; }
+  [hidden] { display: none !important; }
+  @media (max-width: 800px) {
+    .desk { display: none; } .mob { display: block; }
+    .deal, .oven, .locs { grid-template-columns: 1fr; }
+    .brand img { height: 56px; }
+    .offer-card { top: auto; bottom: 0; left: 0; right: 0; width: 100%; }
+    body.offer-open .float-order { top: 70px; bottom: auto; z-index: 120; }
+  }
+</style>
+</head>
+<body>
+<!--
+  BRAND SWAP — logo files, alt text, title.
+  PLACEHOLDER HREFS — Order Now href="#" is Square Online. Header delivery links are href="#". Locations use A–C partner URLs.
+  DEAL PRICES — filled from offers.js. Menu prices match A–C.
+  Halftone, torn edge, sunburst, and oven are inline SVG/CSS. The hero photo is assets/real-spread.jpg.
+-->
+<a class="skip" href="#deal">Skip to the deal</a>
+<div class="ticker"><span id="rot" data-ro-ticker="weekend today family">Weekend Rate</span></div>
+<header>
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
+    <ul class="desk"><li><a href="#deal">Deal</a></li><li><a href="#story">Story</a></li><li><a href="#locations">Locations</a></li></ul>
+    <details class="mob"><summary>Browse</summary><ul><li><a href="#deal">Deal</a></li><li><a href="#story">Story</a></li><li><a href="#locations">Locations</a></li></ul></details>
+    <a class="btn" href="#">Order Now</a>
+    <a class="partner" href="#">Uber Eats</a>
+    <a class="partner dd" href="#">DoorDash</a>
+  </nav>
+</header>
+<main id="top">
+  <section class="hero">
+    <img class="photo" src="assets/real-spread.jpg" alt="">
+    <div class="halftone" aria-hidden="true"></div>
+    <svg class="sun" viewBox="0 0 200 200" aria-hidden="true">
+      <g stroke="#ffca09" stroke-width="3">
+        <line x1="100" y1="10" x2="100" y2="190"/><line x1="10" y1="100" x2="190" y2="100"/>
+        <line x1="30" y1="30" x2="170" y2="170"/><line x1="170" y1="30" x2="30" y2="170"/>
+        <line x1="100" y1="20" x2="40" y2="160"/><line x1="100" y1="20" x2="160" y2="160"/>
+      </g>
+      <circle cx="100" cy="100" r="28" fill="none" stroke="#ffca09" stroke-width="8"/>
+    </svg>
+    <div class="copy">
+      <p style="letter-spacing:.2em;font-weight:800;color:#ffca09;">SAVING THE WORLD FROM BAD PIZZA</p>
+      <h1>Sourdough, printed like a poster.</h1>
+      <p style="margin:12px 0 16px;">Fermented 72+ hours. Roman-style. Made fresh.</p>
+      <div class="row" style="justify-content:center;">
+        <a class="btn-y btn" href="#">Order Now</a>
+        <a class="partner" href="#">Uber Eats</a>
+        <a class="partner dd" href="#">DoorDash</a>
+      </div>
+    </div>
+  </section>
+  <div class="torn" aria-hidden="true"></div>
+  <div class="wrap">
+    <section class="deal" id="deal">
+      <img src="assets/real-margherita.jpg" alt="Margherita pizza">
+      <div>
+        <h2 style="margin:8px 0;">Deal of the day</h2>
+        <p data-ro="weekend" data-ro-part="headline">Weekend Rate</p>
+        <p data-ro="weekend" data-ro-part="rule"></p>
+        <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="weekend" data-ro-part="was"></s> <strong data-ro="weekend" data-ro-part="now"></strong> <span class="ro-save" data-ro="weekend" data-ro-part="save"></span></p>
+        <p class="count" data-ro-countdown="weekend" hidden></p>
+        <a class="btn" href="#" style="margin-top:8px;">Order Now</a>
+      </div>
+    </section>
+    <div class="oven" id="story">
+      <svg viewBox="0 0 140 160" aria-hidden="true">
+        <rect x="10" y="40" width="120" height="100" fill="#171310"/>
+        <path d="M10 50 Q70 0 130 50" fill="#171310"/>
+        <rect x="30" y="70" width="80" height="50" fill="#ffca09"/>
+        <circle cx="70" cy="95" r="16" fill="none" stroke="#171310" stroke-width="4"/>
+        <rect x="40" y="128" width="60" height="8" fill="#9d1208"/>
+      </svg>
+      <div>
+        <h2>Why sourdough? Blame Mrs. Rocco.</h2>
+        <p style="margin-top:8px;line-height:1.6;color:var(--muted);">Rocco built a mother from scratch and fermented the dough for days so pizza was back on the table. Trained in Italy. Findon Road, then the lab on Grange Road.</p>
+        <p style="margin-top:8px;">“You're only as good as your last pizza.”</p>
+      </div>
+    </div>
+    <div class="upsell" style="margin-top:16px;">
+      <h2 style="margin:8px 0;" data-ro="buyTwo" data-ro-part="headline">Buy 2, save $6</h2>
+      <p data-ro="buyTwo" data-ro-part="rule"></p>
+      <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="buyTwo" data-ro-part="was"></s> <strong data-ro="buyTwo" data-ro-part="now"></strong> <span class="ro-save" data-ro="buyTwo" data-ro-part="save"></span></p>
+      <a class="btn" href="#" style="margin-top:8px;">Order Now</a>
+    </div>
+    <form class="loyalty" action="#" onsubmit="return false;">
+      <h2 style="margin:8px 0;">Email me the deals</h2>
+      <p>Weekday lunch prices and the weekend 2-for, straight to your inbox.</p>
+      <label>Email <input type="email" placeholder="name@example.com" aria-label="Email for deals"></label>
+      <button class="btn" type="submit">Email me</button>
+    </form>
+    <section class="locs" id="locations">
+      <article class="loc"><h2>Findon Road</h2><p>336 Findon Road, Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Mon – Sun · 5:00pm – 9:30pm</p><div class="row" style="margin-top:8px;"><a class="btn" href="#">Order Now</a><a class="partner" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA">Uber Eats</a><a class="partner dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/">DoorDash</a></div></article>
+      <article class="loc"><h2>Grange Road</h2><p>466 Grange Road, Fulham Gardens SA 5024<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Wed – Sun · 5:00pm – 9:00pm</p><div class="row" style="margin-top:8px;"><a class="btn" href="#">Order Now</a><a class="partner" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q">Uber Eats</a><a class="partner dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/">DoorDash</a></div></article>
+    </section>
+  </div>
+</main>
+<footer><div class="foot"><img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza"><p class="fine">© 2026 · Adelaide, South Australia · Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</p></div></footer>
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <h2 id="offer-title" data-ro="pizzaNight" data-ro-part="headline">Pizza night</h2>
+  <p data-ro="pizzaNight" data-ro-part="rule"></p>
+  <p class="ro-prices"><span class="ro-sr">Usually </span><s data-ro="pizzaNight" data-ro-part="was"></s> <strong data-ro="pizzaNight" data-ro-part="now"></strong> <span class="ro-save" data-ro="pizzaNight" data-ro-part="save"></span></p>
+  <div class="row"><a class="btn" href="#">Order Now</a><button class="btn-y btn" type="button" data-close>Close</button></div>
+</div>
+<script>
+(function () {
+  var KEY = 'example-offer-l', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null, armed = false;
+  function nodes() { return [].slice.call(root.querySelectorAll('a,button')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement; root.hidden = false; back.hidden = false; document.body.classList.add('offer-open');
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true; document.body.classList.remove('offer-open');
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    if (e.shiftKey && document.activeElement === list[0]) { e.preventDefault(); list[list.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === list[list.length - 1]) { e.preventDefault(); list[0].focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  document.addEventListener('mouseout', function (e) {
+    if (e.clientY > 8) return;
+    if (innerWidth < 800) return;
+    open(false);
+  });
+  addEventListener('scroll', function () {
+    if (armed) return;
+    if (innerWidth >= 800) return;
+    if (scrollY > 500) { armed = true; open(false); }
+  }, { passive: true });
+})();
+</script>
+<script src="offers.js"></script>
+</body>
+</html>
