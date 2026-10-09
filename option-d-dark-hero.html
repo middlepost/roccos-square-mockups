@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option D — Dark Hero | Rocco's Italian Sourdough Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,560;1,9..144,700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Brand colours only. The business name is not set in CSS. */
+  :root {
+    --yellow: #ffca09;
+    --ink: #171310;
+    --cream: #faf6ef;
+    --warm: #f3ead9;
+    --muted: #5c564c;
+    --gold: #6b5200;
+    --bone: #f4efe6;
+    --line: #e4d9c6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; color: var(--ink); background: var(--cream); }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: 'Fraunces', serif; text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+  .skip {
+    position: absolute; left: 12px; top: -48px; background: var(--yellow); color: var(--ink);
+    font-weight: 700; padding: 10px 14px; z-index: 80; border-radius: 8px;
+  }
+  .skip:focus { top: 12px; }
+
+  .announce {
+    background: var(--ink); color: var(--bone); text-align: center;
+    font-size: 13px; letter-spacing: .12em; text-transform: uppercase; padding: 9px 16px;
+  }
+  .announce b { color: var(--yellow); font-weight: 600; }
+
+  header {
+    position: sticky; top: 0; z-index: 50; background: rgba(250,246,239,.94);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    max-width: 1200px; margin: 0 auto; display: flex; align-items: center;
+    gap: 18px; padding: 10px 24px;
+  }
+  .brand { margin-right: auto; display: flex; }
+  .brand img { height: 72px; width: auto; }
+  .desk { display: flex; gap: 26px; list-style: none; font-weight: 600; font-size: 15px; }
+  .desk a:hover { color: var(--gold); }
+  .mob { display: none; position: relative; }
+  .mob summary {
+    list-style: none; cursor: pointer; font-weight: 700; font-size: 14px;
+    border: 2px solid var(--ink); border-radius: 999px; padding: 8px 14px;
+  }
+  .mob summary::-webkit-details-marker { display: none; }
+  .mob ul {
+    display: block; list-style: none; position: absolute; top: calc(100% + 8px); right: 0; left: auto;
+    min-width: 200px; max-width: calc(100vw - 24px);
+    background: var(--cream); border: 1px solid var(--line); border-radius: 14px;
+    padding: 8px; box-shadow: 0 16px 40px -24px rgba(23,19,16,.45); z-index: 60;
+  }
+  details.mob:not([open]) > ul { display: none; }
+  .mob a { display: block; padding: 10px 12px; font-weight: 600; border-radius: 8px; }
+  .mob a:hover { background: var(--warm); }
+  .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; font-weight: 700;
+    font-size: 15px; padding: 12px 22px; border-radius: 999px; min-height: 44px;
+    transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-solid { background: var(--ink); color: #fff; }
+  .btn-yellow { background: var(--yellow); color: var(--ink); }
+  .btn-yellow:focus-visible { outline-color: var(--ink); }
+  .btn-outline { border: 2px solid var(--ink); color: var(--ink); }
+  .btn-ghost { border: 2px solid var(--bone); color: var(--bone); }
+  .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  .partner {
+    display: inline-flex; align-items: center; gap: 7px; min-height: 44px;
+    font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; color: #fff;
+  }
+  .partner .d { width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+  .partner-uber { background: #000; }
+  .partner-dd { background: #c41200; }
+  .partner-uber .d { background: #06C167; }
+  .partner-dd .d { background: #fff; }
+
+  .hero { position: relative; min-height: 640px; display: grid; align-items: end; color: var(--bone); overflow: hidden; }
+  .hero .bg {
+    position: absolute; inset: 0;
+    background: url('assets/real-spread.jpg') center 42% / cover no-repeat;
+    filter: brightness(.42) saturate(1.05);
+  }
+  .hero .shade {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(13,11,9,.78) 0%, rgba(13,11,9,.28) 58%, rgba(13,11,9,.45) 100%);
+  }
+  .hero .content { position: relative; max-width: 1200px; margin: 0 auto; width: 100%; padding: 72px 24px 56px; }
+  .kicker { text-transform: uppercase; letter-spacing: .2em; font-weight: 700; font-size: 12px; color: var(--yellow); }
+  .hero h1 { font-size: clamp(40px, 5vw, 68px); line-height: 1.02; font-weight: 900; max-width: 12ch; margin: 14px 0 16px; color: #fff; }
+  .hero h1 em { font-style: italic; font-weight: 560; color: var(--yellow); }
+  .hero .lead { font-size: 18px; line-height: 1.6; max-width: 42ch; color: #e7e0d4; margin-bottom: 26px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .dlv { display: flex; align-items: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; color: #d9d1c3; font-size: 14px; font-weight: 600; }
+
+  .mosaic { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 8px; padding: 8px; background: var(--ink); }
+  .mosaic figure { position: relative; margin: 0; overflow: hidden; }
+  .mosaic img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3.1; }
+  .mosaic figcaption {
+    position: absolute; left: 12px; bottom: 12px; background: var(--yellow); color: var(--ink);
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; padding: 6px 12px; border-radius: 999px;
+  }
+
+  .strip { background: var(--warm); }
+  .strip-inner {
+    max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 10px 28px; font-size: 13px; letter-spacing: .12em;
+    text-transform: uppercase; font-weight: 700; color: var(--ink);
+  }
+  .strip .dot { color: var(--gold); }
+
+  section.block { max-width: 1200px; margin: 0 auto; padding: 84px 24px; }
+  .sec-head { text-align: center; margin-bottom: 44px; }
+  .sec-head .kicker { color: var(--gold); }
+  .sec-head h2 { font-size: clamp(32px, 3.6vw, 46px); font-weight: 900; margin-top: 8px; }
+  .sec-head p { color: var(--muted); margin-top: 10px; font-size: 17px; }
+
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 56px; }
+  .menu-item { padding: 16px 0; border-bottom: 1px dashed #d8cdb6; }
+  .menu-line { display: flex; align-items: baseline; gap: 10px; }
+  .menu-item .name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; }
+  .menu-item .dots { flex: 1; border-bottom: 2px dotted #cfc3a8; transform: translateY(-4px); min-width: 16px; }
+  .menu-item .price { font-weight: 700; font-size: 18px; }
+  .menu-item .desc { color: var(--muted); font-size: 14.5px; margin-top: 4px; line-height: 1.45; }
+  .tag {
+    display: inline-block; background: var(--yellow); color: var(--ink); font-family: 'Barlow', sans-serif;
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; letter-spacing: .04em;
+    text-transform: uppercase; margin-left: 8px; vertical-align: 2px;
+  }
+  .menu-cta { text-align: center; margin-top: 40px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; }
+
+  .story { background: var(--warm); }
+  .story-inner { max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+  .story-inner img { width: 100%; border-radius: 16px; aspect-ratio: 4/5; object-fit: cover; object-position: center 18%; box-shadow: 0 24px 48px -18px rgba(23,19,16,.35); }
+  .story-inner h2 { font-size: clamp(30px, 3.4vw, 42px); font-weight: 900; margin: 12px 0 18px; }
+  .story-inner p { font-size: 17px; line-height: 1.7; color: #3f382f; margin-bottom: 14px; }
+  .story-inner .sig { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; margin-top: 8px; color: var(--ink); }
+
+  .gift { background: var(--yellow); color: var(--ink); }
+  .gift-inner { max-width: 1200px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
+  .gift h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 900; }
+  .gift p { margin-top: 6px; color: #3d3200; font-size: 17px; }
+
+  .locs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .loc-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .loc-card .map {
+    height: 150px;
+    background:
+      linear-gradient(rgba(23,19,16,.06), rgba(23,19,16,.06)),
+      repeating-linear-gradient(0deg, #ece4d2 0 1px, transparent 1px 42px),
+      repeating-linear-gradient(90deg, #ece4d2 0 1px, transparent 1px 42px),
+      #f6f0e2;
+    position: relative;
+  }
+  .loc-card .pin {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%) rotate(-45deg);
+    width: 28px; height: 28px; background: var(--yellow); border: 3px solid var(--ink); border-radius: 50% 50% 50% 0;
+  }
+  .loc-card .body { padding: 24px 26px 28px; }
+  .loc-card .badge { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+  .loc-card h3 { font-size: 26px; font-weight: 900; margin: 4px 0 8px; }
+  .loc-card p { color: var(--muted); line-height: 1.6; font-size: 15.5px; }
+  .loc-card .hours { margin-top: 10px; font-weight: 700; color: var(--ink); }
+  .loc-card .row, .order-band .row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
+
+  .order-band { background: var(--ink); color: var(--bone); }
+  .order-inner { max-width: 1200px; margin: 0 auto; padding: 48px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+  .order-inner h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 900; color: #fff; }
+  .order-inner p { color: #d9d1c3; margin-top: 6px; }
+
+  footer { background: #0d0b09; color: #d9d1c3; }
+  .foot-inner { max-width: 1200px; margin: 0 auto; padding: 48px 24px 28px; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 28px; align-items: center; padding-bottom: 28px; border-bottom: 1px solid #2c261e; }
+  .foot-top img { height: 96px; width: auto; }
+  .foot-top ul { list-style: none; display: flex; gap: 22px; flex-wrap: wrap; font-weight: 600; font-size: 15px; }
+  .foot-top a:hover { color: var(--yellow); }
+  .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding-top: 18px; font-size: 13px; color: #b7ad9e; }
+
+  @media (max-width: 900px) {
+    .desk { display: none; }
+    .mob { display: block; }
+    .brand img { height: 60px; }
+    .hero { min-height: 560px; }
+    .hero .shade { background: linear-gradient(180deg, rgba(13,11,9,.35) 0%, rgba(13,11,9,.82) 70%); }
+    .mosaic, .menu-grid, .story-inner, .locs { grid-template-columns: 1fr; }
+    .mosaic img { aspect-ratio: 16/10; }
+    section.block, .story-inner { padding-top: 56px; padding-bottom: 56px; }
+  }
+  @media (max-width: 640px) {
+    .nav { flex-wrap: wrap; padding: 10px 16px; }
+    .actions { width: 100%; justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+<!--
+  BRAND SWAP
+  The wordmark lives in the logo files, not in the layout chrome.
+  To rebrand later (for example to Margherita), replace:
+    assets/logo-lockup-on-dark.png   — dark sections
+    assets/logo-lockup-on-light.png  — light sections
+  and the alt text on those images, plus the document title.
+
+  PLACEHOLDER HREFS
+  Every "Order Online" control uses href="#" until the Square Online URL exists.
+  Uber Eats and DoorDash in the header and hero also use href="#" because no
+  single store is chosen there yet.
+  Location cards reuse the Uber Eats and DoorDash store URLs already published
+  in options A–C. Book a table, e-gift cards, and social links are href="#"
+  placeholders, as in those mockups.
+-->
+<a class="skip" href="#menu">Skip to menu</a>
+<div class="announce">Order pickup direct · Delivery with <b>Uber Eats</b> &amp; <b>DoorDash</b></div>
+
+<header>
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
+    <ul class="desk">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#gift">Gift Cards</a></li>
+    </ul>
+    <details class="mob">
+      <summary>Browse</summary>
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#gift">Gift Cards</a></li>
+      </ul>
+    </details>
+    <div class="actions">
+      <!-- PLACEHOLDER: Square Online ordering URL -->
+      <a class="btn btn-yellow" href="#">Order Online</a>
+      <!-- PLACEHOLDER: Uber Eats — pick a store in Locations -->
+      <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
+      <!-- PLACEHOLDER: DoorDash — pick a store in Locations -->
+      <a class="partner partner-dd" href="#"><span class="d"></span>DoorDash</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <div class="bg" role="img" aria-label="Several sourdough pizzas on a dark table"></div>
+    <div class="shade"></div>
+    <div class="content">
+      <p class="kicker">Kidman Park · Fulham Gardens</p>
+      <h1>Roman sourdough, <em>fermented for days.</em></h1>
+      <p class="lead">A sourdough mother, crafted from scratch and fermented for days — pizza so light you could eat two. That's not a dare. It's a warning.</p>
+      <div class="cta-row">
+        <!-- PLACEHOLDER: Square Online ordering URL -->
+        <a class="btn btn-yellow" href="#">Order Online</a>
+        <!-- PLACEHOLDER: table booking -->
+        <a class="btn btn-ghost" href="#">Book a Table</a>
+      </div>
+      <div class="dlv">Delivery
+        <!-- PLACEHOLDER: Uber Eats -->
+        <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
+        <!-- PLACEHOLDER: DoorDash -->
+        <a class="partner partner-dd" href="#"><span class="d"></span>DoorDash</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="mosaic" aria-label="Pizzas">
+    <figure>
+      <img src="assets/real-margherita.jpg" alt="Margherita pizza with tomato, fior di latte and basil">
+      <figcaption>Margherita</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/real-prosciutto.jpg" alt="Prosciutto pizza with rocket and olives">
+      <figcaption>Prosciutto</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/real-gamberi.jpg" alt="Gamberi pizza with prawns and roast peppers">
+      <figcaption>Gamberi</figcaption>
+    </figure>
+  </div>
+
+  <div class="strip">
+    <div class="strip-inner">
+      <span>Sourdough only</span><span class="dot">●</span>
+      <span>Fermented 72+ hours</span><span class="dot">●</span>
+      <span>Italian-trained</span><span class="dot">●</span>
+      <span>Saving the world from bad pizza</span>
+    </div>
+  </div>
+
+  <section class="block" id="menu">
+    <div class="sec-head">
+      <p class="kicker">The Menu</p>
+      <h2>Just pizza. Kept simple.</h2>
+      <p>“You're only as good as your last pizza.”</p>
+    </div>
+    <div class="menu-grid">
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Margherita</h3><span class="dots"></span><span class="price">$19</span></div>
+        <p class="desc">San Marzano tomato, fior di latte, basil</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Marinara</h3><span class="dots"></span><span class="price">$16</span></div>
+        <p class="desc">Tomato, garlic, oregano, olive oil — no cheese</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Diavola <span class="tag">Popular</span></h3><span class="dots"></span><span class="price">$24</span></div>
+        <p class="desc">Spicy salami, fior di latte, chilli honey</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Gamberi</h3><span class="dots"></span><span class="price">$26</span></div>
+        <p class="desc">Prawns, roast peppers, pesto, spinach</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Funghi</h3><span class="dots"></span><span class="price">$23</span></div>
+        <p class="desc">Field mushrooms, garlic cream, fresh herbs</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Prosciutto</h3><span class="dots"></span><span class="price">$26</span></div>
+        <p class="desc">Prosciutto crudo, rocket, ricotta, olives</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Patate e Rosmarino</h3><span class="dots"></span><span class="price">$21</span></div>
+        <p class="desc">Potato, rosemary, garlic oil, sea salt</p>
+      </article>
+      <article class="menu-item">
+        <div class="menu-line"><h3 class="name">Rocco's Special <span class="tag">Chef's pick</span></h3><span class="dots"></span><span class="price">$27</span></div>
+        <p class="desc">Hot salami, 'nduja, stracciatella, basil</p>
+      </article>
+    </div>
+    <div class="menu-cta">
+      <!-- PLACEHOLDER: Square Online ordering URL -->
+      <a class="btn btn-yellow" href="#">Order Online</a>
+      <!-- PLACEHOLDER -->
+      <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
+      <!-- PLACEHOLDER -->
+      <a class="partner partner-dd" href="#"><span class="d"></span>DoorDash</a>
+    </div>
+  </section>
+
+  <div class="story" id="story">
+    <div class="story-inner">
+      <img src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases at a floured bench">
+      <div>
+        <p class="kicker">Our Story</p>
+        <h2>Why sourdough? Blame Mrs. Rocco.</h2>
+        <p>When Mrs. Rocco developed a food sensitivity that made her give up pizza, Rocco went looking for an answer. He crafted his “mother” from scratch, inoculated the dough, and fermented it for days. The result was light, delicious, and easy to digest — pizza she could love again.</p>
+        <p>As a teen in Rome, Rocco ate pizza most days for pocket change — simple and delicious. After training in Italy for years, he returned to Adelaide, imported hi-tech Italian equipment, and opened on Findon Road, followed by his sourdough production lab on Grange Road.</p>
+        <p class="sig">Many say ours is the only pizza they can eat without bloating — or that it's so light, they could eat two.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gift" id="gift">
+    <div class="gift-inner">
+      <div>
+        <h2>Gift a dinner</h2>
+        <p>e-Gift cards, delivered instantly. The tastiest email they'll get all year.</p>
+      </div>
+      <!-- PLACEHOLDER: Square gift card link -->
+      <a class="btn btn-solid" href="#">Buy an e-gift card</a>
+    </div>
+  </div>
+
+  <section class="block" id="locations">
+    <div class="sec-head">
+      <p class="kicker">Find Us</p>
+      <h2>Two homes. One dough.</h2>
+    </div>
+    <div class="locs">
+      <article class="loc-card">
+        <div class="map" aria-hidden="true"><div class="pin"></div></div>
+        <div class="body">
+          <p class="badge">Open 7 days</p>
+          <h3>Findon Road</h3>
+          <p>336 Findon Road<br>Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a></p>
+          <p class="hours">Mon – Sun · 5:00pm – 9:30pm</p>
+          <div class="row">
+            <!-- PLACEHOLDER: Square Online ordering URL -->
+            <a class="btn btn-yellow" href="#">Order Online</a>
+            <!-- PLACEHOLDER: table booking -->
+            <a class="btn btn-outline" href="#">Book a table</a>
+          </div>
+          <div class="row">
+            <a class="partner partner-uber" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA"><span class="d"></span>Uber Eats</a>
+            <a class="partner partner-dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/"><span class="d"></span>DoorDash</a>
+          </div>
+        </div>
+      </article>
+      <article class="loc-card">
+        <div class="map" aria-hidden="true"><div class="pin"></div></div>
+        <div class="body">
+          <p class="badge">Wed – Sun · Sourdough lab</p>
+          <h3>Grange Road</h3>
+          <p>466 Grange Road<br>Fulham Gardens SA 5024<br><a href="tel:+61870784471">(08) 7078 4471</a></p>
+          <p class="hours">Wed – Sun · 5:00pm – 9:00pm</p>
+          <div class="row">
+            <!-- PLACEHOLDER: Square Online ordering URL -->
+            <a class="btn btn-yellow" href="#">Order Online</a>
+            <!-- PLACEHOLDER: table booking -->
+            <a class="btn btn-outline" href="#">Book a table</a>
+          </div>
+          <div class="row">
+            <a class="partner partner-uber" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q"><span class="d"></span>Uber Eats</a>
+            <a class="partner partner-dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/"><span class="d"></span>DoorDash</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="order-band" id="order">
+    <div class="order-inner">
+      <div>
+        <h2>Pickup direct.</h2>
+        <p>Delivery stays with Uber Eats and DoorDash.</p>
+      </div>
+      <div class="row">
+        <!-- PLACEHOLDER: Square Online ordering URL -->
+        <a class="btn btn-yellow" href="#">Order Online</a>
+        <!-- PLACEHOLDER -->
+        <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
+        <!-- PLACEHOLDER -->
+        <a class="partner partner-dd" href="#"><span class="d"></span>DoorDash</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza">
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#gift">Gift Cards</a></li>
+        <!-- PLACEHOLDER: social profiles -->
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 · Adelaide, South Australia</span>
+      <span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
