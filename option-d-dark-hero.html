@@ -204,6 +204,19 @@
     .nav { flex-wrap: wrap; padding: 10px 16px; }
     .actions { width: 100%; justify-content: flex-start; }
   }
+  header { z-index: 110; }
+  body { padding-bottom: 78px; }
+  .ex-tag { display: inline-flex; background: var(--ink); color: var(--yellow); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 8px; }
+  .announce { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .sample-box { max-width: 1200px; margin: 0 auto 28px; padding: 0 24px; }
+  .sample-box .in { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--yellow); color: var(--ink); font-weight: 800; border-radius: 999px; padding: 14px 16px; min-height: 48px; }
+  @media (max-width: 640px) { body.offer-open .float-order { top: 12px; bottom: auto; z-index: 120; } }
+  .offer-back { position: fixed; inset: 0; background: rgba(23,19,16,.5); z-index: 100; }
+  .offer-card { position: fixed; z-index: 101; left: 50%; top: 54%; transform: translate(-50%, -50%); width: min(420px, calc(100% - 28px)); background: #fff; color: var(--ink); border-radius: 18px; padding: 18px; }
+  .offer-card h2 { font-size: 28px; margin: 8px 0; }
+  .offer-card input { width: 100%; margin-top: 6px; font: inherit; font-weight: 700; padding: 10px; border: 2px solid var(--ink); border-radius: 10px; }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
@@ -224,7 +237,7 @@
   placeholders, as in those mockups.
 -->
 <a class="skip" href="#menu">Skip to menu</a>
-<div class="announce">Order pickup direct · Delivery with <b>Uber Eats</b> &amp; <b>DoorDash</b></div>
+<div class="announce"><span class="ex-tag">Example offers</span> <span id="rot">Example: $5 off a first online order · Pickup direct · Uber Eats &amp; DoorDash</span></div>
 
 <header>
   <nav class="nav" aria-label="Primary">
@@ -341,6 +354,13 @@
         <div class="menu-line"><h3 class="name">Rocco's Special <span class="tag">Chef's pick</span></h3><span class="dots"></span><span class="price">$27</span></div>
         <p class="desc">Hot salami, 'nduja, stracciatella, basil</p>
       </article>
+    </div>
+    <div class="sample-box">
+      <div class="in">
+        <!-- SAMPLE upsell. Sides and drinks are not on the existing menu, so there is no price. -->
+        <div><span class="ex-tag">Example offer</span><p style="margin-top:6px;">Example: add a side or a drink with the order.</p></div>
+        <button class="btn btn-outline" type="button">Example add</button>
+      </div>
     </div>
     <div class="menu-cta">
       <!-- PLACEHOLDER: Square Online ordering URL -->
@@ -461,5 +481,53 @@
     </div>
   </div>
 </footer>
+<!-- PLACEHOLDER: Square Online -->
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <!-- SAMPLE welcome offer, not a live discount. -->
+  <span class="ex-tag">Example offer</span>
+  <h2 id="offer-title">Example: $5 off your first online order</h2>
+  <p>Opens after you scroll. Sample code only.</p>
+  <label>Sample code <input readonly value="SCROLL5" aria-label="Sample code SCROLL5"></label>
+  <div class="row" style="margin-top:12px;">
+    <a class="btn btn-yellow" href="#">Order Now</a>
+    <button class="btn btn-outline" type="button" data-close>Close</button>
+  </div>
+</div>
+<script>
+(function () {
+  var lines = ['Example: $5 off a first online order', 'Example upsell has no price — sides are not on the menu', 'Pickup direct · Uber Eats & DoorDash'];
+  var i = 0, rot = document.getElementById('rot');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 4000);
+  var KEY = 'example-offer-d', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
+  function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement; root.hidden = false; back.hidden = false; document.body.classList.add('offer-open');
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true; document.body.classList.remove('offer-open');
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    if (e.shiftKey && document.activeElement === list[0]) { e.preventDefault(); list[list.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === list[list.length - 1]) { e.preventDefault(); list[0].focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  addEventListener('scroll', function () { if (scrollY > 640) open(false); }, { passive: true });
+})();
+</script>
 </body>
 </html>

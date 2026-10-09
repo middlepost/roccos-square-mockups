@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option K — Sticker | Rocco's Italian Sourdough Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,560&family=Barlow:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --yellow: #ffca09; --ink: #171310; --cream: #faf6ef; --muted: #5c564c; --gold: #6b5200; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Barlow', sans-serif; background: var(--cream); color: var(--ink); padding-bottom: 84px; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: 'Fraunces', serif; text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+  .skip { position: absolute; left: 10px; top: -40px; background: var(--ink); color: var(--yellow); padding: 8px 12px; z-index: 120; }
+  .skip:focus { top: 8px; }
+  .ticker { background: var(--ink); color: #fff; overflow: hidden; white-space: nowrap; }
+  .ticker-track { display: inline-block; padding: 10px 0; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; animation: slide 28s linear infinite; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  header { position: sticky; top: 0; z-index: 110; background: rgba(250,246,239,.94); border-bottom: 1px solid #e4d9c6; }
+  .nav { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 8px 16px; }
+  .brand { margin-right: auto; } .brand img { height: 68px; }
+  .desk { display: flex; gap: 16px; list-style: none; font-weight: 700; }
+  .mob { display: none; position: relative; }
+  .mob summary { list-style: none; cursor: pointer; border: 2px solid var(--ink); border-radius: 999px; padding: 8px 12px; font-weight: 800; }
+  .mob summary::-webkit-details-marker { display: none; }
+  .mob ul { display: block; position: absolute; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid #e4d9c6; border-radius: 12px; list-style: none; min-width: 160px; padding: 6px; }
+  details.mob:not([open]) > ul { display: none; }
+  .mob a { display: block; padding: 8px 10px; font-weight: 700; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 16px; border-radius: 999px; font-weight: 800; background: var(--ink); color: #fff; }
+  .btn-y { background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); }
+  .partner { display: inline-flex; align-items: center; min-height: 40px; padding: 8px 12px; border-radius: 999px; font-weight: 800; font-size: 13px; color: #fff; }
+  .u { background: #111; } .d { background: #9d1208; }
+  .hero { max-width: 1100px; margin: 0 auto; padding: 28px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+  .kicker { color: var(--gold); font-weight: 800; letter-spacing: .16em; text-transform: uppercase; font-size: 12px; }
+  .hero h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1; margin: 8px 0; }
+  .stickers { position: relative; min-height: 320px; }
+  .stickers svg { width: 180px; height: 180px; }
+  .s1 { position: absolute; left: 8%; top: 10%; transform: rotate(-8deg); filter: drop-shadow(4px 6px 0 rgba(23,19,16,.15)); }
+  .s2 { position: absolute; right: 6%; top: 18%; width: 140px; height: 140px; transform: rotate(10deg); }
+  .s3 { position: absolute; left: 28%; bottom: 0; width: 120px; transform: rotate(-4deg); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+  .badge { border: 2px solid var(--ink); background: var(--yellow); border-radius: 999px; font-weight: 800; font-size: 13px; padding: 6px 10px; }
+  .ex-tag { display: inline-flex; background: var(--ink); color: var(--yellow); border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 3px 8px; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 10px 16px 36px; }
+  .photos { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; }
+  .photos figure { margin: 0; position: relative; }
+  .photos img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 18px; border: 3px solid var(--ink); }
+  .photos figcaption { position: absolute; left: 10px; bottom: 10px; background: #fff; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 10px; font-weight: 800; }
+  .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-top: 18px; }
+  .menu article { display: flex; justify-content: space-between; gap: 10px; border-bottom: 2px dashed #d8cdb6; padding: 10px 0; }
+  .pop { background: #fff; border: 3px solid var(--ink); border-radius: 18px; padding: 14px; margin-top: 16px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .story { display: grid; grid-template-columns: 180px 1fr; gap: 16px; align-items: center; margin-top: 18px; background: #f3ead9; border-radius: 20px; padding: 16px; }
+  .story img { width: 180px; height: 220px; object-fit: cover; object-position: center 18%; border-radius: 16px; }
+  .locs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .loc { border: 2px solid var(--ink); border-radius: 16px; padding: 14px; background: #fff; }
+  footer { background: var(--ink); color: #f4efe6; }
+  .foot { max-width: 1100px; margin: 0 auto; padding: 22px 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .foot img { height: 80px; }
+  .fine { width: 100%; color: #d9d1c3; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .float-order { position: fixed; z-index: 110; right: 14px; bottom: 14px; background: var(--yellow); color: var(--ink); border: 3px solid var(--ink); border-radius: 999px; font-weight: 800; padding: 12px 16px; }
+  .offer-back { position: fixed; inset: 0; z-index: 100; background: rgba(23,19,16,.25); }
+  .offer-card { position: fixed; z-index: 101; top: 140px; right: 16px; width: min(300px, calc(100% - 32px)); background: var(--yellow); border: 3px solid var(--ink); border-radius: 22px; padding: 14px; transform: rotate(-2deg); }
+  .offer-card h2 { font-size: 26px; margin: 6px 0; }
+  [hidden] { display: none !important; }
+  @media (max-width: 800px) {
+    .desk { display: none; } .mob { display: block; }
+    .hero, .photos, .menu, .locs, .story { grid-template-columns: 1fr; }
+    .stickers { min-height: 240px; }
+    .brand img { height: 56px; }
+    .offer-card { top: auto; bottom: 72px; right: 12px; }
+    body.offer-open .float-order { top: 70px; bottom: auto; z-index: 120; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+</style>
+</head>
+<body>
+<!--
+  BRAND SWAP — logo files, alt text, and the document title.
+  PLACEHOLDER HREFS — Order Now is Square Online href="#". Header delivery links are href="#". Locations use the A–C partner URLs.
+  SAMPLE OFFERS — the sticker welcome, upsell, and any saving are placeholder copy. Pizza prices match A–C.
+  Graphics are inline SVG. Photos are the real files in assets/.
+-->
+<a class="skip" href="#menu">Skip to menu</a>
+<div class="ticker" aria-hidden="true"><div class="ticker-track">Example offers · $5 off is a sample · Fermented 72+ hours ★ Roman style ★ Sourdough only ★ Pickup direct ★ Uber Eats ★ DoorDash ★ Example offers · $5 off is a sample · Fermented 72+ hours ★ Roman style ★ Sourdough only ★ Pickup direct ★ Uber Eats ★ DoorDash ★</div></div>
+<header>
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
+    <ul class="desk"><li><a href="#menu">Menu</a></li><li><a href="#story">Story</a></li><li><a href="#locations">Locations</a></li></ul>
+    <details class="mob"><summary>Browse</summary><ul><li><a href="#menu">Menu</a></li><li><a href="#story">Story</a></li><li><a href="#locations">Locations</a></li></ul></details>
+    <a class="btn btn-y" href="#">Order Now</a>
+    <a class="partner u" href="#">Uber Eats</a>
+    <a class="partner d" href="#">DoorDash</a>
+  </nav>
+</header>
+<main>
+  <section class="hero" id="top">
+    <div>
+      <p class="kicker">Kidman Park · Fulham Gardens</p>
+      <h1>Roman sourdough, devoured in minutes.</h1>
+      <div class="badges">
+        <span class="badge">Fermented 72+ hours</span>
+        <span class="badge">Roman-style</span>
+        <span class="badge">Made fresh</span>
+      </div>
+      <p style="color:var(--muted);max-width:42ch;margin-bottom:14px;">A sourdough mother, crafted from scratch and fermented for days — pizza so light you could eat two.</p>
+      <div class="row">
+        <a class="btn" href="#">Order Now</a>
+        <a class="partner u" href="#">Uber Eats</a>
+        <a class="partner d" href="#">DoorDash</a>
+      </div>
+    </div>
+    <div class="stickers" aria-hidden="true">
+      <svg class="s1" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="92" fill="#ffca09" stroke="#171310" stroke-width="6"/>
+        <circle cx="100" cy="100" r="70" fill="#f6e2b3" stroke="#171310" stroke-width="4"/>
+        <circle cx="78" cy="92" r="10" fill="#9d1208"/><circle cx="118" cy="80" r="8" fill="#9d1208"/>
+        <circle cx="110" cy="120" r="9" fill="#9d1208"/><circle cx="70" cy="120" r="7" fill="#2f6b3a"/>
+        <path d="M60 70c20-20 50-10 60 8" fill="none" stroke="#2f6b3a" stroke-width="4"/>
+      </svg>
+      <svg class="s2" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#ffca09" stroke-width="10"/>
+        <circle cx="60" cy="60" r="32" fill="none" stroke="#171310" stroke-width="4"/>
+        <circle cx="60" cy="60" r="8" fill="#ffca09" stroke="#171310" stroke-width="3"/>
+      </svg>
+      <svg class="s3" viewBox="0 0 140 80">
+        <rect x="4" y="10" width="132" height="60" rx="30" fill="#fff" stroke="#171310" stroke-width="4"/>
+        <text x="70" y="48" text-anchor="middle" font-family="Barlow, sans-serif" font-size="18" font-weight="800" fill="#171310">MADE FRESH</text>
+      </svg>
+    </div>
+  </section>
+  <div class="wrap">
+    <div class="photos">
+      <figure><img src="assets/real-margherita.jpg" alt="Margherita pizza"><figcaption>Margherita · $19</figcaption></figure>
+      <figure><img src="assets/real-funghi.jpg" alt="Funghi pizza"><figcaption>Funghi · $23</figcaption></figure>
+      <figure><img src="assets/real-gamberi.jpg" alt="Gamberi pizza"><figcaption>Gamberi · $26</figcaption></figure>
+    </div>
+    <section class="menu" id="menu">
+      <article><h3>Diavola <span class="badge">Most popular</span></h3><b>$24</b></article>
+      <article><h3>Marinara</h3><b>$16</b></article>
+      <article><h3>Prosciutto</h3><b>$26</b></article>
+      <article><h3>Patate e Rosmarino</h3><b>$21</b></article>
+      <article><h3>Rocco's Special</h3><b>$27</b></article>
+      <article><h3>Margherita</h3><b>$19</b></article>
+    </section>
+    <div class="pop">
+      <span class="ex-tag">Example offer</span>
+      <h2 style="margin:8px 0;">Add a side or a drink</h2>
+      <p>Sample upsell. No price — sides and drinks are not on the pizza list.</p>
+      <div class="row" style="margin-top:10px;"><button class="btn btn-y" type="button">Example side</button><button class="btn btn-y" type="button">Example drink</button></div>
+    </div>
+    <div class="story" id="story">
+      <img src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases">
+      <div>
+        <p class="kicker">Our story</p>
+        <h2>Why sourdough? Blame Mrs. Rocco.</h2>
+        <p style="margin-top:8px;line-height:1.6;">When Mrs. Rocco developed a food sensitivity that made her give up pizza, Rocco crafted a mother from scratch and fermented the dough for days. Findon Road came first, then the sourdough lab on Grange Road.</p>
+      </div>
+    </div>
+    <section class="locs" id="locations">
+      <article class="loc"><p class="kicker">Open 7 days</p><h3>Findon Road</h3><p>336 Findon Road, Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Mon – Sun · 5:00pm – 9:30pm</p><div class="row" style="margin-top:8px;"><a class="btn btn-y" href="#">Order Now</a><a class="partner u" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA">Uber Eats</a><a class="partner d" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/">DoorDash</a></div></article>
+      <article class="loc"><p class="kicker">Wed – Sun</p><h3>Grange Road</h3><p>466 Grange Road, Fulham Gardens SA 5024<br><a href="tel:+61870784471">(08) 7078 4471</a><br>Wed – Sun · 5:00pm – 9:00pm</p><div class="row" style="margin-top:8px;"><a class="btn btn-y" href="#">Order Now</a><a class="partner u" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q">Uber Eats</a><a class="partner d" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/">DoorDash</a></div></article>
+    </section>
+  </div>
+</main>
+<footer><div class="foot"><img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza"><p class="fine"><span>© 2026 · Adelaide, South Australia</span><span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span></p></div></footer>
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <span class="ex-tag">Example offer</span>
+  <h2 id="offer-title">Example: $5 off, stuck on the page</h2>
+  <p>A small sticker, not a full-screen takeover. Sample code only.</p>
+  <p style="font-weight:800;margin:8px 0;">SAMPLE5</p>
+  <div class="row"><a class="btn" href="#">Order Now</a><button class="btn btn-y" type="button" data-close>Close</button></div>
+</div>
+<script>
+(function () {
+  var KEY = 'example-offer-k', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
+  function nodes() { return [].slice.call(root.querySelectorAll('a,button')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement; root.hidden = false; back.hidden = false; document.body.classList.add('offer-open');
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true; document.body.classList.remove('offer-open');
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    if (e.shiftKey && document.activeElement === list[0]) { e.preventDefault(); list[list.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === list[list.length - 1]) { e.preventDefault(); list[0].focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  setTimeout(function () { open(false); }, 2600);
+})();
+</script>
+</body>
+</html>

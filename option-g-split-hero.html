@@ -122,7 +122,8 @@
 
   @media (max-width: 900px) {
     .split { grid-template-columns: 1fr; min-height: 0; }
-    .photo-pane { min-height: 280px; order: -1; }
+    .photo-pane { min-height: 112px; order: -1; }
+    .pane-copy { padding-top: 16px; }
     .desk { display: none; }
     .mob { display: block; }
     .pane { padding: 18px 16px 32px; }
@@ -131,6 +132,19 @@
     .dish { grid-template-columns: 84px 1fr; }
     .dish img, .dish .ph { width: 84px; height: 72px; }
     .dish .price { grid-column: 2; padding: 0 0 6px; }
+  }
+  body { padding-bottom: 76px; }
+  .ex-tag { display: inline-flex; background: var(--ink); color: var(--yellow); font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; border-radius: 999px; padding: 3px 8px; }
+  .claims { display: flex; }
+  .float-order { position: fixed; z-index: 95; right: 14px; bottom: 14px; background: var(--yellow); color: var(--ink); font-weight: 800; border-radius: 999px; padding: 12px 16px; }
+  body.offer-open .float-order { top: 12px; bottom: auto; z-index: 120; }
+  .offer-back { position: fixed; inset: 0; background: rgba(23,19,16,.5); z-index: 100; }
+  .offer-card { position: fixed; z-index: 101; left: 0; right: 0; bottom: 0; background: #fff; padding: 12px 14px 14px; border-radius: 18px 18px 0 0; }
+  .offer-card h2 { font-size: 22px; margin: 6px 0; }
+  .offer-card .row { margin-top: 8px; }
+  [hidden] { display: none !important; }
+  @media (min-width: 900px) {
+    .offer-card { left: auto; right: 20px; bottom: 20px; width: 340px; border-radius: 16px; border: 1px solid var(--line); }
   }
 </style>
 </head>
@@ -199,6 +213,8 @@
 
   <div class="claims">
     <div class="claims-inner">
+      <span class="ex-tag">Example offers</span>
+      <span id="rot">Example: $5 off is a sample</span><b>·</b>
       <span>Fermented 72+ hours</span><b>·</b>
       <span>Italian-trained</span><b>·</b>
       <span>Saving the world from bad pizza</span>
@@ -355,5 +371,52 @@
     </div>
   </div>
 </footer>
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <!-- SAMPLE. Wide screens: a corner card. Phones: a bottom sheet after scroll. -->
+  <span class="ex-tag">Example offer</span>
+  <h2 id="offer-title">Example: $5 off your first online order</h2>
+  <p>Sample code SHEET5.</p>
+  <div class="row" style="margin-top:10px;">
+    <a class="btn btn-yellow" href="#">Order Now</a>
+    <button class="btn btn-line" type="button" data-close>Close</button>
+  </div>
+</div>
+<script>
+(function () {
+  var lines = ['Example: $5 off is a sample', 'Example: add a side — no listed price', 'Pickup direct · Uber Eats & DoorDash'];
+  var i = 0, rot = document.getElementById('rot');
+  if (rot && !matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 3800);
+  var KEY = 'example-offer-g', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
+  function nodes() { return [].slice.call(root.querySelectorAll('a,button')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement; root.hidden = false; back.hidden = false; document.body.classList.add('offer-open');
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true; document.body.classList.remove('offer-open');
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    if (e.shiftKey && document.activeElement === list[0]) { e.preventDefault(); list[list.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === list[list.length - 1]) { e.preventDefault(); list[0].focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  if (innerWidth >= 900) setTimeout(function () { open(false); }, 3000);
+  else addEventListener('scroll', function () { if (scrollY > 420) open(false); }, { passive: true });
+})();
+</script>
 </body>
 </html>

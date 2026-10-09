@@ -147,6 +147,16 @@
     .nav { flex-wrap: wrap; padding: 8px 16px; }
     .head-order { margin-left: auto; }
   }
+  header, .orderbar { z-index: 110; }
+  .ex-tag { display: inline-flex; background: var(--yellow); color: var(--ink); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; }
+  .orderbar .count { font-variant-numeric: tabular-nums; font-weight: 800; }
+  .float-order { position: fixed; z-index: 110; right: 16px; bottom: 96px; background: transparent; color: var(--yellow); border: 2px solid var(--yellow); font-weight: 800; padding: 10px 12px; letter-spacing: .06em; text-transform: uppercase; font-size: 13px; }
+  .offer-back { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 100; }
+  .offer-card { position: fixed; z-index: 101; left: 50%; top: 18%; transform: translateX(-50%); width: min(420px, calc(100% - 28px)); background: var(--cream); color: var(--ink); padding: 16px; }
+  .offer-card h2 { font-size: 28px; margin: 8px 0; }
+  .offer-card input { width: 100%; font: inherit; padding: 8px; margin-top: 6px; border: 2px solid var(--ink); }
+  [hidden] { display: none !important; }
+  @media (max-width: 900px) { .float-order { bottom: 150px; } }
 </style>
 </head>
 <body>
@@ -192,7 +202,7 @@
 </header>
 
 <div class="orderbar" role="region" aria-label="Order">
-  <p>Pickup · Delivery</p>
+  <p><span class="ex-tag">Example offer</span> <span class="count" data-count>Sample timer</span></p>
   <!-- PLACEHOLDER: Square Online ordering URL -->
   <a class="obar" href="#">Order Online</a>
   <!-- PLACEHOLDER: Uber Eats -->
@@ -319,6 +329,11 @@
       </div>
       <!-- PLACEHOLDER: Square gift card link -->
       <a href="#">Buy an e-gift card</a>
+      <form action="#" onsubmit="return false;" style="width:100%;">
+        <!-- SAMPLE rewards sign-up. Does not create an account. -->
+        <p style="margin-top:8px;"><span class="ex-tag">Example offer</span> Example rewards — sample email only.</p>
+        <input type="email" placeholder="name@example.com" aria-label="Sample rewards email" style="margin-top:6px;padding:8px;border:2px solid #171310;font:inherit;">
+      </form>
     </div>
   </div>
 </main>
@@ -340,5 +355,56 @@
     </div>
   </div>
 </footer>
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <!-- SAMPLE. The bar timer is the same placeholder clock, not a real cutoff. -->
+  <span class="ex-tag">Example offer</span>
+  <h2 id="offer-title">Example: $5 off while the sample timer runs</h2>
+  <p>Opens on a delay. The order bar stays above this card.</p>
+  <label>Sample code <input readonly value="TIMER5" aria-label="Sample code TIMER5"></label>
+  <div class="row" style="margin-top:10px;">
+    <a class="head-order" href="#">Order Now</a>
+    <button type="button" data-close class="partner">Close</button>
+  </div>
+</div>
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var end = Date.now() + 2 * 60 * 60 * 1000, el = document.querySelector('[data-count]');
+  function tick() {
+    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
+    el.textContent = 'Example ends ' + String(Math.floor(s / 3600)).padStart(2, '0') + ':' + String(Math.floor((s % 3600) / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  }
+  tick(); if (!reduce) setInterval(tick, 1000);
+  var KEY = 'example-offer-f', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
+  function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement; root.hidden = false; back.hidden = false;
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true;
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    if (e.shiftKey && document.activeElement === list[0]) { e.preventDefault(); list[list.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === list[list.length - 1]) { e.preventDefault(); list[0].focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  setTimeout(function () { open(false); }, 3200);
+})();
+</script>
 </body>
 </html>

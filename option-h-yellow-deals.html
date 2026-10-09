@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option H — Yellow Deals | Rocco's Italian Sourdough Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Barlow:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --yellow: #ffca09; --ink: #171310; --cream: #fff8e4; --card: #fff; --muted: #3f382f; --red: #9d1208; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; background: var(--yellow); color: var(--ink); padding-bottom: 88px; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: 'Fredoka', sans-serif; text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .skip { position: absolute; left: 12px; top: -48px; background: var(--ink); color: var(--yellow); font-weight: 800; padding: 10px 14px; z-index: 120; border-radius: 10px; }
+  .skip:focus { top: 12px; }
+  .ticker { background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 16px; font-weight: 700; font-size: 14px; min-height: 40px; }
+  .ex-tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; background: var(--red); color: #fff; border-radius: 999px; padding: 3px 8px; white-space: nowrap; }
+  header { position: sticky; top: 0; z-index: 110; background: var(--yellow); border-bottom: 4px solid var(--ink); }
+  .nav { max-width: 1120px; margin: 0 auto; padding: 8px 18px; display: flex; align-items: center; gap: 12px; }
+  .brand { margin-right: auto; display: flex; }
+  .brand img { height: 68px; width: auto; }
+  .desk { display: flex; gap: 16px; list-style: none; font-weight: 700; }
+  .mob { display: none; position: relative; }
+  .mob summary { list-style: none; cursor: pointer; font-weight: 800; border: 3px solid var(--ink); border-radius: 999px; padding: 8px 12px; background: #fff; }
+  .mob summary::-webkit-details-marker { display: none; }
+  .mob ul { display: block; position: absolute; right: 0; top: calc(100% + 8px); background: #fff; border: 3px solid var(--ink); border-radius: 14px; min-width: 180px; padding: 6px; z-index: 5; list-style: none; }
+  details.mob:not([open]) > ul { display: none; }
+  .mob a { display: block; padding: 10px 12px; font-weight: 700; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 18px; border-radius: 14px; font-weight: 800; border: 3px solid var(--ink); background: #fff; }
+  .btn-ink { background: var(--ink); color: var(--yellow); }
+  .btn-red { background: var(--red); color: #fff; border-color: var(--ink); }
+  .partner { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 12px; border-radius: 999px; color: #fff; font-weight: 800; font-size: 13px; border: 3px solid var(--ink); }
+  .partner-uber { background: #111; }
+  .partner-dd { background: var(--red); }
+  .partner .d { width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+  .partner-uber .d { background: #06C167; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 22px 18px; }
+  .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 22px; align-items: center; }
+  .hero h1 { font-size: clamp(40px, 5vw, 64px); line-height: .95; font-weight: 700; }
+  .hero p { font-size: 18px; font-weight: 600; margin: 12px 0 18px; max-width: 36ch; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .shot { position: relative; }
+  .shot img { width: 100%; border: 4px solid var(--ink); border-radius: 28px; aspect-ratio: 1/1; object-fit: cover; }
+  .price-tag { position: absolute; right: 14px; bottom: 14px; background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 8px 12px; font-family: 'Fredoka', sans-serif; font-size: 28px; font-weight: 700; }
+  .price-tag small { display: block; font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: .04em; }
+  .banner { margin-top: 18px; background: var(--ink); color: #fff; border-radius: 20px; padding: 16px 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .banner strong { font-family: 'Fredoka', sans-serif; font-size: 26px; color: var(--yellow); }
+  .count { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 20px; }
+  .deals { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 14px; }
+  .deal { background: var(--card); border: 4px solid var(--ink); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+  .deal img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-bottom: 4px solid var(--ink); }
+  .deal .pad { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .deal h3 { font-size: 24px; }
+  .deal .real { font-weight: 700; }
+  .flash { align-self: flex-start; background: var(--red); color: #fff; font-weight: 800; border-radius: 10px; padding: 4px 8px; }
+  .menu-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pizza { background: #fff; border: 4px solid var(--ink); border-radius: 22px; overflow: hidden; }
+  .pizza img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+  .pizza .pad { padding: 12px; }
+  .pizza h3 { font-size: 18px; }
+  .badge { display: inline-block; background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; font-size: 11px; font-weight: 800; padding: 2px 7px; margin-left: 4px; }
+  .upsell, .progress, .loyalty, .loc { background: #fff; border: 4px solid var(--ink); border-radius: 22px; padding: 16px; }
+  .stack { display: grid; gap: 14px; margin-top: 14px; }
+  .bar { height: 14px; background: #f3ead9; border: 3px solid var(--ink); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .bar span { display: block; height: 100%; width: 70%; background: var(--ink); }
+  .locs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .loc h3 { font-size: 26px; margin: 6px 0; }
+  .loc p { font-weight: 600; line-height: 1.5; }
+  .hours { font-weight: 800; margin: 8px 0; }
+  footer { background: var(--ink); color: #f4efe6; margin-top: 10px; }
+  .foot { max-width: 1120px; margin: 0 auto; padding: 28px 18px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .foot img { height: 84px; }
+  .foot ul { display: flex; gap: 14px; list-style: none; flex-wrap: wrap; font-weight: 700; }
+  .fine { width: 100%; color: #d9d1c3; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--ink); color: var(--yellow); font-weight: 800; border-radius: 999px; padding: 14px 18px; min-height: 52px; border: 3px solid var(--yellow); box-shadow: 0 10px 0 rgba(23,19,16,.25); }
+  .offer-back { position: fixed; inset: 0; background: rgba(23,19,16,.55); z-index: 100; }
+  .offer-card { position: fixed; z-index: 101; top: 148px; right: 18px; width: min(340px, calc(100% - 32px)); background: #fff; color: var(--ink); border: 4px solid var(--ink); border-radius: 24px; padding: 20px; }
+  .offer-card h2 { font-size: 30px; margin: 8px 0; }
+  .offer-card label { display: block; font-weight: 800; margin: 10px 0; }
+  .offer-card input { width: 100%; margin-top: 4px; font: inherit; font-weight: 800; letter-spacing: .08em; padding: 10px 12px; border: 3px solid var(--ink); border-radius: 12px; background: var(--cream); }
+  .offer-card .row { margin-top: 8px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 900px) {
+    .desk { display: none; }
+    .mob { display: block; }
+    .hero, .deals, .menu-row, .locs { grid-template-columns: 1fr; }
+    .brand img { height: 58px; }
+  }
+  @media (max-width: 640px) {
+    .nav { flex-wrap: wrap; }
+    .offer-card { top: auto; bottom: 0; left: 0; right: 0; width: 100%; border-radius: 22px 22px 0 0; }
+    body.offer-open .float-order { bottom: auto; top: 76px; z-index: 120; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<!--
+  BRAND SWAP — wordmark lives in the logo files. To rebrand (for example to Margherita),
+  replace assets/logo-lockup-on-dark.png and assets/logo-lockup-on-light.png, their alt text, and the document title.
+
+  PLACEHOLDER HREFS — Order Online / Order Now use href="#" until the Square Online URL exists.
+  Header Uber Eats and DoorDash use href="#" until a store is chosen.
+  Location cards reuse the partner URLs already in options A–C.
+
+  SAMPLE OFFERS — every discount, bundle price, saving, code, countdown, free-delivery bar,
+  upsell, and rewards sign-up on this page is placeholder copy, not a live promotion.
+  Menu item prices (Margherita $19 and so on) are the prices already used in options A–C.
+-->
+<a class="skip" href="#menu">Skip to menu</a>
+<div class="ticker">
+  <span class="ex-tag">Example offers</span>
+  <span id="rot">Example: $5 off a first online order</span>
+</div>
+<header>
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></a>
+    <ul class="desk">
+      <li><a href="#deals">Meal deals</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#locations">Locations</a></li>
+    </ul>
+    <details class="mob">
+      <summary>Browse</summary>
+      <ul>
+        <li><a href="#deals">Meal deals</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#locations">Locations</a></li>
+      </ul>
+    </details>
+    <!-- PLACEHOLDER: Square Online -->
+    <a class="btn btn-ink" href="#">Order Now</a>
+    <!-- PLACEHOLDER -->
+    <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
+    <!-- PLACEHOLDER -->
+    <a class="partner partner-dd" href="#"><span class="d"></span>DoorDash</a>
+  </nav>
+</header>
+<main id="top">
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1>Just pizza. Order it now.</h1>
+        <p>Roman-style bases fermented for days. Light enough that you could eat two. Pickup direct. Delivery with Uber Eats and DoorDash.</p>
+        <div class="row">
+          <!-- PLACEHOLDER: Square Online -->
+          <a class="btn btn-ink" href="#">Order Now</a>
+          <!-- PLACEHOLDER -->
+          <a class="partner partner-uber" href="#"><span class="d"></span>Uber Eats</a>
+          <!-- PLACEHOLDER -->
+          <a class="partner partner-dd" href="#"><span class="d"></span>DoorDash</a>
+        </div>
+      </div>
+      <div class="shot">
+        <img src="assets/real-margherita.jpg" alt="Margherita pizza with tomato, fior di latte and basil">
+        <p class="price-tag">$19<small>Margherita</small></p>
+      </div>
+    </section>
+    <section class="banner" id="deals" aria-label="Example deal of the day">
+      <div>
+        <span class="ex-tag">Example offer</span>
+        <p style="margin-top:6px;">Deal of the day · sample only</p>
+        <strong>Example: Margherita + a sample side</strong>
+        <p>Margherita is $19 on the menu. The bundle saving below is not a real price.</p>
+      </div>
+      <div>
+        <p class="flash">Example: save $4</p>
+        <p class="count" data-count aria-live="off">Sample timer</p>
+      </div>
+    </section>
+    <div class="deals" style="margin-top:14px;">
+      <!-- SAMPLE bundle prices, not on the real menu -->
+      <article class="deal">
+        <img src="assets/real-margherita.jpg" alt="">
+        <div class="pad">
+          <span class="ex-tag">Example offer</span>
+          <h3>Example meal · Margherita</h3>
+          <p class="real">Menu price $19. Sample side and sample drink are not menu items.</p>
+          <p class="flash">Example: save $4</p>
+          <p><b>Sample bundle $22</b></p>
+          <!-- PLACEHOLDER: Square Online -->
+          <a class="btn btn-ink" href="#">Order Now</a>
+        </div>
+      </article>
+      <article class="deal">
+        <img src="assets/real-funghi.jpg" alt="Funghi pizza with field mushrooms">
+        <div class="pad">
+          <span class="ex-tag">Example offer</span>
+          <h3>Example meal · Funghi</h3>
+          <p class="real">Menu price $23.</p>
+          <p class="flash">Example: save $3</p>
+          <p><b>Sample bundle $27</b></p>
+          <a class="btn" href="#">Order Now</a>
+        </div>
+      </article>
+      <article class="deal">
+        <img src="assets/real-prosciutto.jpg" alt="Prosciutto pizza with rocket and olives">
+        <div class="pad">
+          <span class="ex-tag">Example offer</span>
+          <h3>Example meal · Prosciutto</h3>
+          <p class="real">Menu price $26.</p>
+          <p class="flash">Example: save $5</p>
+          <p><b>Sample bundle $30</b></p>
+          <a class="btn" href="#">Order Now</a>
+        </div>
+      </article>
+    </div>
+
+    <section id="menu" style="margin-top:22px;">
+      <h2 style="font-size:36px;margin-bottom:12px;">The menu</h2>
+      <div class="menu-row">
+        <article class="pizza">
+          <img src="assets/real-gamberi.jpg" alt="Gamberi pizza with prawns and roast peppers">
+          <div class="pad"><h3>Gamberi</h3><p>$26 · prawns, roast peppers, pesto, spinach</p></div>
+        </article>
+        <article class="pizza">
+          <img src="assets/real-patate.jpg" alt="Patate e rosmarino pizza with potato and rosemary">
+          <div class="pad"><h3>Patate e Rosmarino</h3><p>$21 · potato, rosemary, garlic oil</p></div>
+        </article>
+        <article class="pizza">
+          <div class="pad" style="background:#fff3c4;min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;">
+            <h3>Diavola <span class="badge">Most popular</span></h3>
+            <p>$24 · spicy salami, fior di latte, chilli honey</p>
+          </div>
+        </article>
+        <article class="pizza">
+          <div class="pad" style="background:#fff;min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;">
+            <h3>Marinara</h3>
+            <p>$16 · tomato, garlic, oregano, olive oil</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="stack">
+      <div class="upsell">
+        <span class="ex-tag">Example offer</span>
+        <h2 style="margin:8px 0;">Add a side or a drink</h2>
+        <p>Sample upsell. Sides and drinks are not on the current pizza menu, so there is no price here.</p>
+        <div class="row" style="margin-top:10px;">
+          <button class="btn" type="button">Example: add a side</button>
+          <button class="btn" type="button">Example: add a drink</button>
+        </div>
+      </div>
+      <div class="progress">
+        <span class="ex-tag">Example offer</span>
+        <h2 style="margin:8px 0;">Example: free delivery over $40</h2>
+        <p>Not a real delivery rule. Delivery stays with Uber Eats and DoorDash. This bar is a sample basket.</p>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="40" aria-valuenow="28" aria-label="Example progress, sample basket $28 of $40"><span></span></div>
+        <p style="margin-top:6px;font-weight:800;">Example basket $28 of $40</p>
+      </div>
+      <form class="loyalty" action="#" onsubmit="return false;">
+        <span class="ex-tag">Example offer</span>
+        <h2 style="margin:8px 0;">Example rewards</h2>
+        <p>Sample sign-up. It does not create an account.</p>
+        <label style="display:block;font-weight:800;margin:10px 0;">Email
+          <input type="email" placeholder="name@example.com" style="display:block;width:min(360px,100%);margin-top:4px;padding:10px;border:3px solid var(--ink);border-radius:12px;font:inherit;">
+        </label>
+        <button class="btn btn-ink" type="submit">Sample sign-up</button>
+      </form>
+    </div>
+
+    <section id="locations" style="margin-top:22px;">
+      <h2 style="font-size:36px;margin-bottom:12px;">Two homes. One dough.</h2>
+      <div class="locs">
+        <article class="loc">
+          <p>Open 7 days</p>
+          <h3>Findon Road</h3>
+          <p>336 Findon Road<br>Kidman Park SA 5025<br><a href="tel:+61870784471">(08) 7078 4471</a></p>
+          <p class="hours">Mon – Sun · 5:00pm – 9:30pm</p>
+          <div class="row">
+            <a class="btn btn-ink" href="#">Order Now</a>
+            <a class="partner partner-uber" href="https://www.ubereats.com/au/store/roccopizza-italian-sourdough-kidman-park/iCiXoQ6kTMme_amGzGugyA"><span class="d"></span>Uber Eats</a>
+            <a class="partner partner-dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-kidman-park-25677142/"><span class="d"></span>DoorDash</a>
+          </div>
+        </article>
+        <article class="loc">
+          <p>Wed – Sun · Sourdough lab</p>
+          <h3>Grange Road</h3>
+          <p>466 Grange Road<br>Fulham Gardens SA 5024<br><a href="tel:+61870784471">(08) 7078 4471</a></p>
+          <p class="hours">Wed – Sun · 5:00pm – 9:00pm</p>
+          <div class="row">
+            <a class="btn btn-ink" href="#">Order Now</a>
+            <a class="partner partner-uber" href="https://www.ubereats.com/store/roccopizza-italian-sourdough-fulham-gardens/QdXmLrvQQfaoB4M1PCap8Q"><span class="d"></span>Uber Eats</a>
+            <a class="partner partner-dd" href="https://www.doordash.com/en-AU/store/rocco%27s---italian-sourdough-pizza-fulham-gardens-25678181/"><span class="d"></span>DoorDash</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="foot">
+    <img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza">
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#">Gift Cards</a></li>
+    </ul>
+    <p class="fine"><span>© 2026 · Adelaide, South Australia</span><span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span></p>
+  </div>
+</footer>
+<!-- PLACEHOLDER: Square Online -->
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <p class="ex-tag">Example offer</p>
+  <h2 id="offer-title">Example: $5 off your first online order</h2>
+  <p>Sample welcome offer. Not a live code.</p>
+  <label>Sample code <input readonly value="EXAMPLE5" aria-label="Sample code EXAMPLE5"></label>
+  <div class="row">
+    <a class="btn btn-ink" href="#">Order Now</a>
+    <button class="btn" type="button" data-close>Close</button>
+  </div>
+</div>
+<script>
+/* SAMPLE timer and rotating lines. Not a real campaign end time. */
+(function () {
+  var lines = [
+    'Example: $5 off a first online order',
+    'Example: meal bundles are sample prices',
+    'Pickup direct · Uber Eats & DoorDash'
+  ];
+  var i = 0, rot = document.getElementById('rot');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 3500);
+  var end = Date.now() + 2 * 60 * 60 * 1000;
+  var el = document.querySelector('[data-count]');
+  function tick() {
+    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
+    var h = String(Math.floor(s / 3600)).padStart(2, '0');
+    var m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+    var sec = String(s % 60).padStart(2, '0');
+    el.textContent = 'Example ends in ' + h + ':' + m + ':' + sec;
+  }
+  tick(); if (!reduce) setInterval(tick, 1000);
+})();
+/* First-visit modal after a short delay. Dismiss remembers for this tab. */
+(function () {
+  var KEY = 'example-offer-h';
+  var root = document.getElementById('offer');
+  var back = document.getElementById('offer-back');
+  var last = null;
+  function nodes() { return Array.prototype.slice.call(root.querySelectorAll('a,button,input')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement;
+    root.hidden = false; back.hidden = false;
+    document.body.classList.add('offer-open');
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true;
+    document.body.classList.remove('offer-open');
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    var a = list[0], z = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  setTimeout(function () { open(false); }, 2800);
+})();
+</script>
+</body>
+</html>

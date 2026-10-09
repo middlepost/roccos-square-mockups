@@ -138,12 +138,29 @@
     .brand img { height: 60px; }
     .hero, .story-inner, .cards, .rest, .loc-grid { grid-template-columns: 1fr; }
     .stamp { width: 76px; right: 8px; bottom: -16px; }
-    .hero { padding-top: 36px; }
+    .hero { padding-top: 16px; padding-bottom: 12px; }
+    .hero h1 { font-size: 34px; }
+    .hero .lead { font-size: 16px; margin-bottom: 12px; }
   }
   @media (max-width: 640px) {
     .nav { flex-wrap: wrap; padding: 10px 16px; }
     .actions { width: 100%; }
     .hero, .locs, .story-inner { padding-left: 16px; padding-right: 16px; }
+  }
+  header { z-index: 110; }
+  body { padding-bottom: 76px; }
+  .announce { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .ex-tag { display: inline-flex; background: var(--yellow); color: var(--ink); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 8px; }
+  .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--ink); color: var(--yellow); font-weight: 800; border-radius: 999px; padding: 14px 16px; }
+  @media (max-width: 800px) { body.offer-open .float-order { top: 12px; bottom: auto; z-index: 120; } }
+  .offer-back { position: fixed; inset: 0; background: rgba(20,17,13,.55); z-index: 100; }
+  .offer-card { position: fixed; z-index: 101; left: 0; right: 0; bottom: 0; background: var(--char); color: var(--bone); padding: 16px 16px 20px; border-radius: 18px 18px 0 0; }
+  .offer-card h2 { font-size: 22px; margin: 4px 0; color: #fff; }
+  @media (max-width: 800px) { .offer-card { padding: 12px 14px 14px; } }
+  .offer-card input { width: 100%; margin-top: 6px; font: inherit; padding: 10px; border: 0; }
+  [hidden] { display: none !important; }
+  @media (min-width: 801px) {
+    .offer-card { left: 50%; right: auto; bottom: auto; top: 18%; transform: translateX(-50%); width: min(420px, calc(100% - 32px)); border-radius: 16px; }
   }
 </style>
 </head>
@@ -165,7 +182,7 @@
   placeholders, as in those mockups.
 -->
 <a class="skip" href="#menu">Skip to menu</a>
-<div class="announce">Order pickup direct · Delivery with <b>Uber Eats</b> &amp; <b>DoorDash</b></div>
+<div class="announce"><span class="ex-tag">Example offers</span> <span id="rot">Tagged example offers only · Pickup direct · Uber Eats &amp; DoorDash</span></div>
 
 <header>
   <nav class="nav" aria-label="Primary">
@@ -284,6 +301,7 @@
           <p>Hot salami, 'nduja, stracciatella, basil</p>
         </article>
       </div>
+      <p style="margin-top:18px;"><span class="ex-tag">Example offer</span> <span style="margin-left:8px;">Example: add a side or a drink — no price, those items are not on the menu. Example basket toward a sample $40 delivery bar: $19 of $40.</span></p>
       <div class="cta on-dark">
         <!-- PLACEHOLDER: Square Online ordering URL -->
         <a class="btn btn-yellow btn-sq" href="#">Order Online</a>
@@ -381,5 +399,52 @@
     </div>
   </div>
 </footer>
+<a class="float-order" href="#">Order Now</a>
+<div class="offer-back" id="offer-back" hidden></div>
+<div class="offer-card" id="offer" role="dialog" aria-modal="true" aria-labelledby="offer-title" hidden>
+  <!-- SAMPLE sheet. On a phone it sits at the bottom; on a wide screen it is a card. -->
+  <span class="ex-tag">Example offer</span>
+  <h2 id="offer-title">Example: $5 off your first online order</h2>
+  <p>Sample code only.</p>
+  <label>Sample code <input readonly value="BAND5" aria-label="Sample code BAND5"></label>
+  <div class="row" style="margin-top:12px;">
+    <a class="btn btn-yellow" href="#">Order Now</a>
+    <button class="btn btn-line" type="button" data-close>Close</button>
+  </div>
+</div>
+<script>
+(function () {
+  var lines = ['Tagged example offers only · menu prices are the real list', 'Example: $5 off is a sample code', 'Pickup direct · Uber Eats & DoorDash'];
+  var i = 0, rot = document.getElementById('rot');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { i = (i + 1) % lines.length; rot.textContent = lines[i]; }, 4000);
+  var KEY = 'example-offer-e', root = document.getElementById('offer'), back = document.getElementById('offer-back'), last = null;
+  function nodes() { return [].slice.call(root.querySelectorAll('a,button,input')); }
+  function open(force) {
+    if (!force && window.top !== window.self) return;
+    try { if (!force && sessionStorage.getItem(KEY)) return; } catch (e) {}
+    if (!root.hidden) return;
+    last = document.activeElement; root.hidden = false; back.hidden = false; document.body.classList.add('offer-open');
+    var n = nodes(); if (n[0]) n[0].focus();
+  }
+  function close() {
+    if (root.hidden) return;
+    root.hidden = true; back.hidden = true; document.body.classList.remove('offer-open');
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    if (last && last.focus) last.focus();
+  }
+  root.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', close); });
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (root.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key !== 'Tab') return;
+    var list = nodes(); if (!list.length) return;
+    if (e.shiftKey && document.activeElement === list[0]) { e.preventDefault(); list[list.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === list[list.length - 1]) { e.preventDefault(); list[0].focus(); }
+  });
+  window.showExampleOffer = function () { open(true); };
+  setTimeout(function () { if (innerWidth < 801) open(false); }, 2400);
+})();
+</script>
 </body>
 </html>
