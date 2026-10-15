@@ -68,13 +68,21 @@
   .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--acc); color: var(--onacc); font-weight: 800; border-radius: 999px; padding: 14px 20px; box-shadow: 0 10px 24px rgba(0,0,0,.3); }
   .ro-save { color: var(--hl); font-weight: 800; } .ro-sr { position: absolute; left: -9999px; }
   @media (max-width: 900px) { .desk { display: none; } .hero, .two, .deals, .menu, .about, .locs { grid-template-columns: 1fr; } }
+  /* Real Margherita logo (on white) sits on white cards so it stays legible */
+  header { background: #fff; }
+  .mlogo { height: 60px; width: auto; }
+  .logo-card { background: #fff; border-radius: 16px; padding: 10px 16px; display: inline-flex; box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+  .hero-card { margin-bottom: 18px; } .hero-card .mlogo { height: 96px; }
+  .ticker { background: #d7261e; color: #fff; font-weight: 800; letter-spacing: .02em; }
+  .ticker::before { content: "🎉"; margin-right: 8px; font-size: 16px; }
+  .ticker::after { content: "🎉"; margin-left: 8px; font-size: 16px; display: inline-block; transform: scaleX(-1); }
 </style>
 </head>
 <body>
 <div class="ticker" data-ro-ticker="today twoFor family">Slow-fermented sourdough · Findon Rd open 7 days · Grange Rd Wed – Sun</div>
 <header>
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#top"><span class="word">Margherita<small>by Rocco's · Italian sourdough</small></span></a>
+    <a class="brand" href="#top"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></a>
     <ul class="desk">
       <li><a href="#menu">Menu</a></li>
       <li><a href="#book">Book a table</a></li>
@@ -88,7 +96,7 @@
 <main class="wrap" id="top">
   <section class="panel hero">
     <div>
-      <img class="hero-logo" src="assets/pizza-icon.png" alt=""><span class="word light">Margherita<small>by Rocco's</small></span>
+      <div class="logo-card hero-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></div>
       <h1>Just pizza. <em>Kept simple.</em></h1>
       <div class="badges"><span class="badge">Roman-style</span><span class="badge">Sourdough, fermented for days</span><span class="badge">Most popular · Diavola</span></div>
       <p>Roman-style bases fermented for days. So light, you could eat two. Pickup direct. Delivery with Uber Eats and DoorDash.</p>
@@ -121,7 +129,7 @@
   <section class="panel about" id="about">
     <img src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases">
     <div>
-      <p class="kick">About Rocco's</p><h2>No shortcuts.</h2>
+      <p class="kick">Pizza to the People</p><h2>No shortcuts.</h2>
       <blockquote>For over 25 years, Rocco has trained in Italy and with Italian Masters to learn the art of pizza. At Rocco’s that now means slow-fermented dough, big Italian ovens, Mutti Italian tomatoes, imported mozzarella, sauces made from scratch and fresh Italian sausage (made in-house). No shortcuts - No unnecessary extras.</blockquote>
       <cite>— Rocco DeAngelis</cite>
       <div class="row" style="margin-top:14px;"><a class="btn btn-ghost" href="https://www.roccopizza.com.au/copy-of-book-a-table">Read our story</a></div>
@@ -172,7 +180,7 @@
 </main>
 <footer>
   <div class="foot">
-    <div class="flogo"><img src="assets/pizza-icon.png" alt=""><span class="word light">Margherita<small>by Rocco's</small></span></div>
+    <div class="logo-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></div>
     <ul><li><a href="#menu">Menu</a></li><li><a href="#book">Book a table</a></li><li><a href="#locations">Locations</a></li><li><a href="#careers">Careers</a></li><li><a href="https://squareup.com/gift/CM10V20G1HD5Z/order">Gift cards</a></li></ul>
     <p class="fine"><span>© 2026 · Adelaide, South Australia</span><span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span></p>
   </div>
