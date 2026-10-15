@@ -78,16 +78,17 @@
   body { background: #0f0c0a; }
   .panel { background: #1f1a15; box-shadow: 0 14px 30px rgba(0,0,0,.5); }
   footer { background: #1f1a15; }
-  .ycard { background: var(--acc); border-radius: 16px; padding: 6px 14px; display: inline-flex; }
-  .ycard img { height: 72px !important; }
-  .hero .ycard { margin-bottom: 18px; } .hero .ycard img { height: 104px !important; }
+  /* O2 logo: white wordmark with yellow pizza "O" (logo-dark-text.png) directly on black */
+  .brand img { height: 56px !important; width: auto; }
+  .hero img[src$="logo-dark-text.png"] { height: 120px; width: auto; margin-bottom: 20px; }
+  .foot img { height: 72px !important; width: auto; }
 </style>
 </head>
 <body>
 <div class="ticker" data-ro-ticker="today twoFor family">Slow-fermented sourdough · Findon Rd open 7 days · Grange Rd Wed – Sun</div>
 <header>
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#top"><span class="ycard"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza" style="height:68px"></span></a>
+    <a class="brand" href="#top"><img src="assets/logo-dark-text.png" alt="Rocco's Italian Sourdough Pizza" style="height:68px"></a>
     <ul class="desk">
       <li><a href="#menu">Menu</a></li>
       <li><a href="#book">Book a table</a></li>
@@ -101,7 +102,7 @@
 <main class="wrap" id="top">
   <section class="panel hero">
     <div>
-      <span class="ycard"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza"></span>
+      <img src="assets/logo-dark-text.png" alt="Rocco's Italian Sourdough Pizza">
       <h1>Just pizza. <em>Kept simple.</em></h1>
       <div class="badges"><span class="badge">Roman-style</span><span class="badge">Sourdough, fermented for days</span><span class="badge">Most popular · Diavola</span></div>
       <p>Roman-style bases fermented for days. So light, you could eat two. Pickup direct. Delivery with Uber Eats and DoorDash.</p>
@@ -185,7 +186,7 @@
 </main>
 <footer>
   <div class="foot">
-    <span class="ycard"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza" style="height:84px"></span>
+    <img src="assets/logo-dark-text.png" alt="Rocco's Italian Sourdough Pizza" style="height:84px">
     <ul><li><a href="#menu">Menu</a></li><li><a href="#book">Book a table</a></li><li><a href="#locations">Locations</a></li><li><a href="#careers">Careers</a></li><li><a href="https://squareup.com/gift/CM10V20G1HD5Z/order">Gift cards</a></li></ul>
     <p class="fine"><span>© 2026 · Adelaide, South Australia</span><span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span></p>
   </div>
