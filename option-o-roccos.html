@@ -68,13 +68,17 @@
   .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--acc); color: var(--onacc); font-weight: 800; border-radius: 999px; padding: 14px 20px; box-shadow: 0 10px 24px rgba(0,0,0,.3); }
   .ro-save { color: var(--hl); font-weight: 800; } .ro-sr { position: absolute; left: -9999px; }
   @media (max-width: 900px) { .desk { display: none; } .hero, .two, .deals, .menu, .about, .locs { grid-template-columns: 1fr; } }
+  /* Option O: header + ticker use the footer treatment so the logo pops */
+  .ticker { background: var(--acc); color: var(--ink); }
+  header { background: var(--ink); color: var(--txt); box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+  .hero-logo { height: 110px; }
 </style>
 </head>
 <body>
 <div class="ticker" data-ro-ticker="today twoFor family">Slow-fermented sourdough · Findon Rd open 7 days · Grange Rd Wed – Sun</div>
 <header>
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#top"><img src="assets/logo-lockup-on-light.png" alt="Rocco's Italian Sourdough Pizza" style="height:64px"></a>
+    <a class="brand" href="#top"><img src="assets/logo-lockup-on-dark.png" alt="Rocco's Italian Sourdough Pizza" style="height:68px"></a>
     <ul class="desk">
       <li><a href="#menu">Menu</a></li>
       <li><a href="#book">Book a table</a></li>
