@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@500;600;700;800&family=Fredoka:wght@600;700&family=Fraunces:ital,opsz,wght@1,9..144,560&display=swap" rel="stylesheet">
 <style>
   /* Based on Option H. No outlines anywhere; every block uses the footer treatment (dark panel, light text). Hero layout from Option M. */
-  :root { --bg: #f7efe0; --ink: #1e2a1c; --acc: #c8321f; --acc2: #2f7d3a; --txt: #fff8ec; --hl: #c8321f; --onacc: #fff; --muted: #cfc6b6; }
+  :root { --bg: #ffca09; --ink: #171310; --acc: #ffca09; --acc2: #9d1208; --txt: #f4efe6; --hl: #ffca09; --onacc: #171310; --muted: #cfc6b6; }
   * { margin: 0; padding: 0; box-sizing: border-box; border: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--ink); padding-bottom: 88px; }
@@ -68,21 +68,24 @@
   .float-order { position: fixed; z-index: 110; right: 16px; bottom: 16px; background: var(--acc); color: var(--onacc); font-weight: 800; border-radius: 999px; padding: 14px 20px; box-shadow: 0 10px 24px rgba(0,0,0,.3); }
   .ro-save { color: var(--hl); font-weight: 800; } .ro-sr { position: absolute; left: -9999px; }
   @media (max-width: 900px) { .desk { display: none; } .hero, .two, .deals, .menu, .about, .locs { grid-template-columns: 1fr; } }
-  /* Real Margherita logo (on white) sits on white cards so it stays legible */
-  header { background: #fff; }
-  .mlogo { height: 60px; width: auto; }
-  .logo-card { background: #fff; border-radius: 16px; padding: 10px 16px; display: inline-flex; box-shadow: 0 8px 20px rgba(0,0,0,.25); }
-  .hero-card { margin-bottom: 18px; } .hero-card .mlogo { height: 96px; }
+  /* Option O: header + ticker use the footer treatment so the logo pops */
   .ticker { background: #d7261e; color: #fff; font-weight: 800; letter-spacing: .02em; }
   .ticker::before { content: "🎉"; margin-right: 8px; font-size: 16px; }
   .ticker::after { content: "🎉"; margin-left: 8px; font-size: 16px; display: inline-block; transform: scaleX(-1); }
+  header { background: var(--ink); color: var(--txt); box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+  .hero-logo { height: 110px; }
+  /* Margherita: same structure as O, Margherita palette + real logo on white cards */
+  :root { --bg: #f7efe0; --ink: #1e2a1c; --acc: #c8321f; --acc2: #2f7d3a; --txt: #fff8ec; --hl: #e2493a; --onacc: #fff; }
+  .logo-card { background: #fff; border-radius: 14px; padding: 8px 14px; display: inline-flex; box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+  .mlogo { height: 78px; width: auto; }
+  .hero-card { margin-bottom: 18px; } .hero-card .mlogo { height: 110px; }
 </style>
 </head>
 <body>
 <div class="ticker" data-ro-ticker="today twoFor family">Slow-fermented sourdough · Findon Rd open 7 days · Grange Rd Wed – Sun</div>
 <header>
   <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#top"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></a>
+    <a class="brand" href="#top"><span class="logo-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></span></a>
     <ul class="desk">
       <li><a href="#menu">Menu</a></li>
       <li><a href="#book">Book a table</a></li>
@@ -96,13 +99,13 @@
 <main class="wrap" id="top">
   <section class="panel hero">
     <div>
-      <div class="logo-card hero-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></div>
+      <span class="logo-card hero-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></span>
       <h1>Just pizza. <em>Kept simple.</em></h1>
       <div class="badges"><span class="badge">Roman-style</span><span class="badge">Sourdough, fermented for days</span><span class="badge">Most popular · Diavola</span></div>
       <p>Roman-style bases fermented for days. So light, you could eat two. Pickup direct. Delivery with Uber Eats and DoorDash.</p>
       <div class="row"><a class="btn" href="#order">Order Now</a><a class="btn btn-ghost" href="#book">Book a table</a></div>
     </div>
-    <img class="photo" src="assets/real-margherita.jpg" alt="Margherita pizza with tomato, fior di latte and basil">
+    <img class="photo" src="assets/real-rocco-dough.jpg" alt="Rocco shaping sourdough bases">
   </section>
 
   <section class="panel" id="deals">
@@ -180,7 +183,7 @@
 </main>
 <footer>
   <div class="foot">
-    <div class="logo-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></div>
+    <span class="logo-card"><img class="mlogo" src="assets/margherita-logo.jpg" alt="Margherita — Pizza to the People"></span>
     <ul><li><a href="#menu">Menu</a></li><li><a href="#book">Book a table</a></li><li><a href="#locations">Locations</a></li><li><a href="#careers">Careers</a></li><li><a href="https://squareup.com/gift/CM10V20G1HD5Z/order">Gift cards</a></li></ul>
     <p class="fine"><span>© 2026 · Adelaide, South Australia</span><span>Built on Square Online · Pickup direct · Delivery by Uber Eats &amp; DoorDash</span></p>
   </div>
