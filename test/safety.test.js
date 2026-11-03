@@ -21,9 +21,17 @@ test('sandbox is the default and production is refused', () => {
   assert.equal(sandbox.applicationId, 'sandbox-sq0idb-rqkEoTTcR7FYJQCQiDjBYw');
   assert.equal(sandbox.locationId, 'LFXEWDVVKRYC0');
   assert.equal(sandbox.paymentsReady, false);
+  assert.equal(resolveSquareConfig({ SQUARE_ENVIRONMENT: 'sandbox' }).environment, 'sandbox');
+  assert.equal(resolveSquareConfig({ SQUARE_ENVIRONMENT: 'sandbox' }).apiBase, SANDBOX_API);
 
   assert.throws(() => resolveSquareConfig({
     SQUARE_ENV: 'production',
+    SQUARE_APPLICATION_ID: 'sq0idp-live',
+    SQUARE_ACCESS_TOKEN: 'EAAAsecret-token-value',
+  }), /production/i);
+
+  assert.throws(() => resolveSquareConfig({
+    SQUARE_ENVIRONMENT: 'production',
     SQUARE_APPLICATION_ID: 'sq0idp-live',
     SQUARE_ACCESS_TOKEN: 'EAAAsecret-token-value',
   }), /production/i);

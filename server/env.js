@@ -27,7 +27,7 @@ export function loadDotEnv(file = path.resolve('.env')) {
 }
 
 export function resolveSquareConfig(env = process.env) {
-  const environment = String(env.SQUARE_ENV || 'sandbox').trim().toLowerCase();
+  const environment = String(env.SQUARE_ENVIRONMENT || env.SQUARE_ENV || 'sandbox').trim().toLowerCase();
   const allowProduction = env.SQUARE_ALLOW_PRODUCTION === 'yes';
   const applicationId = String(env.SQUARE_APPLICATION_ID || SANDBOX_APP_ID).trim();
   const locationId = String(env.SQUARE_LOCATION_ID || SANDBOX_LOCATION_ID).trim();
@@ -35,11 +35,11 @@ export function resolveSquareConfig(env = process.env) {
   const currency = String(env.SQUARE_CURRENCY || 'AUD').trim() || 'AUD';
 
   if (environment !== 'sandbox' && environment !== 'production') {
-    throw new Error(`SQUARE_ENV must be "sandbox" or "production" (got "${environment}").`);
+    throw new Error(`SQUARE_ENVIRONMENT or SQUARE_ENV must be "sandbox" or "production" (got "${environment}").`);
   }
   if (environment === 'production' && !allowProduction) {
     throw new Error(
-      'Refusing to use a production Square account. Keep SQUARE_ENV=sandbox. Production is only used when SQUARE_ENV=production and SQUARE_ALLOW_PRODUCTION=yes.',
+      'Refusing to use a production Square account. Keep SQUARE_ENVIRONMENT=sandbox. Production is only used when that value is production and SQUARE_ALLOW_PRODUCTION=yes.',
     );
   }
   if (environment === 'sandbox' && !applicationId.startsWith('sandbox-')) {
