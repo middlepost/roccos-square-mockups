@@ -70,7 +70,7 @@ test('the page keeps the v3 wording and the 1 Nov names', () => {
   assert.match(html, /Nutella Bomb/);
   assert.match(html, /Sopressa Salame/);
   assert.doesNotMatch(html, /President|Hot Salame|Big Nutella|Cheesy Garlic Mozzarella/);
-  assert.match(html, /roccos-approved-wordmark\.png/);
+  assert.match(html, /roccos-face-logo\.png/);
   assert.match(css, /object-fit:\s*contain/);
   assert.match(css, /\.item\.photo-card \.photo\{[^}]*background:\s*#fff/);
 });
