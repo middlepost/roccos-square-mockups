@@ -1,0 +1,84 @@
+{
+  "id": "roccos",
+  "name": "Rocco's",
+  "tagline": "Italian Sourdough Pizza",
+  "skuPrefix": "ROCCO-",
+  "menuFile": "data/menu.roccos.json",
+  "enquiryEmail": "placeholder@example.com",
+  "phone": "7078 4471",
+  "phoneTel": "0870784471",
+  "logoImage": "/images/brand/roccos-face-logo.png?v=2",
+  "instagram": "",
+  "videoUrl": "",
+  "prepMinutes": 20,
+  "currency": "AUD",
+  "colors": {
+    "black": "#0a0a0a",
+    "black2": "#161616",
+    "line": "#2c2c2c",
+    "yellow": "#ffcb0b",
+    "white": "#fff",
+    "off": "#f6f4ee",
+    "grey": "#a9a9a9",
+    "ink": "#111"
+  },
+  "hero": {
+    "eyebrow": "Woodfired · Sourdough · Adelaide",
+    "title": "Pizza that loves you back.",
+    "titleEmphasis": "loves you back.",
+    "lead": "Slow-risen sourdough, fresh toppings and a Mediterranean-diet state of mind. Takeaway, minus the fast-food reputation."
+  },
+  "story": {
+    "heading": "Takeaway pizza deserves better.",
+    "paragraphs": [
+      "Rocco started the pizzeria with a simple conviction: takeaway pizza has copped an unfair fast-food reputation, and it doesn't have to be that way.",
+      "So the pizzas here follow the principles of the Mediterranean diet: a sourdough base, lots of vegetables, good olive oil and honest toppings."
+    ],
+    "quote": "Slow-fermented dough, imported tomatoes, fresh basil. No shortcuts. No unnecessary extras.",
+    "quoteEmphasis": "No shortcuts. No unnecessary extras.",
+    "cite": "Rocco’s promise"
+  },
+  "hours": {
+    "findon": null,
+    "grange": null
+  },
+  "categories": {
+    "pizza": "Pizzas",
+    "dessert": "Dessert",
+    "drinks": "Drinks"
+  },
+  "locations": [
+    {
+      "key": "findon",
+      "name": "Findon Rd",
+      "address": "336 Findon Rd",
+      "mapQuery": "Rocco's Pizza 336 Findon Rd Adelaide SA",
+      "squareLocationId": "LFXEWDVVKRYC0"
+    },
+    {
+      "key": "grange",
+      "name": "Grange Rd",
+      "address": "466 Grange Rd",
+      "mapQuery": "Rocco's Pizza 466 Grange Rd Adelaide SA",
+      "squareLocationId": "LFXEWDVVKRYC0"
+    }
+  ],
+  "deal": {
+    "id": "hungry-italian",
+    "name": "The Hungry Italian",
+    "priceCents": 5000,
+    "required": 3,
+    "blurb": "Choose 3 from the list. A few pizzas cost a little extra.",
+    "choices": [
+      { "sku": "ROCCO-02", "upgradeCents": 0 },
+      { "sku": "ROCCO-03", "upgradeCents": 0 },
+      { "sku": "ROCCO-06", "upgradeCents": 0 },
+      { "sku": "ROCCO-08", "upgradeCents": 0 },
+      { "sku": "ROCCO-15", "upgradeCents": 0 },
+      { "sku": "ROCCO-04", "upgradeCents": 100 },
+      { "sku": "ROCCO-05", "upgradeCents": 200 },
+      { "sku": "ROCCO-09", "upgradeCents": 200 },
+      { "sku": "ROCCO-07", "upgradeCents": 200 }
+    ]
+  }
+}

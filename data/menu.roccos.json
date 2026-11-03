@@ -1,0 +1,316 @@
+{
+  "currency": "AUD",
+  "updated": "2026-11-01",
+  "note": "Approved 1 Nov collection. Descriptions marked To confirm are placeholders from the brief, not final kitchen wording.",
+  "items": [
+    {
+      "sku": "ROCCO-01",
+      "number": 1,
+      "name": "Number 1 Son",
+      "priceCents": 2800,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": true,
+      "toConfirm": false,
+      "description": "Large garlic prawns (12), baby spinach, fior di latte mozzarella, basil pesto (contains nuts, light).",
+      "image": "01_Roccos_Number_1_Son.jpg",
+      "modifiers": [
+        { "key": "sausage", "name": "Italian sausage", "priceCents": 300 }
+      ]
+    },
+    {
+      "sku": "ROCCO-02",
+      "number": 2,
+      "name": "Margherita",
+      "priceCents": 2000,
+      "category": "pizza",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Mutti Italian sauce, fior di latte mozzarella, fresh basil, herbs.",
+      "image": "02_Roccos_Margherita.jpg",
+      "modifiers": [
+        { "key": "prosciutto", "name": "Prosciutto", "priceCents": 600 }
+      ]
+    },
+    {
+      "sku": "ROCCO-03",
+      "number": 3,
+      "name": "Cheesy Garlic",
+      "priceCents": 2000,
+      "category": "pizza",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "House-made garlic sauce, fior di latte mozzarella, baby spinach.",
+      "image": "03_Roccos_Cheesy_Garlic.jpg",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-04",
+      "number": 4,
+      "name": "Vegetariana",
+      "priceCents": 2200,
+      "category": "pizza",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Roasted red capsicum, baby spinach, garlic mushrooms, kalamata olives, Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "04_Roccos_Vegetariana.jpg",
+      "modifiers": [
+        { "key": "chicken", "name": "Chicken", "priceCents": 400 }
+      ]
+    },
+    {
+      "sku": "ROCCO-05",
+      "number": 5,
+      "name": "Smoked Ham & Mushroom",
+      "priceCents": 2200,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Smoked leg ham, garlic mushrooms, Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "05_Roccos_Smoked_Ham_and_Mushroom.jpg",
+      "modifiers": [
+        { "key": "pineapple", "name": "Pineapple", "priceCents": 100 }
+      ]
+    },
+    {
+      "sku": "ROCCO-06",
+      "number": 6,
+      "name": "Funghi Mushroom",
+      "priceCents": 2200,
+      "category": "pizza",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Garlic parsley mushrooms, baby spinach, fior di latte mozzarella, house-made garlic sauce.",
+      "image": "06_Roccos_Funghi_Mushroom.jpg",
+      "modifiers": [
+        { "key": "sausage", "name": "Italian sausage", "priceCents": 300 }
+      ]
+    },
+    {
+      "sku": "ROCCO-07",
+      "number": 7,
+      "name": "Sopressa Salame",
+      "priceCents": 2200,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": false,
+      "toConfirm": true,
+      "description": "To confirm — sopressa salame, chilli salsa, Mutti Italian sauce, fior di latte mozzarella. Assumed from the previous Hot Salame description.",
+      "image": "07_Roccos_Sopressa_Salame.jpg",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-08",
+      "number": 8,
+      "name": "Patata e Cipolla",
+      "priceCents": 2200,
+      "category": "pizza",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Roasted garlic herb potato slices, caramelised onion, fior di latte mozzarella, baby spinach.",
+      "image": "08_Roccos_Patata_e_Cipolla.jpg",
+      "modifiers": [
+        { "key": "sausage", "name": "Italian sausage", "priceCents": 300 }
+      ]
+    },
+    {
+      "sku": "ROCCO-09",
+      "number": 9,
+      "name": "Salsiccia – Italian Sausage",
+      "priceCents": 2200,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Roasted Italian sausage, Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "09_Roccos_Salsiccia_Italian_Sausage.jpg",
+      "modifiers": [
+        { "key": "chilli-salsa", "name": "Chilli salsa", "priceCents": 100 }
+      ]
+    },
+    {
+      "sku": "ROCCO-10",
+      "number": 10,
+      "name": "Middle Child – Honey Salame",
+      "priceCents": 2400,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": true,
+      "toConfirm": false,
+      "description": "Sopressa salame, house-made hot honey (mild), kalamata olives, basil pesto (contains nuts), Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "10_Roccos_Middle_Child.jpg",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-11",
+      "number": 11,
+      "name": "Super Salame",
+      "priceCents": 2400,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Traditional sopressa salame, garlic mushrooms, kalamata olives, roasted red capsicum, Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "11_Roccos_Super_Salame.jpg",
+      "modifiers": [
+        { "key": "anchovy", "name": "Anchovy", "priceCents": 200 }
+      ]
+    },
+    {
+      "sku": "ROCCO-12",
+      "number": 12,
+      "name": "Honey Pesto Chicken",
+      "priceCents": 2600,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": true,
+      "toConfirm": true,
+      "description": "To confirm — roast chicken, baby spinach, Mutti Italian sauce, fior di latte mozzarella, hot honey and basil pesto (contains nuts). Wording not confirmed; the name suggests hot honey and basil pesto added to the previous President's Pollo.",
+      "image": "12_Roccos_Honey_Pesto_Chicken.jpg",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-13",
+      "number": 13,
+      "name": "Prosciutto e Burrata",
+      "priceCents": 2800,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Cured prosciutto, smashed burrata mozzarella, shaved parmesan, baby leaves, Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "13_Roccos_Prosciutto_e_Burrata.jpg",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-14",
+      "number": 14,
+      "name": "Carnivores Love Meat",
+      "priceCents": 2800,
+      "category": "pizza",
+      "vegetarian": false,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Roasted leg ham, Italian sausage, sopressa salame, Mutti Italian sauce, fior di latte mozzarella.",
+      "image": "14_Roccos_Carnivores_Love_Meat.jpg",
+      "modifiers": [
+        { "key": "hot-honey", "name": "Hot honey", "priceCents": 100 }
+      ]
+    },
+    {
+      "sku": "ROCCO-15",
+      "number": 15,
+      "name": "Nutella Bomb",
+      "priceCents": 1800,
+      "category": "dessert",
+      "vegetarian": false,
+      "containsNuts": true,
+      "toConfirm": false,
+      "description": "Half-circle calzone stuffed with Nutella cream, powdered sugar.",
+      "image": "15_Roccos_Nutella_Bomb.jpg",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR01",
+      "number": 101,
+      "name": "Peroni",
+      "priceCents": 890,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Italian beer.",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR02",
+      "number": 102,
+      "name": "Hahn Super Dry",
+      "priceCents": 1090,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR03",
+      "number": 103,
+      "name": "Stone & Wood",
+      "priceCents": 1090,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR04",
+      "number": 104,
+      "name": "Large glass of wine, Shiraz or Pinot Grigio",
+      "priceCents": 1090,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "Shiraz or Pinot Grigio.",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR05",
+      "number": 105,
+      "name": "J Squire Ginger Beer",
+      "priceCents": 1090,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR06",
+      "number": 106,
+      "name": "Still mineral water",
+      "priceCents": 290,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR07",
+      "number": 107,
+      "name": "Soft drink cans",
+      "priceCents": 390,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "",
+      "modifiers": []
+    },
+    {
+      "sku": "ROCCO-DR08",
+      "number": 108,
+      "name": "San Pellegrino or juice",
+      "priceCents": 490,
+      "category": "drinks",
+      "vegetarian": true,
+      "containsNuts": false,
+      "toConfirm": false,
+      "description": "",
+      "modifiers": []
+    }
+  ]
+}

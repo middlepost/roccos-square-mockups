@@ -1,0 +1,18 @@
+# The site (public/, config/, server/) is the repo root, so this service has no rootDir.
+services:
+  - type: web
+    name: roccos-pizza
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SQUARE_ENVIRONMENT
+        value: sandbox
+      - key: SQUARE_APPLICATION_ID
+        value: sandbox-sq0idb-rqkEoTTcR7FYJQCQiDjBYw
+      - key: SQUARE_LOCATION_ID
+        value: LFXEWDVVKRYC0
+      - key: SQUARE_ACCESS_TOKEN
+        sync: false

@@ -1,0 +1,14 @@
+{
+  "name": "roccos-pizza",
+  "private": true,
+  "type": "module",
+  "description": "Rocco's Pizza pickup site with Square sandbox ordering.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node scripts/seed-square.js",
+    "test": "node --test test/*.js"
+  }
+}
