@@ -1,0 +1,50 @@
+{
+  "id": "margherita",
+  "name": "Margherita",
+  "tagline": "Good · Simple · Italian",
+  "status": "stub",
+  "skuPrefix": "MARG-",
+  "menuFile": "data/menu.margherita.json",
+  "enquiryEmail": "placeholder@example.com",
+  "phone": "7078 4471",
+  "phoneTel": "0870784471",
+  "logoText": "Margherita",
+  "instagram": "",
+  "videoUrl": "",
+  "prepMinutes": 20,
+  "currency": "AUD",
+  "colors": {
+    "black": "#1c1412",
+    "black2": "#2a1d19",
+    "line": "#3d2c26",
+    "yellow": "#c8102e",
+    "white": "#fffdf8",
+    "off": "#f6efe6",
+    "grey": "#b3a49c",
+    "ink": "#1c1412"
+  },
+  "hero": {
+    "eyebrow": "Good · Simple · Italian",
+    "title": "Pizza, simply done.",
+    "titleEmphasis": "simply done.",
+    "lead": "Sister-brand theme for Margherita. The menu is not loaded yet — say what should be on it and this site will serve it the same way as Rocco's."
+  },
+  "story": {
+    "heading": "Good. Simple. Italian.",
+    "paragraphs": [
+      "This is a placeholder story so the shared site can wear Margherita's colours.",
+      "Locations, menu, and photos still need to be filled in from the Margherita menu."
+    ],
+    "quote": "Same ordering system. Different shop.",
+    "quoteEmphasis": "Different shop.",
+    "cite": "Margherita"
+  },
+  "hours": {},
+  "categories": {
+    "pizza": "Pizzas",
+    "dessert": "Dessert",
+    "drinks": "Drinks"
+  },
+  "locations": [],
+  "deal": null
+}

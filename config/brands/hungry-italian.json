@@ -1,0 +1,50 @@
+{
+  "id": "hungry-italian",
+  "name": "The Hungry Italian",
+  "tagline": "The next launch",
+  "status": "stub",
+  "skuPrefix": "HUNGRY-",
+  "menuFile": "data/menu.hungry-italian.json",
+  "enquiryEmail": "placeholder@example.com",
+  "phone": "7078 4471",
+  "phoneTel": "0870784471",
+  "logoText": "The Hungry Italian",
+  "instagram": "",
+  "videoUrl": "",
+  "prepMinutes": 20,
+  "currency": "AUD",
+  "colors": {
+    "black": "#10210f",
+    "black2": "#173116",
+    "line": "#2c4a2a",
+    "yellow": "#f2f0e6",
+    "white": "#fff",
+    "off": "#f3f6ef",
+    "grey": "#b7c4b4",
+    "ink": "#10210f"
+  },
+  "hero": {
+    "eyebrow": "Coming after Margherita",
+    "title": "Hungry, properly.",
+    "titleEmphasis": "properly.",
+    "lead": "Sister-brand theme for The Hungry Italian. No menu is loaded yet. Rocco said the sites will be pretty much the same, so this one reuses the ordering flow."
+  },
+  "story": {
+    "heading": "A second brand, the same bones.",
+    "paragraphs": [
+      "The Hungry Italian is the launch Rocco described as coming after Margherita.",
+      "Swap this theme on with BRAND=hungry-italian. The story, menu, and stores are still to be written."
+    ],
+    "quote": "Order 3 pizzas, get 10% off — once the menu is confirmed.",
+    "quoteEmphasis": "once the menu is confirmed.",
+    "cite": "From the 20 Oct menu draft"
+  },
+  "hours": {},
+  "categories": {
+    "pizza": "Pizzas",
+    "dessert": "Dessert",
+    "drinks": "Drinks"
+  },
+  "locations": [],
+  "deal": null
+}
