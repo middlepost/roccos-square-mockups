@@ -1,6 +1,6 @@
 :root{
-  --black:#0a0a0a; --black2:#161616; --line:#2c2c2c;
-  --yellow:#c8102e; --red:#c8102e; --redDark:#9e0c23; --cream:#f4ead5; --white:#fff; --off:#f4ead5; --grey:#b9b1a3; --ink:#111;
+  --black:#c8102e; --black2:#9e0c23; --line:#e3d5bd;
+  --yellow:#c8102e; --red:#c8102e; --redDark:#9e0c23; --cream:#f4ead5; --white:#fff; --off:#f4ead5; --grey:#6b5e50; --ink:#1d1712;
   --radius:20px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -658,3 +658,51 @@ footer .wrap.fbottom{border-top:1px solid rgba(60,40,20,.12)}
 .visit-card .btn-ghost{border-color:var(--white);color:var(--white)}
 .visit-card .btn-ghost:hover{background:var(--white);color:var(--red)}
 .drawer{box-shadow:none}.drawer.open{box-shadow:-20px 0 50px rgba(60,40,20,.18)}
+
+/* ==== Nov 5: black -> Rocco's red, yellow -> cream, spinning pizza back ==== */
+/* spinning pizza (restored) */
+.hero-art{position:relative;z-index:1}
+.hero-art .pizza-art{position:absolute;z-index:3;width:210px;max-width:none;left:-86px;bottom:-56px;margin:0}
+.hero-art .pizza-art svg{filter:drop-shadow(0 18px 24px rgba(158,12,35,.35))}
+.hero::before{background:radial-gradient(circle at 40% 40%,#f1e3c9 0,#eedfc3 55%,rgba(238,223,195,0) 71%)}
+@media (max-width:900px){.hero-art .pizza-art{width:120px;left:-8px;bottom:-34px;order:0}}
+
+/* headings and text accents: red; body copy stays dark for readability */
+h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-head h3,.fcol h4,.item.photo-card h3,.step h3,.rule h3,.loc-info h3{color:var(--red)}
+.hero h1 em{color:var(--red);background:linear-gradient(transparent 62%,#efdcbf 62%,#efdcbf 92%,transparent 92%);padding:0 .06em}
+.visit-card h3,.promo-card h3,.deal h3,.deal-head h3,.rule:hover h3{color:var(--white)}
+.item.photo-card .price,.item.drink .price,.bs-price,.dt-note b,.hours td:last-child{color:var(--red)}
+.ai-pill{color:var(--red)}
+.bot-tip,.logo-text{color:var(--red)}
+.btn-light{background:var(--cream);color:var(--red)}.btn-light:hover{background:var(--white);color:var(--red)}
+.visit-card .btn-light{background:var(--cream);color:var(--red)}
+
+/* outlines/borders that were black/dark */
+.btn-ghost{border-color:var(--red);color:var(--red)}
+.btn-ghost:hover{background:var(--red);color:var(--white)}
+.line .qty button,.qty button{color:var(--red);border-color:var(--red)}
+.deal .qty button{color:var(--white);border-color:var(--white)}
+.deal .qty button:hover{background:var(--cream);color:var(--red)}
+.qty button:hover{background:var(--red);color:var(--white)}
+.builder{border-top-color:rgba(255,255,255,.35)}
+.x{border-color:var(--red);color:var(--red)}
+
+/* elements that were black ON red: now cream with red text */
+.cart-btn .count,.big-tel,.pick .up,.bot-head .av,.bot-head button,
+.deal .btn-dark,.promo-card .btn,.promo-card .btn-primary{background:var(--cream);color:var(--red);box-shadow:none}
+.deal .btn-dark:hover,.promo-card .btn:hover{background:var(--white);color:var(--red)}
+.btn-dark{background:var(--red);color:var(--white)}.btn-dark:hover{background:var(--redDark)}
+.bot-head .av svg{color:var(--red)}
+/* black badges/tags: red with white text */
+.tag.nut,.tag.dine,.hellos span,.tile .cap{background:var(--red);color:var(--white);border-color:var(--red)}
+.bs-badge.new{background:var(--cream);color:var(--red);border:1.5px solid var(--red)}
+/* video letterbox, overlays, lightbox */
+.hero-vid,.vid-frame,.vid-frame video,.vid-list button{background:var(--redDark)}
+.vid-list span{background:rgba(200,16,46,.85)}
+.overlay{background:rgba(158,12,35,.35)}
+.lightbox{background:rgba(158,12,35,.92)}
+.lightbox button{color:var(--white)}
+/* logo: yellow ring is now cream, so it sits on a red badge */
+.logo-box{background:var(--red);border-radius:16px;padding:5px 12px;box-shadow:0 6px 16px rgba(200,16,46,.25)}
+.logo-box img{height:62px}
+.fbrand .logo-box{display:inline-block;align-self:flex-start}.fbrand .logo-box img{height:90px}
