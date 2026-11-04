@@ -62,7 +62,7 @@ test('the site serves the v3 page, local menu, and photos without a token', asyn
     const page = await fetch(`${base}/`);
     const html = await page.text();
     assert.equal(page.status, 200);
-    assert.match(html, /Pizza that <em>loves you back\.<\/em>/);
+    assert.match(html, /Hold, fold, eat, <em>repeat\.<\/em>/);
     assert.match(html, /sandbox-sq0idb-rqkEoTTcR7FYJQCQiDjBYw/);
     assert.doesNotMatch(html, /EAAAsuper-secret-token/);
     const config = await (await fetch(`${base}/api/config`)).json();

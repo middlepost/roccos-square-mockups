@@ -1,7 +1,7 @@
 {
   "currency": "AUD",
   "updated": "2026-11-01",
-  "note": "Approved 1 Nov collection. Descriptions marked To confirm are placeholders from the brief, not final kitchen wording.",
+  "note": "Approved 1 Nov collection. Descriptions marked To confirm are placeholders from the brief, not final kitchen wording. 4 Nov: every pizza carries the full \"Make it yours\" extras list from the current roccopizza.com.au menu; alcohol is dine-in only.",
   "items": [
     {
       "sku": "ROCCO-01",
@@ -15,7 +15,41 @@
       "description": "Large garlic prawns (12), baby spinach, fior di latte mozzarella, basil pesto (contains nuts, light).",
       "image": "01_Roccos_Number_1_Son.jpg",
       "modifiers": [
-        { "key": "sausage", "name": "Italian sausage", "priceCents": 300 }
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -30,7 +64,41 @@
       "description": "Mutti Italian sauce, fior di latte mozzarella, fresh basil, herbs.",
       "image": "02_Roccos_Margherita.jpg",
       "modifiers": [
-        { "key": "prosciutto", "name": "Prosciutto", "priceCents": 600 }
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        }
       ]
     },
     {
@@ -44,7 +112,43 @@
       "toConfirm": false,
       "description": "House-made garlic sauce, fior di latte mozzarella, baby spinach.",
       "image": "03_Roccos_Cheesy_Garlic.jpg",
-      "modifiers": []
+      "modifiers": [
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
+      ]
     },
     {
       "sku": "ROCCO-04",
@@ -58,7 +162,41 @@
       "description": "Roasted red capsicum, baby spinach, garlic mushrooms, kalamata olives, Mutti Italian sauce, fior di latte mozzarella.",
       "image": "04_Roccos_Vegetariana.jpg",
       "modifiers": [
-        { "key": "chicken", "name": "Chicken", "priceCents": 400 }
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -73,7 +211,41 @@
       "description": "Smoked leg ham, garlic mushrooms, Mutti Italian sauce, fior di latte mozzarella.",
       "image": "05_Roccos_Smoked_Ham_and_Mushroom.jpg",
       "modifiers": [
-        { "key": "pineapple", "name": "Pineapple", "priceCents": 100 }
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -88,7 +260,41 @@
       "description": "Garlic parsley mushrooms, baby spinach, fior di latte mozzarella, house-made garlic sauce.",
       "image": "06_Roccos_Funghi_Mushroom.jpg",
       "modifiers": [
-        { "key": "sausage", "name": "Italian sausage", "priceCents": 300 }
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -102,7 +308,43 @@
       "toConfirm": true,
       "description": "To confirm — sopressa salame, chilli salsa, Mutti Italian sauce, fior di latte mozzarella. Assumed from the previous Hot Salame description.",
       "image": "07_Roccos_Sopressa_Salame.jpg",
-      "modifiers": []
+      "modifiers": [
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
+      ]
     },
     {
       "sku": "ROCCO-08",
@@ -116,7 +358,41 @@
       "description": "Roasted garlic herb potato slices, caramelised onion, fior di latte mozzarella, baby spinach.",
       "image": "08_Roccos_Patata_e_Cipolla.jpg",
       "modifiers": [
-        { "key": "sausage", "name": "Italian sausage", "priceCents": 300 }
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -131,7 +407,41 @@
       "description": "Roasted Italian sausage, Mutti Italian sauce, fior di latte mozzarella.",
       "image": "09_Roccos_Salsiccia_Italian_Sausage.jpg",
       "modifiers": [
-        { "key": "chilli-salsa", "name": "Chilli salsa", "priceCents": 100 }
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -145,7 +455,43 @@
       "toConfirm": false,
       "description": "Sopressa salame, house-made hot honey (mild), kalamata olives, basil pesto (contains nuts), Mutti Italian sauce, fior di latte mozzarella.",
       "image": "10_Roccos_Middle_Child.jpg",
-      "modifiers": []
+      "modifiers": [
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
+      ]
     },
     {
       "sku": "ROCCO-11",
@@ -159,7 +505,41 @@
       "description": "Traditional sopressa salame, garlic mushrooms, kalamata olives, roasted red capsicum, Mutti Italian sauce, fior di latte mozzarella.",
       "image": "11_Roccos_Super_Salame.jpg",
       "modifiers": [
-        { "key": "anchovy", "name": "Anchovy", "priceCents": 200 }
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -170,10 +550,46 @@
       "category": "pizza",
       "vegetarian": false,
       "containsNuts": true,
-      "toConfirm": true,
-      "description": "To confirm — roast chicken, baby spinach, Mutti Italian sauce, fior di latte mozzarella, hot honey and basil pesto (contains nuts). Wording not confirmed; the name suggests hot honey and basil pesto added to the previous President's Pollo.",
+      "toConfirm": false,
+      "description": "Italian tomato, fior di latte mozzarella, roast chicken, roasted red capsicum, mild hot honey, basil pesto (contains nuts).",
       "image": "12_Roccos_Honey_Pesto_Chicken.jpg",
-      "modifiers": []
+      "modifiers": [
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
+      ]
     },
     {
       "sku": "ROCCO-13",
@@ -186,7 +602,43 @@
       "toConfirm": false,
       "description": "Cured prosciutto, smashed burrata mozzarella, shaved parmesan, baby leaves, Mutti Italian sauce, fior di latte mozzarella.",
       "image": "13_Roccos_Prosciutto_e_Burrata.jpg",
-      "modifiers": []
+      "modifiers": [
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
+      ]
     },
     {
       "sku": "ROCCO-14",
@@ -200,7 +652,41 @@
       "description": "Roasted leg ham, Italian sausage, sopressa salame, Mutti Italian sauce, fior di latte mozzarella.",
       "image": "14_Roccos_Carnivores_Love_Meat.jpg",
       "modifiers": [
-        { "key": "hot-honey", "name": "Hot honey", "priceCents": 100 }
+        {
+          "key": "hot-honey",
+          "name": "Hot honey",
+          "priceCents": 100
+        },
+        {
+          "key": "chilli-salsa",
+          "name": "Chilli salsa",
+          "priceCents": 100
+        },
+        {
+          "key": "pineapple",
+          "name": "Pineapple",
+          "priceCents": 100
+        },
+        {
+          "key": "anchovy",
+          "name": "Anchovy",
+          "priceCents": 200
+        },
+        {
+          "key": "sausage",
+          "name": "Italian sausage",
+          "priceCents": 300
+        },
+        {
+          "key": "chicken",
+          "name": "Chicken",
+          "priceCents": 400
+        },
+        {
+          "key": "prosciutto",
+          "name": "Prosciutto",
+          "priceCents": 600
+        }
       ]
     },
     {
@@ -226,7 +712,9 @@
       "containsNuts": false,
       "toConfirm": false,
       "description": "Italian beer.",
-      "modifiers": []
+      "modifiers": [],
+      "alcohol": true,
+      "dineInOnly": true
     },
     {
       "sku": "ROCCO-DR02",
@@ -238,7 +726,9 @@
       "containsNuts": false,
       "toConfirm": false,
       "description": "",
-      "modifiers": []
+      "modifiers": [],
+      "alcohol": true,
+      "dineInOnly": true
     },
     {
       "sku": "ROCCO-DR03",
@@ -250,7 +740,9 @@
       "containsNuts": false,
       "toConfirm": false,
       "description": "",
-      "modifiers": []
+      "modifiers": [],
+      "alcohol": true,
+      "dineInOnly": true
     },
     {
       "sku": "ROCCO-DR04",
@@ -262,7 +754,9 @@
       "containsNuts": false,
       "toConfirm": false,
       "description": "Shiraz or Pinot Grigio.",
-      "modifiers": []
+      "modifiers": [],
+      "alcohol": true,
+      "dineInOnly": true
     },
     {
       "sku": "ROCCO-DR05",
@@ -274,7 +768,9 @@
       "containsNuts": false,
       "toConfirm": false,
       "description": "",
-      "modifiers": []
+      "modifiers": [],
+      "alcohol": true,
+      "dineInOnly": true
     },
     {
       "sku": "ROCCO-DR06",

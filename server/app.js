@@ -19,6 +19,7 @@ const TYPES = {
   '.webp': 'image/webp',
   '.ico': 'image/x-icon',
   '.txt': 'text/plain; charset=utf-8',
+  '.mp4': 'video/mp4',
 };
 
 function publicBrand(brand) {
@@ -33,6 +34,8 @@ function publicBrand(brand) {
     logoText: brand.logoText || null,
     instagram: brand.instagram || '',
     videoUrl: brand.videoUrl || '',
+    videos: brand.videos || [],
+    slogan: brand.slogan || '',
     prepMinutes: brand.prepMinutes || 20,
     colors: brand.colors || null,
     hero: brand.hero || null,
@@ -43,9 +46,19 @@ function publicBrand(brand) {
       name: location.name,
       address: location.address,
       mapQuery: location.mapQuery,
+      phone: location.phone || brand.phone,
+      phoneTel: location.phoneTel || brand.phoneTel,
+      phoneConfirmed: Boolean(location.phoneConfirmed),
+      openDays: location.openDays || null,
+      daysLabel: location.daysLabel || null,
       squareLocationId: location.squareLocationId,
     })),
-    deal: brand.deal || null,
+    deal: brand.deal && brand.deal.enabled !== false ? brand.deal : null,
+    features: brand.features || {},
+    promos: brand.promos || null,
+    bestSellers: brand.bestSellers || [],
+    aiOrdering: brand.aiOrdering || null,
+    pickup: brand.pickup || null,
   };
 }
 
@@ -85,7 +98,7 @@ function readBody(req) {
   });
 }
 
-function sendFile(res, root, rel) {
+function sendFile(res, root, rel, req = null) {
   const base = path.resolve(root);
   const target = path.resolve(base, rel);
   if (target !== base && !target.startsWith(`${base}${path.sep}`)) {
@@ -98,7 +111,29 @@ function sendFile(res, root, rel) {
     return;
   }
   const ext = path.extname(target).toLowerCase();
+  const size = fs.statSync(target).size;
+  const range = /^bytes=(\d*)-(\d*)$/.exec(String(req?.headers?.range || ''));
+  if (range && ext === '.mp4') {
+    const start = range[1] ? Number(range[1]) : Math.max(0, size - Number(range[2] || 0));
+    const end = range[1] && range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
+    if (start >= size || start > end) {
+      res.writeHead(416, { 'Content-Range': `bytes */${size}` });
+      res.end();
+      return;
+    }
+    res.writeHead(206, {
+      'Content-Type': TYPES[ext],
+      'Content-Range': `bytes ${start}-${end}/${size}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': end - start + 1,
+      'Cache-Control': 'public, max-age=86400',
+    });
+    fs.createReadStream(target, { start, end }).pipe(res);
+    return;
+  }
   res.writeHead(200, {
+    'Content-Length': size,
+    ...(ext === '.mp4' ? { 'Accept-Ranges': 'bytes' } : {}),
     'Content-Type': TYPES[ext] || 'application/octet-stream',
     'X-Content-Type-Options': 'nosniff',
     'Cache-Control': ext === '.html' || ext === '.js' || ext === '.css' ? 'no-store' : 'public, max-age=86400',
@@ -295,7 +330,7 @@ export function createApp({
           sendPage(res);
           return;
         }
-        sendFile(res, publicDir, rel);
+        sendFile(res, publicDir, rel, req);
         return;
       }
       sendJson(res, 405, { error: 'Method not allowed.' });

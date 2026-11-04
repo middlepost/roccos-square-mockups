@@ -13,7 +13,10 @@ let tab = 'pizza';
 let card = null;
 let payments = null;
 let cardLocationId = null;
+let store = null;
 const dealCounts = [];
+const PHONE_ICON = '<svg class="ic" aria-hidden="true"><use href="#ph"/></svg>';
+const on = (flag) => Boolean(brand?.features?.[flag]);
 
 const header = $('#top');
 const onScroll = () => header.classList.toggle('scrolled', scrollY > 30);
@@ -88,37 +91,41 @@ function applyBrand() {
       if (link.id !== 'mbarCall') link.textContent = brand.phone;
     }
   });
-  $('#mbarCall').href = `tel:${brand.phoneTel}`;
-  $('#heroPhone').textContent = brand.phone;
-  $('#heroPhone').href = `tel:${brand.phoneTel}`;
   $('#botPhone').textContent = brand.phone;
   const club = $('#clubTitle');
   if (club && brand.id === 'roccos') club.textContent = "Rocco's Club";
   else if (club && brand.name) club.textContent = `${brand.name} Club`;
+  // Feature toggles: anything marked data-feature="x" shows only when brand.features.x is true.
+  $$('[data-feature]').forEach((el) => { el.hidden = !on(el.dataset.feature); });
   const locs = brand.locations || [];
-  $('#footerMeta').innerHTML = locs.length
-    ? `${locs.map((loc) => esc(loc.address)).join(' · ')} · <a href="tel:${esc(brand.phoneTel)}">${esc(brand.phone)}</a>`
-    : `<a href="tel:${esc(brand.phoneTel)}">${esc(brand.phone)}</a>`;
+  $('#footerMeta').innerHTML = locs.map((loc) => `<div class="fm-shop"><b>${esc(loc.name)}</b> · ${esc(loc.address)}<br>${phoneLink(loc)}</div>`).join('')
+    || `<a href="tel:${esc(brand.phoneTel)}">${esc(brand.phone)}</a>`;
   $('#footerNote').textContent = square?.environment === 'production' ? 'Pickup orders' : 'Sandbox demo · test cards only';
-  $('#coWhere').innerHTML = locs.map((loc) => `<option value="${esc(loc.key)}">${esc(loc.name)} (${esc(loc.address)})</option>`).join('');
   const heroMeta = $('#heroMeta');
-  heroMeta.innerHTML = locs.map((loc) => `<div><b>${esc(loc.name)}</b><span class="badge" data-status="${esc(loc.key)}">Checking hours…</span></div>`).join('')
-    + `<div><b>Call</b><a id="heroPhone" href="tel:${esc(brand.phoneTel)}" style="text-decoration:none">${esc(brand.phone)}</a></div>`;
+  heroMeta.innerHTML = locs.map((loc) => `<div><b>${esc(loc.name)}</b><span class="badge" data-status="${esc(loc.key)}">Checking hours…</span></div>`).join('');
   if (!locs.length) {
     heroMeta.innerHTML = `<div><b>Call</b><a href="tel:${esc(brand.phoneTel)}" style="text-decoration:none">${esc(brand.phone)}</a></div>`;
   }
+  try { store = sessionStorage.getItem(`store:${brand.id}`); } catch { store = null; }
+  if (!locs.some((loc) => loc.key === store)) store = locs[0]?.key || null;
+  buildVisit();
+  buildStoreButtons();
+  paintAi();
+  paintVideos();
   buildLocs();
   paintStatus();
   if (brand.instagram) {
     $('#igWrap').hidden = false;
     $('#igLink').href = brand.instagram;
   }
-  if (brand.videoUrl) {
+  if (brand.videoUrl && !(brand.videos || []).length) {
     const frame = $('#vidFrame');
     frame.innerHTML = /\.mp4($|\?)/i.test(brand.videoUrl)
       ? `<video src="${esc(brand.videoUrl)}" controls playsinline></video>`
       : `<iframe src="${esc(brand.videoUrl)}" title="Story" allowfullscreen loading="lazy"></iframe>`;
   }
+  const doughShops = locs.map((loc) => `<a class="btn btn-primary btn-sm" href="tel:${esc(loc.phoneTel || brand.phoneTel)}">${PHONE_ICON} ${esc(loc.name)}</a>`).join('');
+  if ($('#doughActs')) $('#doughActs').innerHTML = doughShops;
   const pay = $('#payNote');
   if (square?.environment === 'sandbox') {
     pay.textContent = square.paymentsReady
@@ -129,16 +136,168 @@ function applyBrand() {
   }
 }
 
+function locByKey(key) {
+  return (brand?.locations || []).find((loc) => loc.key === key) || null;
+}
+function phoneLink(loc, cls = 'tel') {
+  const phone = loc?.phone || brand.phone;
+  const tel = loc?.phoneTel || brand.phoneTel;
+  return `<a class="${cls}" href="tel:${esc(tel)}">${PHONE_ICON}<span>${esc(phone)}</span></a>`;
+}
+function mapsUrl(loc) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.mapQuery || loc.address)}`;
+}
+function buildVisit() {
+  const grid = $('#visitGrid');
+  if (!grid) return;
+  grid.innerHTML = (brand.locations || []).map((loc) => `<article class="visit-card">
+      <div class="vk">Visit us</div>
+      <h3>${esc(loc.name)}</h3>
+      <p class="va">${esc(loc.address)}</p>
+      ${loc.daysLabel ? `<p class="vd">${esc(loc.daysLabel)}</p>` : ''}
+      ${phoneLink(loc, 'tel big-tel')}
+      <div class="vacts"><a class="btn btn-light btn-sm" target="_blank" rel="noopener" href="${mapsUrl(loc)}">Visit us · directions</a>
+      <a class="btn btn-ghost btn-sm" href="#menu" data-order="${esc(loc.key)}">Order from ${esc(loc.name)}</a></div>
+    </article>`).join('');
+}
+function buildStoreButtons() {
+  const locs = brand.locations || [];
+  const btn = (loc, cls) => `<button type="button" class="${cls}${loc.key === store ? ' active' : ''}" role="radio" aria-checked="${loc.key === store}" data-store="${esc(loc.key)}"><b>${esc(loc.name)}</b><small>${esc(loc.address)}</small></button>`;
+  $('#coStores').innerHTML = locs.map((loc) => btn(loc, 'store-btn')).join('');
+  $('#ssBtns').innerHTML = locs.map((loc) => btn(loc, 'ss-btn')).join('');
+  paintStore();
+}
+function paintStore() {
+  const loc = locByKey(store);
+  $('#coWhere').value = store || '';
+  $$('[data-store]').forEach((el) => {
+    const active = el.dataset.store === store;
+    el.classList.toggle('active', active);
+    el.setAttribute('aria-checked', String(active));
+  });
+  const label = loc ? `${loc.name} · ${loc.address}` : '';
+  $('#drawerStore').innerHTML = loc ? `Ordering from <b>${esc(loc.name)}</b> (${esc(loc.address)})` : '';
+  $('#cartStore').textContent = loc ? `· ${loc.name}` : '';
+  $('#storeSwitch').dataset.current = label;
+  buildSlots();
+}
+function setStore(key) {
+  if (!locByKey(key) || key === store) return;
+  store = key;
+  card = null;
+  try { sessionStorage.setItem(`store:${brand.id}`, key); } catch { /* ignore */ }
+  paintStore();
+  if ($('#drawer').classList.contains('open')) initCard().catch((error) => say(error.message || 'The card form could not load.', true));
+}
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-store]');
+  if (button) setStore(button.dataset.store);
+  const order = event.target.closest('[data-order]');
+  if (order) setStore(order.dataset.order);
+});
+function paintAi() {
+  const ai = brand.aiOrdering;
+  $('#ai-order').hidden = !ai?.enabled;
+  $('#heroAi').hidden = !ai?.enabled;
+  if (!ai?.enabled) return;
+  const tel = ai.phoneTel || brand.phoneTel;
+  const phone = ai.phone || brand.phone;
+  $$('#heroAi,#aiCall').forEach((link) => { link.href = `tel:${tel}`; });
+  $('#aiNum').textContent = phone;
+  $('#heroAiNum').textContent = `AI phone ordering · ${phone}`;
+  if (ai.headline) $('#aiHead').textContent = ai.headline;
+  if (ai.body) $('#aiBody').textContent = ai.body;
+}
+function paintVideos() {
+  const videos = brand.videos || [];
+  if (!videos.length) return;
+  const hero = $('#heroVideo');
+  let index = 0;
+  const dots = $('#hvDots');
+  dots.innerHTML = videos.map((video, i) => `<button type="button" data-v="${i}" aria-label="Video ${i + 1}: ${esc(video.caption || '')}"></button>`).join('');
+  const play = (i) => {
+    index = (i + videos.length) % videos.length;
+    hero.src = videos[index].src;
+    hero.poster = videos[index].poster || '';
+    hero.muted = true;
+    hero.play().catch(() => {});
+    $$('button', dots).forEach((dot, n) => dot.classList.toggle('on', n === index));
+  };
+  hero.addEventListener('ended', () => play(index + 1));
+  dots.addEventListener('click', (event) => {
+    const dot = event.target.closest('[data-v]');
+    if (dot) play(+dot.dataset.v);
+  });
+  play(0);
+  const frame = $('#vidFrame');
+  const showMain = (i) => {
+    const video = videos[i];
+    frame.innerHTML = `<video src="${esc(video.src)}" poster="${esc(video.poster || '')}" controls playsinline preload="none"></video>`;
+    $$('#vidList button').forEach((button, n) => button.classList.toggle('on', n === i));
+  };
+  $('#vidList').innerHTML = videos.map((video, i) => `<button type="button" data-i="${i}"><img src="${esc(video.poster || '')}" alt="" loading="lazy"><span>${esc(video.caption || `Video ${i + 1}`)}</span></button>`).join('');
+  $('#vidList').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-i]');
+    if (button) {
+      showMain(+button.dataset.i);
+      $('video', frame).play().catch(() => {});
+    }
+  });
+  showMain(1 % videos.length);
+}
+
+function renderBestSellers() {
+  const grid = $('#bsGrid');
+  const picks = (brand?.bestSellers || []).map((entry) => ({ ...entry, item: itemBySku(entry.sku) })).filter((entry) => entry.item);
+  $('#bestsellers').hidden = !picks.length && !brand?.deal;
+  grid.innerHTML = picks.map(({ item, badge }) => `<article class="bs-tile" data-sku="${esc(item.sku)}">
+      <div class="bs-photo">${item.imageUrl ? `<img src="${esc(item.imageUrl)}" alt="${esc(item.name)}" loading="lazy">` : ''}<span class="bs-badge${/new/i.test(badge) ? ' new' : ''}">${esc(badge || 'Top seller')}</span></div>
+      <div class="bs-body"><h3>${esc(item.name)}</h3><span class="bs-price">${money(item.priceCents)}</span>
+      <button class="btn btn-primary btn-sm bs-add" type="button">Add to order</button></div>
+    </article>`).join('');
+}
+$('#bsGrid').addEventListener('click', (event) => {
+  const button = event.target.closest('.bs-add');
+  if (!button) return;
+  const sku = button.closest('[data-sku]').dataset.sku;
+  addLine(sku, []);
+  button.textContent = 'Added ✓';
+  setTimeout(() => { button.textContent = 'Add to order'; }, 900);
+});
+
+function addLine(sku, modifierKeys) {
+  const item = itemBySku(sku);
+  if (!item) return false;
+  const key = `${item.sku}|${modifierKeys.join(',')}`;
+  const existing = lines.find((line) => line.type === 'item' && line.key === key);
+  if (existing) existing.qty += 1;
+  else lines.push({ type: 'item', key, sku: item.sku, qty: 1, modifierKeys });
+  if (!safePrice()) {
+    if (existing) existing.qty -= 1;
+    else lines.pop();
+    return false;
+  }
+  renderCart();
+  bump();
+  return true;
+}
+
 function paintDeal() {
   const deal = brand?.deal;
   const card = $('#dealCard');
   if (!deal) {
     card.hidden = true;
+    $('#promoCard').hidden = true;
+    $('#promoBar').hidden = true;
     return;
   }
   card.hidden = false;
   $('#dealName').textContent = deal.name;
   $('#dealPrice').textContent = money(deal.priceCents);
+  $('#promoName').textContent = deal.name;
+  $('#promoPrice').textContent = money(deal.priceCents);
+  $('#promoBlurb').textContent = deal.blurb || `Any ${deal.required} from the list.`;
+  $('#promoText').textContent = brand.promos?.bar || `${deal.name}: ${deal.required} pizzas for ${money(deal.priceCents)}`;
   const named = deal.choices.map((choice) => {
     const item = menu.items.find((entry) => entry.sku === choice.sku);
     return { ...choice, name: item?.name || choice.sku };
@@ -168,27 +327,32 @@ function renderMenu() {
       item.containsNuts ? '<span class="tag nut">Contains nuts</span>' : '',
       item.toConfirm ? '<span class="tag confirm">To confirm</span>' : '',
     ].join('');
+    const bestTag = (brand?.bestSellers || []).find((entry) => entry.sku === item.sku);
     const opts = (item.modifiers || []).map((mod) => (
-      `<label class="opt"><input type="checkbox" data-key="${esc(mod.key)}"> + ${esc(mod.name)} <span>+${money(mod.priceCents)}</span></label>`
+      `<label class="opt"><input type="checkbox" data-key="${esc(mod.key)}"> ${esc(mod.name)} <span>+${money(mod.priceCents)}</span></label>`
     )).join('');
+
     const num = item.category === 'dessert' ? '★' : String(item.number ?? '');
     return `<article class="item photo-card" data-cat="${esc(item.category)}" data-v="${item.vegetarian ? 1 : 0}" data-n="${item.containsNuts ? 1 : 0}" data-sku="${esc(item.sku)}">
       <div class="photo">${item.imageUrl ? `<img src="${esc(item.imageUrl)}" alt="${esc(item.name)}" loading="lazy">` : ''}</div>
       <div class="body">
-        <div class="meta"><span class="num">${esc(num)}</span>${tags}</div>
+        <div class="meta"><span class="num">${esc(num)}</span>${bestTag ? `<span class="tag best">${esc(bestTag.badge || 'Top seller')}</span>` : ''}${tags}</div>
         <h3>${esc(item.name)}</h3>
         <div class="price">${money(item.priceCents)}</div>
         ${item.description ? `<p>${esc(item.description)}</p>` : ''}
-        ${opts ? `<div class="opts">${opts}</div>` : ''}
+        ${opts ? `<button class="extras-btn" type="button" aria-expanded="false">+ Extras <span class="xc"></span></button><div class="opts" hidden>${opts}</div>` : ''}
         <div class="buy"><span class="live">${money(item.priceCents)}</span><button class="btn btn-primary btn-sm add" type="button">Add to order</button></div>
       </div>
     </article>`;
-  }).join('') + drinks.map((item) => (
-    `<article class="item drink" data-cat="drinks" data-sku="${esc(item.sku)}" hidden>
-      <span class="nm">${esc(item.name)}</span><span class="price">${money(item.priceCents)}</span>
-      <div class="buy"><button class="btn btn-primary btn-sm add" type="button">Add</button></div>
+  }).join('');
+  const softFirst = [...drinks].sort((a, b) => Number(Boolean(a.dineInOnly)) - Number(Boolean(b.dineInOnly)));
+  $('#drinkList').innerHTML = softFirst.map((item) => (
+    `<article class="item drink${item.dineInOnly ? ' dine-in' : ''}" data-cat="drinks" data-sku="${esc(item.sku)}">
+      <span class="nm">${esc(item.name)}${item.dineInOnly ? ' <span class="tag dine">Dine-in only</span>' : ''}</span><span class="price">${money(item.priceCents)}</span>
+      <div class="buy">${item.dineInOnly ? '<span class="dine-note">At the shop</span>' : '<button class="btn btn-primary btn-sm add" type="button">Add</button>'}</div>
     </article>`
   )).join('');
+  $('#drinks').hidden = !drinks.length;
   const source = $('#menuSource');
   if (menu.notice) source.textContent = menu.notice;
   else if (menu.source === 'square') source.textContent = 'Menu loaded from the Square catalog.';
@@ -197,6 +361,7 @@ function renderMenu() {
   else source.textContent = 'Showing the saved 1 Nov menu. After the Square catalog is seeded, this page reads from Square.';
   applyFilters();
   renderGallery();
+  renderBestSellers();
 }
 
 function liveUnit(article) {
@@ -209,43 +374,49 @@ function liveUnit(article) {
   return item.priceCents + extra;
 }
 
+function paintExtrasCount(article) {
+  const count = $$('input[data-key]:checked', article).length;
+  const badge = $('.extras-btn .xc', article);
+  if (badge) badge.textContent = count ? `(${count} added)` : '';
+}
 $('#items').addEventListener('change', (event) => {
   const article = event.target.closest('.item');
   if (!article || article.dataset.cat === 'drinks') return;
   const live = $('.live', article);
   if (live) live.textContent = money(liveUnit(article));
+  paintExtrasCount(article);
 });
 
-$('#items').addEventListener('click', (event) => {
+function onAdd(event) {
+  const toggle = event.target.closest('.extras-btn');
+  if (toggle) {
+    const panel = toggle.nextElementSibling;
+    panel.hidden = !panel.hidden;
+    toggle.setAttribute('aria-expanded', String(!panel.hidden));
+    toggle.classList.toggle('open', !panel.hidden);
+    return;
+  }
   const button = event.target.closest('.add');
   if (!button) return;
   const article = button.closest('.item');
   const item = itemBySku(article.dataset.sku);
   if (!item) return;
   const modifierKeys = $$('input[data-key]:checked', article).map((input) => input.dataset.key).sort();
-  const key = `${item.sku}|${modifierKeys.join(',')}`;
-  const existing = lines.find((line) => line.type === 'item' && line.key === key);
-  if (existing) existing.qty += 1;
-  else lines.push({ type: 'item', key, sku: item.sku, qty: 1, modifierKeys });
-  if (!safePrice()) {
-    if (existing) existing.qty -= 1;
-    else lines.pop();
-    return;
-  }
+  if (!addLine(item.sku, modifierKeys)) return;
   $$('input[data-key]', article).forEach((input) => { input.checked = false; });
   const live = $('.live', article);
   if (live) live.textContent = money(item.priceCents);
-  renderCart();
-  bump();
+  paintExtrasCount(article);
   button.textContent = 'Added ✓';
   setTimeout(() => { button.textContent = item.category === 'drinks' ? 'Add' : 'Add to order'; }, 900);
-});
+}
+$('#items').addEventListener('click', onAdd);
+$('#drinkList').addEventListener('click', onAdd);
 
 function applyFilters() {
   const veg = $('#fVeg').checked;
   const nuts = $('#fNut').checked;
   const itemsEl = $('#items');
-  itemsEl.classList.toggle('list-mode', tab === 'drinks');
   $$('.item', itemsEl).forEach((article) => {
     let show = article.dataset.cat === tab;
     if (show && tab === 'pizza') {
@@ -363,6 +534,7 @@ function bump() {
   $('#openCart').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 280 });
 }
 function openCart() {
+  buildSlots();
   $('#drawer').classList.add('open');
   $('#overlay').classList.add('open');
   $('#confirm').classList.remove('show');
@@ -382,17 +554,89 @@ addEventListener('keydown', (event) => {
     closeLb();
   }
 });
-$('#coWhen').addEventListener('change', (event) => {
-  const timed = event.target.value === 'time';
+function whenValue() {
+  return $('input[name=when]:checked')?.value || 'asap';
+}
+function setWhen(value) {
+  const radio = $(`input[name=when][value="${value}"]`);
+  if (radio) radio.checked = true;
+  const timed = value === 'time';
   $('#coTimeWrap').hidden = !timed;
   $('#coDate').required = timed;
   $('#coTime').required = timed;
-  if (timed && !$('#coDate').value) $('#coDate').value = adelaideToday();
-});
-$('#coWhere').addEventListener('change', () => { card = null; });
+}
+$$('input[name=when]').forEach((radio) => radio.addEventListener('change', () => setWhen(whenValue())));
+$('#coDate').addEventListener('change', () => buildTimes());
 
-function adelaideToday() {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Adelaide', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+function adelaideParts(at) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Australia/Adelaide', year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(at).map((part) => [part.type, part.value]));
+  let hour = Number(parts.hour);
+  if (hour === 24) hour = 0;
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, dow: DAYS.indexOf(parts.weekday.slice(0, 3).toLowerCase()), min: hour * 60 + Number(parts.minute) };
+}
+const hhmm = (mins) => `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
+function pickupWindow() {
+  const pickup = brand?.pickup || {};
+  return { open: minutes(pickup.open || '11:30'), close: minutes(pickup.close || '21:00'), step: pickup.slotMinutes || 5, ahead: pickup.daysAhead || 7 };
+}
+// Exact pickup times for one day: every few minutes from (now + prep) until close.
+function slotsFor(dateIndex) {
+  const win = pickupWindow();
+  const now = new Date();
+  const day = adelaideParts(new Date(now.getTime() + dateIndex * 86_400_000));
+  const loc = locByKey(store);
+  if (loc?.openDays && !loc.openDays.includes(day.dow)) return { day, times: [] };
+  let first = win.open;
+  if (dateIndex === 0) {
+    const earliest = adelaideParts(now).min + (brand?.prepMinutes || 20);
+    first = Math.max(first, Math.ceil(earliest / win.step) * win.step);
+  }
+  const times = [];
+  for (let t = first; t <= win.close; t += win.step) times.push(t);
+  return { day, times };
+}
+function dayLabel(day, index) {
+  if (index === 0) return 'Today';
+  if (index === 1) return 'Tomorrow';
+  const [y, m, d] = day.date.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d, 12)).toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short', timeZone: 'UTC' });
+}
+function buildSlots() {
+  if (!brand) return;
+  const win = pickupWindow();
+  const days = [];
+  for (let i = 0; i < win.ahead; i += 1) {
+    const slot = slotsFor(i);
+    if (slot.times.length) days.push({ ...slot, index: i });
+  }
+  const previous = $('#coDate').value;
+  $('#coDate').innerHTML = days.map((entry) => `<option value="${entry.day.date}" data-i="${entry.index}">${esc(dayLabel(entry.day, entry.index))}</option>`).join('')
+    || '<option value="">No pickup days available</option>';
+  if (days.some((entry) => entry.day.date === previous)) $('#coDate').value = previous;
+  buildTimes();
+  const today = slotsFor(0);
+  const nowMin = adelaideParts(new Date()).min;
+  const openNow = today.times.length && nowMin >= win.open - (brand?.prepMinutes || 20) && nowMin < win.close;
+  const asap = $('input[name=when][value=asap]');
+  if (openNow) {
+    const ready = Math.max(win.open, nowMin + (brand?.prepMinutes || 20));
+    $('#asapLbl').innerHTML = `As soon as possible <b>· ready about ${fmt(hhmm(ready))}</b>`;
+    asap.disabled = false;
+  } else {
+    $('#asapLbl').innerHTML = 'As soon as possible <b>· shop closed now, pick a time</b>';
+    asap.disabled = true;
+    setWhen('time');
+  }
+}
+function buildTimes() {
+  const option = $('#coDate').selectedOptions[0];
+  const index = option ? Number(option.dataset.i) : 0;
+  const { times } = slotsFor(Number.isFinite(index) ? index : 0);
+  const previous = $('#coTime').value;
+  $('#coTime').innerHTML = times.map((t) => `<option value="${hhmm(t)}">${fmt(hhmm(t))}</option>`).join('') || '<option value="">No times left</option>';
+  if (times.some((t) => hhmm(t) === previous)) $('#coTime').value = previous;
 }
 
 function say(message, isError) {
@@ -414,7 +658,7 @@ function loadScript(src) {
 
 async function initCard() {
   if (!square?.applicationId) return;
-  const location = (brand.locations || []).find((entry) => entry.key === $('#coWhere').value) || brand.locations?.[0];
+  const location = locByKey(store) || brand.locations?.[0];
   const locationId = location?.squareLocationId || square.locationId;
   if (card && cardLocationId === locationId) return;
   await loadScript(square.sdkUrl);
@@ -447,7 +691,7 @@ $('#checkout').addEventListener('submit', async (event) => {
       body: JSON.stringify({
         idempotencyKey: crypto.randomUUID(),
         sourceId: token.token,
-        locationKey: data.where,
+        locationKey: store,
         when: data.when,
         date: data.date,
         time: data.time,
@@ -460,14 +704,15 @@ $('#checkout').addEventListener('submit', async (event) => {
     const body = await response.json();
     if (!response.ok) throw new Error(body.error || 'Payment failed.');
     const confirm = $('#confirm');
-    confirm.innerHTML = `<h4>Order received</h4><p>Thanks ${esc(data.name)}. Square order <strong>${esc(body.orderId)}</strong> is paid (${esc(body.status)}).</p>
+    const shop = locByKey(store);
+    confirm.innerHTML = `<h4>Order received</h4><p class="cf-store">Pick up from <b>${esc(shop?.name || '')}</b>, ${esc(shop?.address || '')}</p><p>Thanks ${esc(data.name)}. Square order <strong>${esc(body.orderId)}</strong> is paid (${esc(body.status)}).</p>
       <pre>${esc(body.summary)}</pre>
-      <div class="acts">${body.receiptUrl ? `<a class="btn btn-primary btn-sm" href="${esc(body.receiptUrl)}" target="_blank" rel="noopener">View receipt</a>` : ''}<a class="btn btn-ghost btn-sm" href="tel:${esc(brand.phoneTel)}">Call ${esc(brand.phone)}</a></div>`;
+      <div class="acts">${body.receiptUrl ? `<a class="btn btn-primary btn-sm" href="${esc(body.receiptUrl)}" target="_blank" rel="noopener">View receipt</a>` : ''}<a class="btn btn-ghost btn-sm" href="tel:${esc(shop?.phoneTel || brand.phoneTel)}">Call ${esc(shop?.name || '')} ${esc(shop?.phone || brand.phone)}</a></div>`;
     confirm.classList.add('show');
     lines = [];
     renderCart();
     form.reset();
-    $('#coTimeWrap').hidden = true;
+    paintStore();
     confirm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   } catch (error) {
     say(error.message || 'Payment failed.', true);
@@ -495,7 +740,14 @@ const fmt = (value) => {
 };
 function status(key) {
   const hours = brand?.hours?.[key];
-  if (!hours) return { cls: '', text: 'Call for today’s hours' };
+  if (!hours) {
+    const loc = locByKey(key);
+    if (loc?.openDays) {
+      const open = loc.openDays.includes(adelaideParts(new Date()).dow);
+      return { cls: open ? '' : 'closed', text: open ? `${loc.daysLabel || 'Open today'}` : `Closed today · ${loc.daysLabel || ''}` };
+    }
+    return { cls: '', text: 'Call for today’s hours' };
+  }
   const now = adelaideNow();
   const today = hours[now.day] || [];
   for (const [open, close] of today) {
@@ -512,7 +764,7 @@ function status(key) {
 }
 function hoursTable(key) {
   const hours = brand?.hours?.[key];
-  if (!hours) return '<p class="hours-note">Opening hours will be listed here. Please call us to check before you head over.</p>';
+  if (!hours) return `<p class="hours-note">${esc(locByKey(key)?.daysLabel || '')}${locByKey(key)?.daysLabel ? '. ' : ''}Exact hours will be listed here. Please call to check before you head over.</p>`;
   const now = adelaideNow();
   return `<table class="hours">${['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map((day) => `<tr class="${day === now.day ? 'today' : ''}"><td>${DAY_NAME[day]}</td><td>${hours[day]?.length ? hours[day].map((range) => `${fmt(range[0])} – ${fmt(range[1])}`).join(', ') : 'Closed'}</td></tr>`).join('')}</table>`;
 }
@@ -535,7 +787,7 @@ function buildLocs() {
     <div class="loc-info"><h3>${esc(loc.name)}</h3><div class="addr">${esc(loc.address)}</div>
       <span class="badge" data-status="${esc(loc.key)}"></span>
       ${hoursTable(loc.key)}
-      <div class="acts"><a class="btn btn-primary btn-sm" href="tel:${esc(brand.phoneTel)}">Call ${esc(brand.phone)}</a>
+      <div class="acts"><a class="btn btn-primary btn-sm" href="tel:${esc(loc.phoneTel || brand.phoneTel)}">${PHONE_ICON} ${esc(loc.phone || brand.phone)}</a>
       <a class="btn btn-ghost btn-sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.mapQuery)}">Directions</a>
       <a class="btn btn-ghost btn-sm" href="#menu" data-order="${esc(loc.key)}">Order from here</a></div></div>
     <div class="map" data-q="${esc(loc.mapQuery)}"></div></div>`).join('');
@@ -557,10 +809,6 @@ $('#locTabs').addEventListener('click', (event) => {
     showLoc(tabButton.dataset.k);
     history.replaceState(null, '', `#${tabButton.dataset.k}`);
   }
-});
-$('#locPanels').addEventListener('click', (event) => {
-  const link = event.target.closest('[data-order]');
-  if (link) $('#coWhere').value = link.dataset.order;
 });
 function routeHash() {
   const hash = location.hash.slice(1);
@@ -589,7 +837,6 @@ $('#grid6').addEventListener('click', (event) => {
 $('#lightbox').addEventListener('click', (event) => { if (event.target.id === 'lightbox') closeLb(); });
 
 const FORM_KIND = {
-  'Catering enquiry': 'catering',
   'Gift card request': 'gift-card',
   "Rocco's Club signup": 'club',
 };
@@ -638,20 +885,22 @@ function setupBot() {
       { k: [/hour|open|clos|what time|when/], a: () => `Right now: ${(brand.locations || []).map((loc) => `${esc(loc.name)} is <b>${esc(status(loc.key).text)}</b>`).join(' and ') || 'call us'}. Full hours are in the ${link('#locations', 'Locations section')}.` },
       { k: [/where|address|location|find you|findon|grange|direction|map/], a: () => `We have ${(brand.locations || []).map((loc) => esc(loc.address)).join(' and ') || 'shops listed soon'}. Maps are in the ${link('#locations', 'Locations section')}.` },
       { k: [/phone|call|number|contact|ring/], a: () => `Call us on ${tel()}.` },
-      { k: [/order|pick ?up|collect|online|takeaway|take away|pay/], a: () => `Add pizzas from the ${link('#menu', 'menu')}, choose Findon Rd or Grange Rd, and pay by card in the cart. Pickup only.` },
+      { k: [/order|pick ?up|collect|online|takeaway|take away|pay/], a: () => `Add pizzas from the ${link('#menu', 'menu')}, tap Findon Rd or Grange Rd, pick an exact pickup time and pay by card. Pickup only. You can also call ${tel()} and order in any language.` },
+      { k: [/language|italian|chinese|mandarin|vietnam|greek|arabic|speak|\bai\b/], a: () => `Call ${tel()} and our AI phone line will take your order in the language you prefer.` },
+      { k: [/dough|base to take|make at home/], a: () => `Yes, we sell our sourdough dough. Ask at either shop or call ${tel()} to put some aside.` },
+      { k: [/scissor|cut|slice|dine|eat in|sit/], a: () => 'Dining in, we cut your pizza with scissors and hand it straight over. The wood oven is in the open kitchen, so you can watch.' },
       { k: [/deliver|uber|menulog|doordash/], a: () => `This site is pickup only. For delivery, use the delivery apps or call ${tel()}.` },
       { k: [/price|cost|how much|\$/], a: () => `Pizzas run from ${money(min)} to ${money(max)}. The Nutella Bomb and drinks are on the ${link('#menu', 'menu')} too.` },
       { k: [/vegetarian|veggie|vego|meat.?free/], a: () => `Vegetarian pizzas: <ul>${veg.map((item) => `<li>${esc(item.name)} (${money(item.priceCents)})</li>`).join('')}</ul>` },
       { k: [/vegan|dairy/], a: () => `Nothing is marked vegan. The pizzas use mozzarella. Call ${tel()} and ask what we can do.` },
       { k: [/gluten|coeliac|celiac|wheat/], a: () => `The base is sourdough. Call ${tel()} before you count on a gluten-free option.` },
       { k: [/allerg|nut|pesto|hazelnut/], a: () => `${nuts.join(', ') || 'Some items'} contain nuts. Tell us about allergies in the order notes, and call ${tel()} if you need to check.` },
-      { k: [/deal|hungry italian|combo|\b50\b/], a: () => brand.deal ? `${esc(brand.deal.name)} is ${money(brand.deal.priceCents)} for ${brand.deal.required} from the list in the ${link('#menu', 'menu')}, with a small upgrade on a few pizzas.` : 'There is no deal on this menu yet.' },
+      { k: [/deal|promo|special|combo|best ?sell|popular|\b50\b/], a: () => brand.deal ? `${esc(brand.deal.name)} is ${money(brand.deal.priceCents)} for ${brand.deal.required} from the list in the ${link('#menu', 'menu')}, with a small upgrade on a few pizzas.` : 'There is no deal on this menu yet.' },
       { k: [/pineapple|hawaiian/], a: () => 'Yes. Add pineapple to the Smoked Ham & Mushroom.' },
       { k: [/dessert|nutella|sweet|calzone/], a: () => 'The Nutella Bomb is a half-circle calzone with Nutella cream and powdered sugar. It contains nuts.' },
-      { k: [/drink|beer|wine|byo|corkage|soft|juice|water/], a: () => `Drinks are on the menu, and the house rule is BYO with no corkage. Call ${tel()} if you want to check before you bring a bottle.` },
-      { k: [/cater|party|group|function|office/], a: () => `Send a note from the ${link('#catering', 'catering form')} or call ${tel()}.` },
+      { k: [/drink|beer|wine|alcohol|byo|corkage|soft|juice|water/], a: () => `Soft drinks can go in a pickup order. Alcohol is dine-in only, and BYO has no corkage. Call ${tel()} if you want to check.` },
       { k: [/gift|voucher|present/], a: () => `Request a $25, $50, or $100 card from the ${link('#gift', 'gift card form')}. It is a request, not a charge.` },
-      { k: [/club|newsletter|subscribe/], a: () => `Join from the ${link('#club', 'club form')}.` },
+      ...(on('club') ? [{ k: [/club|newsletter|subscribe/], a: () => `Join from the ${link('#club', 'club form')}.` }] : []),
     ];
     let best = null;
     let score = 0;
@@ -679,7 +928,7 @@ function setupBot() {
     pending.innerHTML = answer(value);
     log.scrollTop = log.scrollHeight;
   }
-  chips.innerHTML = ['Opening hours', 'Where are you?', 'Vegetarian options', 'Allergies & nuts', 'How do I order?', 'Catering']
+  chips.innerHTML = ['Opening hours', 'Where are you?', 'Vegetarian options', 'Allergies & nuts', 'How do I order?', 'Promos', 'Order in any language']
     .map((label) => `<button type="button">${label}</button>`).join('');
   chips.addEventListener('click', (event) => {
     const button = event.target.closest('button');
@@ -763,8 +1012,21 @@ async function start() {
   }
   routeHash();
   setInterval(paintStatus, 60_000);
+  setInterval(() => { if ($('#drawer').classList.contains('open')) buildSlots(); }, 60_000);
   setupBot();
   renderCart();
+  // Preview helper: ?cart=demo fills a sample order and opens the pickup drawer (used for screenshots).
+  const params = new URLSearchParams(location.search);
+  if (params.get('store')) setStore(params.get('store'));
+  if (params.get('cart') === 'demo' && !lines.length) {
+    addLine('ROCCO-02', ['prosciutto']);
+    addLine('ROCCO-DR07', []);
+  }
+  if (params.get('cart')) openCart();
+  if (params.get('extras') === 'open') {
+    const first = $('#items .extras-btn');
+    if (first) first.click();
+  }
 }
 
 start().catch((error) => {

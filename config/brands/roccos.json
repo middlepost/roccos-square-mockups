@@ -9,24 +9,27 @@
   "phoneTel": "0870784471",
   "logoImage": "/images/brand/roccos-face-logo.png?v=2",
   "instagram": "",
-  "videoUrl": "",
+  "videoUrl": "/videos/rocco-1.mp4",
   "prepMinutes": 20,
   "currency": "AUD",
   "colors": {
     "black": "#0a0a0a",
     "black2": "#161616",
     "line": "#2c2c2c",
-    "yellow": "#ffcb0b",
+    "yellow": "#c8102e",
+    "red": "#c8102e",
+    "redDark": "#9e0c23",
+    "cream": "#f4ead5",
     "white": "#fff",
-    "off": "#f6f4ee",
-    "grey": "#a9a9a9",
+    "off": "#f4ead5",
+    "grey": "#b9b1a3",
     "ink": "#111"
   },
   "hero": {
-    "eyebrow": "Woodfired · Sourdough · Adelaide",
-    "title": "Pizza that loves you back.",
-    "titleEmphasis": "loves you back.",
-    "lead": "Slow-risen sourdough, fresh toppings and a Mediterranean-diet state of mind. Takeaway, minus the fast-food reputation."
+    "eyebrow": "Wood oven · Sourdough · Adelaide",
+    "title": "Hold, fold, eat, repeat.",
+    "titleEmphasis": "repeat.",
+    "lead": "Slow-risen sourdough, fired in the wood oven in our open kitchen. Order for pickup from Findon Rd or Grange Rd, or call and order in any language."
   },
   "story": {
     "heading": "Takeaway pizza deserves better.",
@@ -53,32 +56,157 @@
       "name": "Findon Rd",
       "address": "336 Findon Rd",
       "mapQuery": "Rocco's Pizza 336 Findon Rd Adelaide SA",
-      "squareLocationId": "LFXEWDVVKRYC0"
+      "squareLocationId": "LFXEWDVVKRYC0",
+      "phone": "7078 4471",
+      "phoneTel": "0870784471",
+      "phoneConfirmed": false,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "daysLabel": "Open 7 days, Monday to Sunday"
     },
     {
       "key": "grange",
       "name": "Grange Rd",
       "address": "466 Grange Rd",
       "mapQuery": "Rocco's Pizza 466 Grange Rd Adelaide SA",
-      "squareLocationId": "LFXEWDVVKRYC0"
+      "squareLocationId": "LFXEWDVVKRYC0",
+      "phone": "7078 4471",
+      "phoneTel": "0870784471",
+      "phoneConfirmed": false,
+      "openDays": [
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "daysLabel": "Open 5 days, Wednesday to Sunday"
     }
   ],
   "deal": {
-    "id": "hungry-italian",
-    "name": "The Hungry Italian",
+    "id": "three-pizza-deal",
+    "name": "3 Pizza Deal",
     "priceCents": 5000,
     "required": 3,
-    "blurb": "Choose 3 from the list. A few pizzas cost a little extra.",
+    "blurb": "Any 3 from the list for $50. A few pizzas cost a little extra.",
     "choices": [
-      { "sku": "ROCCO-02", "upgradeCents": 0 },
-      { "sku": "ROCCO-03", "upgradeCents": 0 },
-      { "sku": "ROCCO-06", "upgradeCents": 0 },
-      { "sku": "ROCCO-08", "upgradeCents": 0 },
-      { "sku": "ROCCO-15", "upgradeCents": 0 },
-      { "sku": "ROCCO-04", "upgradeCents": 100 },
-      { "sku": "ROCCO-05", "upgradeCents": 200 },
-      { "sku": "ROCCO-09", "upgradeCents": 200 },
-      { "sku": "ROCCO-07", "upgradeCents": 200 }
-    ]
+      {
+        "sku": "ROCCO-02",
+        "upgradeCents": 0
+      },
+      {
+        "sku": "ROCCO-03",
+        "upgradeCents": 0
+      },
+      {
+        "sku": "ROCCO-06",
+        "upgradeCents": 0
+      },
+      {
+        "sku": "ROCCO-08",
+        "upgradeCents": 0
+      },
+      {
+        "sku": "ROCCO-15",
+        "upgradeCents": 0
+      },
+      {
+        "sku": "ROCCO-04",
+        "upgradeCents": 100
+      },
+      {
+        "sku": "ROCCO-05",
+        "upgradeCents": 200
+      },
+      {
+        "sku": "ROCCO-09",
+        "upgradeCents": 200
+      },
+      {
+        "sku": "ROCCO-07",
+        "upgradeCents": 200
+      }
+    ],
+    "enabled": true,
+    "badge": "PROMO"
+  },
+  "videos": [
+    {
+      "src": "/videos/rocco-1.mp4",
+      "poster": "/videos/rocco-1.jpg",
+      "caption": "Hold, fold, eat, repeat"
+    },
+    {
+      "src": "/videos/rocco-2.mp4",
+      "poster": "/videos/rocco-2.jpg",
+      "caption": "In the kitchen"
+    },
+    {
+      "src": "/videos/rocco-3.mp4",
+      "poster": "/videos/rocco-3.jpg",
+      "caption": "Loved pizza a long time"
+    },
+    {
+      "src": "/videos/rocco-4.mp4",
+      "poster": "/videos/rocco-4.jpg",
+      "caption": "Cutting the dough"
+    },
+    {
+      "src": "/videos/rocco-5.mp4",
+      "poster": "/videos/rocco-5.jpg",
+      "caption": "Dough, made here"
+    }
+  ],
+  "slogan": "Hold, fold, eat, repeat.",
+  "features": {
+    "club": false,
+    "catering": false,
+    "giftCards": true,
+    "_note": "Set club to true to bring back the Rocco's Club sign-up (card, footer link and chat answer)."
+  },
+  "aiOrdering": {
+    "enabled": true,
+    "phone": "7078 4471",
+    "phoneTel": "0870784471",
+    "phoneConfirmed": false,
+    "headline": "Call and order in any language",
+    "body": "Our AI phone line takes pickup orders in English, Italiano, 中文, Tiếng Việt, العربية, Ελληνικά and more. Just call and speak the way you like."
+  },
+  "pickup": {
+    "slotMinutes": 5,
+    "daysAhead": 7,
+    "hoursConfirmed": false,
+    "open": "11:30",
+    "close": "21:00",
+    "_note": "PLACEHOLDER pickup window until Rocco confirms each shop's hours."
+  },
+  "bestSellers": [
+    {
+      "sku": "ROCCO-02",
+      "badge": "Top seller"
+    },
+    {
+      "sku": "ROCCO-10",
+      "badge": "Top seller"
+    },
+    {
+      "sku": "ROCCO-13",
+      "badge": "Top seller"
+    },
+    {
+      "sku": "ROCCO-12",
+      "badge": "New"
+    }
+  ],
+  "promos": {
+    "bar": "Any 3 pizzas for $50. Build your deal",
+    "bestSellersNote": "Top sellers as marked on the current roccopizza.com.au menu."
   }
 }

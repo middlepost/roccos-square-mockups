@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node server/index.js",
     "seed": "node scripts/seed-square.js",
+    "delivery-prices": "node scripts/delivery-prices.js",
     "test": "node --test test/*.js"
   }
 }

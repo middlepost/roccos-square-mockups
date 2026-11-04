@@ -15,7 +15,7 @@ test('an empty catalog plans creates, and a second plan updates in place', () =>
   assert.equal(sausageLists.length, 1);
   const son = first.objects.find((object) => object.item_data?.variations?.[0]?.item_variation_data?.sku === 'ROCCO-01');
   assert.equal(son.item_data.variations[0].item_variation_data.price_money.amount, 2800);
-  assert.equal(son.item_data.modifier_list_info.length, 1);
+  assert.equal(son.item_data.modifier_list_info.length, 7); // every pizza now offers the full Extras list
   assert.ok(son.item_data.food_and_beverage_details.dietary_preferences.some((pref) => pref.custom_name === 'CONTAINS_NUTS'));
 
   const existing = [

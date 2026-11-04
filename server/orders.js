@@ -22,6 +22,13 @@ export function buildCheckout({ brand, menuItems, body, currency, now = new Date
     prepMinutes: brand.prepMinutes,
     now,
   });
+  if (body.when === 'time' && Array.isArray(location.openDays)) {
+    const [y, m, d] = String(body.date).split('-').map(Number);
+    const weekday = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+    if (!location.openDays.includes(weekday)) {
+      throw new PriceError(`${location.name} is closed that day. Pick another day or the other shop.`);
+    }
+  }
   const priced = priceCart(menuItems, brand.deal, body.lines, currency);
   const squareLocationId = location.squareLocationId;
   if (!squareLocationId) throw new PriceError('This store is not linked to a Square location yet.');

@@ -45,6 +45,7 @@ export function priceCart(items, deal, lines, currency = 'AUD') {
 function priceItem(bySku, line, currency) {
   const item = bySku.get(line.sku);
   if (!item) throw new PriceError('Something in the cart is no longer on the menu. Refresh and try again.');
+  if (item.dineInOnly) throw new PriceError(`${item.name} is dine-in only. Order it at the shop.`);
   const qty = asQty(line.qty, item.name);
   const keys = Array.isArray(line.modifierKeys) ? line.modifierKeys : [];
   if (new Set(keys).size !== keys.length) throw new PriceError(`Remove the duplicate add-on on ${item.name}.`);
@@ -77,7 +78,7 @@ function priceItem(bySku, line, currency) {
 }
 
 function priceDeal(bySku, deal, line, currency) {
-  if (!deal) throw new PriceError('That deal is not available.');
+  if (!deal || deal.enabled === false) throw new PriceError('That deal is not available.');
   const qty = asQty(line.qty, deal.name);
   const picks = Array.isArray(line.picks) ? line.picks : [];
   const count = picks.reduce((sum, pick) => sum + Number(pick?.qty || 0), 0);
@@ -121,4 +122,13 @@ function priceDeal(bySku, deal, line, currency) {
     picks: expanded,
     currency,
   };
+}
+
+/**
+ * Uber Eats / DoorDash price: in-store price plus 33%, rounded to the nearest dollar.
+ * Rocco agreed per-item dollar steps are fine, so an override per SKU wins when set.
+ */
+export function deliveryCents(inStoreCents, markup = 0.33, overrideCents = null) {
+  if (Number.isInteger(overrideCents)) return overrideCents;
+  return Math.round((inStoreCents * (1 + markup)) / 100) * 100;
 }

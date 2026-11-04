@@ -31,8 +31,8 @@ test('1 Nov menu is the one the site serves', () => {
   assert.equal(bySku['ROCCO-12'].name, 'Honey Pesto Chicken');
   assert.equal(bySku['ROCCO-12'].priceCents, 2600);
   assert.equal(bySku['ROCCO-12'].containsNuts, true);
-  assert.equal(bySku['ROCCO-12'].toConfirm, true);
-  assert.match(bySku['ROCCO-12'].description, /^To confirm/i);
+  assert.equal(bySku['ROCCO-12'].toConfirm, false);
+  assert.match(bySku['ROCCO-12'].description, /basil pesto/);
   assert.equal(bySku['ROCCO-15'].name, 'Nutella Bomb');
   assert.equal(bySku['ROCCO-15'].priceCents, 1800);
   assert.equal(bySku['ROCCO-15'].category, 'dessert');
@@ -42,7 +42,7 @@ test('1 Nov menu is the one the site serves', () => {
   const names = menu.items.map((item) => item.name).join(' | ');
   assert.doesNotMatch(names, /President|Hot Salame|Big Nutella|Cheesy Garlic Mozzarella/);
   const confirm = menu.items.filter((item) => item.toConfirm).map((item) => item.sku).sort();
-  assert.deepEqual(confirm, ['ROCCO-07', 'ROCCO-12']);
+  assert.deepEqual(confirm, ['ROCCO-07']);
   const veg = pizzas.filter((item) => item.vegetarian).map((item) => item.sku).sort();
   assert.deepEqual(veg, ['ROCCO-02', 'ROCCO-03', 'ROCCO-04', 'ROCCO-06', 'ROCCO-08']);
 });
@@ -63,8 +63,12 @@ test('each food photo is the approved file and is not a text overlay', () => {
 });
 
 test('the page keeps the v3 wording and the 1 Nov names', () => {
-  assert.match(html, /Pizza that <em>loves you back\.<\/em>/);
-  assert.match(html, /Fourteen pizzas\. No unnecessary extras\./);
+  assert.match(html, /Hold, fold, eat, <em>repeat\.<\/em>/);
+  assert.match(html, /Fourteen pizzas\. Hold, fold, eat, repeat\./);
+  assert.doesNotMatch(html, /Hungry Italian|Catering/);
+  assert.match(html, /Best Sellers/);
+  assert.match(html, /Alcohol is dine-in only/);
+  assert.match(html, /We sell dough/);
   assert.match(html, /Takeaway pizza deserves better\./);
   assert.match(html, /Cheesy Garlic/);
   assert.match(html, /Nutella Bomb/);

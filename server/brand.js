@@ -38,6 +38,8 @@ export function presentLocalItem(item) {
     category: item.category,
     vegetarian: Boolean(item.vegetarian),
     containsNuts: Boolean(item.containsNuts),
+    dineInOnly: Boolean(item.dineInOnly),
+    alcohol: Boolean(item.alcohol),
     toConfirm: Boolean(item.toConfirm) || /^to confirm/i.test(item.description || ''),
     imageUrl: item.image ? `/images/products/${item.image}` : null,
     variationId: null,
