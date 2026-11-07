@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { PriceError, formatMoney, priceCart } from '../shared/pricing.js';
 import { toE164 } from './phone.js';
 import { resolvePickup } from './time.js';
+import { pizzaCount } from './slots.js';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -29,7 +30,18 @@ export function buildCheckout({ brand, menuItems, body, currency, now = new Date
       throw new PriceError(`${location.name} is closed that day. Pick another day or the other shop.`);
     }
   }
+  if (body.when === 'time' && brand.pickup?.slotMinutes) {
+    const [hh, mm] = String(body.time).split(':').map(Number);
+    const mins = hh * 60 + mm;
+    const toMin = (v) => { const [a, b] = String(v).split(':').map(Number); return a * 60 + b; };
+    const open = toMin(brand.pickup.open || '00:00');
+    const close = toMin(brand.pickup.close || '23:59');
+    if (mins < open || mins > close || (mins - open) % brand.pickup.slotMinutes !== 0) {
+      throw new PriceError(`Pick a pickup time from the list (every ${brand.pickup.slotMinutes} minutes from ${brand.pickup.open}).`);
+    }
+  }
   const priced = priceCart(menuItems, brand.deal, body.lines, currency);
+  const pizzas = pizzaCount(priced, menuItems);
   const squareLocationId = location.squareLocationId;
   if (!squareLocationId) throw new PriceError('This store is not linked to a Square location yet.');
 
@@ -107,6 +119,7 @@ export function buildCheckout({ brand, menuItems, body, currency, now = new Date
     squareLocationId,
     location,
     pickup,
+    pizzas,
     summary,
     customer: { name, phone },
   };

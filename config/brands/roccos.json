@@ -180,12 +180,13 @@
     "body": "Our AI phone line takes pickup orders in English, Italiano, 中文, Tiếng Việt, العربية, Ελληνικά and more. Just call and speak the way you like."
   },
   "pickup": {
-    "slotMinutes": 5,
+    "slotMinutes": 15,
+    "maxPizzasPerSlot": 10,
     "daysAhead": 7,
     "hoursConfirmed": false,
-    "open": "11:30",
+    "open": "17:30",
     "close": "21:00",
-    "_note": "PLACEHOLDER pickup window until Rocco confirms each shop's hours."
+    "_note": "Michelle 5 Nov: slots from 17:30 every 15 min, max 10 pizzas each. Close time is a placeholder until Rocco confirms hours."
   },
   "bestSellers": [
     {

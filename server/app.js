@@ -5,6 +5,7 @@ import { menuFromCatalog } from './catalog.js';
 import { recordEnquiry, notifyEnquiry, validateEnquiry } from './enquiries.js';
 import { buildCheckout, paymentBody } from './orders.js';
 import { SquareError } from './square.js';
+import { createSlotBook } from './slots.js';
 import { PriceError, priceCart } from '../shared/pricing.js';
 
 const TYPES = {
@@ -155,6 +156,7 @@ export function createApp({
   fetchImpl = fetch,
 }) {
   let cache = { at: 0, value: null };
+  const slotBook = createSlotBook();
 
   function configBody() {
     return {
@@ -251,6 +253,14 @@ export function createApp({
         sendJson(res, 200, { ok: true, id: entry.id, delivery: entry.delivery, message: "Thanks. We've got your request." });
         return;
       }
+      if (req.method === 'GET' && pathname === '/api/slots') {
+        const url = new URL(req.url, 'http://x');
+        sendJson(res, 200, {
+          max: brand.pickup?.maxPizzasPerSlot || null,
+          used: slotBook.forDay(url.searchParams.get('location') || '', url.searchParams.get('date') || ''),
+        });
+        return;
+      }
       if (req.method === 'POST' && pathname === '/api/checkout') {
         if (!square) {
           sendJson(res, 503, {
@@ -267,6 +277,15 @@ export function createApp({
           currency: current.currency || 'AUD',
           now: clock(),
         });
+        const cap = brand.pickup?.maxPizzasPerSlot;
+        if (cap && body.when === 'time' && checkout.pizzas > 0) {
+          const taken = slotBook.used(checkout.location.key, body.date, body.time);
+          if (taken + checkout.pizzas > cap) {
+            const left = Math.max(0, cap - taken);
+            sendJson(res, 409, { error: `That pickup time is full (${cap} pizzas per 15 minutes, ${left} left). Pick another time. Nothing was charged.` });
+            return;
+          }
+        }
         const created = await square.createOrder(checkout.order, `${checkout.idempotencyKey}-order`);
         const order = created.order;
         const amount = order?.total_money?.amount;
@@ -303,6 +322,7 @@ export function createApp({
           });
           return;
         }
+        if (body.when === 'time' && checkout.pizzas > 0) slotBook.add(checkout.location.key, body.date, body.time, checkout.pizzas);
         console.log(`Paid ${order.id} ${amount} ${checkout.currency} pickup=${checkout.location.key}`);
         sendJson(res, 200, {
           ok: true,

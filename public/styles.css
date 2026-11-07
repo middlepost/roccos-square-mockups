@@ -706,3 +706,37 @@ h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-hea
 .logo-box{background:var(--red);border-radius:16px;padding:5px 12px;box-shadow:0 6px 16px rgba(200,16,46,.25)}
 .logo-box img{height:62px}
 .fbrand .logo-box{display:inline-block;align-self:flex-start}.fbrand .logo-box img{height:90px}
+
+/* Michelle 5 Nov changes */
+.nav ul.main{gap:18px}
+.nav ul.main a{white-space:nowrap}
+.tick{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:var(--ink);user-select:none;padding:6px 10px;border:2px solid var(--red);border-radius:999px;background:#fff}
+.tick input{position:absolute;opacity:0;width:1px;height:1px}
+.tick .box{width:20px;height:20px;border:2px solid var(--red);border-radius:5px;display:grid;place-items:center;background:#fff;flex:none}
+.tick input:checked + .box{background:var(--red)}
+.tick input:checked + .box::after{content:'✓';color:#fff;font-size:14px;line-height:1}
+.tick input:focus-visible + .box{outline:3px solid var(--ink);outline-offset:2px}
+.item.ticked{box-shadow:0 0 0 3px var(--red)}
+.book,.faq{padding:72px 0}
+.book{background:var(--red);color:var(--cream)}
+.book h2,.book p,.book .eyebrow{color:var(--cream)}
+.book .btn-primary{background:var(--cream);color:var(--red)}
+.book-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.faq-list{display:grid;gap:10px;max-width:820px}
+.faq details{background:#fff;border:1px solid rgba(200,16,46,.25);border-radius:12px;padding:14px 18px}
+.faq summary{font-weight:700;cursor:pointer;color:var(--ink)}
+.faq details p{margin:10px 0 0;color:var(--grey)}
+.faq .eyebrow,.book .eyebrow{color:var(--red)}
+.book .eyebrow{color:var(--cream)}
+.faq-more{margin-top:16px;color:var(--grey)}
+.ticker-bottom{overflow:hidden;background:var(--red);color:var(--cream);border-top:2px solid var(--cream);padding:12px 0;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.tb-track{display:flex;gap:48px;width:max-content;animation:tbScroll 28s linear infinite}
+.tb-track span::after{content:'✦';margin-left:48px}
+@keyframes tbScroll{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.tb-track{animation:none}}
+.fm-shop{display:flex;flex-direction:column;gap:4px;margin-bottom:16px}
+.fm-addr{opacity:.85}
+.fm-ai{font-size:.9rem;opacity:.9}
+.fm-ai a{font-weight:700}
+.cf-ready{font-size:1.1rem;color:var(--red)}
+.book .section-head h2,.book .section-head p,.book .section-head .eyebrow{color:var(--cream)!important}

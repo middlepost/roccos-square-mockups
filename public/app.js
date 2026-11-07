@@ -98,7 +98,8 @@ function applyBrand() {
   // Feature toggles: anything marked data-feature="x" shows only when brand.features.x is true.
   $$('[data-feature]').forEach((el) => { el.hidden = !on(el.dataset.feature); });
   const locs = brand.locations || [];
-  $('#footerMeta').innerHTML = locs.map((loc) => `<div class="fm-shop"><b>${esc(loc.name)}</b> · ${esc(loc.address)}<br>${phoneLink(loc)}</div>`).join('')
+  const ai = brand.aiOrdering?.enabled ? brand.aiOrdering : null;
+  $('#footerMeta').innerHTML = locs.map((loc) => `<div class="fm-shop"><b>${esc(loc.name)}</b><span class="fm-addr">${esc(loc.address)}</span>${phoneLink(loc)}${ai ? `<span class="fm-ai">AI phone line: call <a href="tel:${esc(ai.phoneTel || loc.phoneTel || brand.phoneTel)}">${esc(ai.phone || loc.phone || brand.phone)}</a> and order in any language</span>` : ''}</div>`).join('')
     || `<a href="tel:${esc(brand.phoneTel)}">${esc(brand.phone)}</a>`;
   $('#footerNote').textContent = square?.environment === 'production' ? 'Pickup orders' : 'Sandbox demo · test cards only';
   const heroMeta = $('#heroMeta');
@@ -126,6 +127,7 @@ function applyBrand() {
   }
   const doughShops = locs.map((loc) => `<a class="btn btn-primary btn-sm" href="tel:${esc(loc.phoneTel || brand.phoneTel)}">${PHONE_ICON} ${esc(loc.name)}</a>`).join('');
   if ($('#doughActs')) $('#doughActs').innerHTML = doughShops;
+  if ($('#bookActs') && locs.length) $('#bookActs').innerHTML = locs.map((loc) => `<a class="btn btn-primary" href="tel:${esc(loc.phoneTel || brand.phoneTel)}">${PHONE_ICON} Book at ${esc(loc.name)} · ${esc(loc.phone || brand.phone)}</a>`).join('');
   const pay = $('#payNote');
   if (square?.environment === 'sandbox') {
     pay.textContent = square.paymentsReady
@@ -341,7 +343,7 @@ function renderMenu() {
         <div class="price">${money(item.priceCents)}</div>
         ${item.description ? `<p>${esc(item.description)}</p>` : ''}
         ${opts ? `<button class="extras-btn" type="button" aria-expanded="false">+ Extras <span class="xc"></span></button><div class="opts" hidden>${opts}</div>` : ''}
-        <div class="buy"><span class="live">${money(item.priceCents)}</span><button class="btn btn-primary btn-sm add" type="button">Add to order</button></div>
+        <div class="buy"><span class="live">${money(item.priceCents)}</span><label class="tick"><input type="checkbox" class="tick-in" aria-label="Add ${esc(item.name)} to order"><span class="box" aria-hidden="true"></span><span class="tl">Add to order</span></label></div>
       </div>
     </article>`;
   }).join('');
@@ -411,6 +413,32 @@ function onAdd(event) {
   setTimeout(() => { button.textContent = item.category === 'drinks' ? 'Add' : 'Add to order'; }, 900);
 }
 $('#items').addEventListener('click', onAdd);
+$('#items').addEventListener('change', (event) => {
+  const tick = event.target.closest('.tick-in');
+  if (!tick) return;
+  const article = tick.closest('.item');
+  const item = itemBySku(article.dataset.sku);
+  if (!item) return;
+  if (tick.checked) {
+    const modifierKeys = $$('input[data-key]:checked', article).map((input) => input.dataset.key).sort();
+    if (!addLine(item.sku, modifierKeys)) { tick.checked = false; return; }
+  } else {
+    for (let i = lines.length - 1; i >= 0; i -= 1) if (lines[i].type === 'item' && lines[i].sku === item.sku) lines.splice(i, 1);
+    renderCart();
+  }
+  syncTicks();
+});
+function syncTicks() {
+  $$('#items .item').forEach((article) => {
+    const tick = $('.tick-in', article);
+    if (!tick) return;
+    const qty = lines.filter((line) => line.type === 'item' && line.sku === article.dataset.sku).reduce((sum, line) => sum + line.qty, 0);
+    tick.checked = qty > 0;
+    article.classList.toggle('ticked', qty > 0);
+    const label = $('.tl', article);
+    if (label) label.textContent = qty > 1 ? `Added ×${qty}` : qty ? 'Added' : 'Add to order';
+  });
+}
 $('#drinkList').addEventListener('click', onAdd);
 
 function applyFilters() {
@@ -506,6 +534,7 @@ function renderCart() {
   let priced = { totalCents: 0, lines: [] };
   try { priced = currentPrice(); } catch { lines = []; }
   const count = lines.reduce((sum, line) => sum + line.qty, 0);
+  syncTicks();
   $('#cartCount').textContent = String(count);
   $('#mbarCount').textContent = count ? `(${count})` : '';
   const box = $('#cartLines');
@@ -635,8 +664,34 @@ function buildTimes() {
   const index = option ? Number(option.dataset.i) : 0;
   const { times } = slotsFor(Number.isFinite(index) ? index : 0);
   const previous = $('#coTime').value;
-  $('#coTime').innerHTML = times.map((t) => `<option value="${hhmm(t)}">${fmt(hhmm(t))}</option>`).join('') || '<option value="">No times left</option>';
-  if (times.some((t) => hhmm(t) === previous)) $('#coTime').value = previous;
+  const used = slotUse.key === `${store}|${option?.value}` ? slotUse.used : {};
+  const max = slotUse.max;
+  const want = cartPizzas();
+  const isFull = (t) => max && (used[hhmm(t)] || 0) + Math.max(want, 1) > max;
+  $('#coTime').innerHTML = times.map((t) => {
+    const full = isFull(t);
+    const left = max ? max - (used[hhmm(t)] || 0) : null;
+    return `<option value="${hhmm(t)}"${full ? ' disabled' : ''}>${fmt(hhmm(t))}${full ? ' · full' : left !== null && left < max ? ` · ${left} pizza${left === 1 ? '' : 's'} left` : ''}</option>`;
+  }).join('') || '<option value="">No times left</option>';
+  const open = times.filter((t) => !isFull(t));
+  if (open.some((t) => hhmm(t) === previous)) $('#coTime').value = previous;
+  else if (open.length) $('#coTime').value = hhmm(open[0]);
+  const key = `${store}|${option?.value}`;
+  if (option?.value && slotUse.key !== key && !slotUse.loading) {
+    slotUse.loading = true;
+    fetch(`/api/slots?location=${encodeURIComponent(store || '')}&date=${encodeURIComponent(option.value)}`)
+      .then((r) => r.json()).then((data) => { Object.assign(slotUse, { key, used: data.used || {}, max: data.max || null }); })
+      .catch(() => {}).finally(() => { slotUse.loading = false; if (slotUse.key === key) buildTimes(); });
+  }
+}
+var slotUse = { key: '', used: {}, max: null, loading: false };
+function cartPizzas() {
+  let n = 0;
+  for (const line of lines) {
+    if (line.type === 'item') { if (itemBySku(line.sku)?.category === 'pizza') n += line.qty; }
+    else for (const pick of line.picks || []) if (itemBySku(pick.sku)?.category === 'pizza') n += pick.qty * line.qty;
+  }
+  return n;
 }
 
 function say(message, isError) {
@@ -705,11 +760,13 @@ $('#checkout').addEventListener('submit', async (event) => {
     if (!response.ok) throw new Error(body.error || 'Payment failed.');
     const confirm = $('#confirm');
     const shop = locByKey(store);
-    confirm.innerHTML = `<h4>Order received</h4><p class="cf-store">Pick up from <b>${esc(shop?.name || '')}</b>, ${esc(shop?.address || '')}</p><p>Thanks ${esc(data.name)}. Square order <strong>${esc(body.orderId)}</strong> is paid (${esc(body.status)}).</p>
+    const ready = data.when === 'time' ? `Ready for pickup at <b>${esc(fmt(data.time))}</b>.` : '<b>Pick up within 30 minutes.</b>';
+    confirm.innerHTML = `<h4>Order received</h4><p class="cf-ready">${ready}</p><p class="cf-store">Pick up from <b>${esc(shop?.name || '')}</b>, ${esc(shop?.address || '')}</p><p>Thanks ${esc(data.name)}. Square order <strong>${esc(body.orderId)}</strong> is paid (${esc(body.status)}).</p>
       <pre>${esc(body.summary)}</pre>
       <div class="acts">${body.receiptUrl ? `<a class="btn btn-primary btn-sm" href="${esc(body.receiptUrl)}" target="_blank" rel="noopener">View receipt</a>` : ''}<a class="btn btn-ghost btn-sm" href="tel:${esc(shop?.phoneTel || brand.phoneTel)}">Call ${esc(shop?.name || '')} ${esc(shop?.phone || brand.phone)}</a></div>`;
     confirm.classList.add('show');
     lines = [];
+    slotUse.key = '';
     renderCart();
     form.reset();
     paintStore();

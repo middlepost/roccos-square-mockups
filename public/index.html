@@ -33,11 +33,13 @@
   <div class="wrap nav">
     <a href="#top" class="logo-box" aria-label="Rocco's Italian Sourdough Pizza"><img src="/images/brand/roccos-face-logo-cream.png?v=3" alt="Rocco's — Italian Sourdough Pizza"></a>
     <ul class="main" id="links">
+      <li><a href="#story">Our Story</a></li>
       <li><a href="#menu">Menu</a></li>
-      <li><a href="#bestsellers" class="nav-promo">Best sellers &amp; promos</a></li>
-      <li><a href="#visit">Visit us</a></li>
-      <li><a href="#story">Our story</a></li>
-      <li><a href="#extras">Gift cards &amp; dough</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#menu" class="nav-promo">Order Now</a></li>
+      <li><a href="#book">Book a Table</a></li>
+      <li><a href="#careers" class="careers-open">Careers</a></li>
+      <li><a href="#faq">FAQs</a></li>
     </ul>
     <div style="display:flex;gap:10px;align-items:center">
       <button class="cart-btn" id="openCart" aria-label="Open your order"><span class="lbl">Your order</span><span class="cart-store" id="cartStore"></span><span class="count" id="cartCount">0</span></button>
@@ -75,8 +77,8 @@
 </div>
 
 <div class="strip" aria-hidden="true"><div>
-  <span>Hold, fold, eat, repeat</span>★<span>Wood-oven open kitchen</span>★<span>Slow-risen sourdough</span>★<span>Call &amp; order in any language</span>★<span>We sell dough</span>★<span>BYO, no corkage</span>★
-  <span>Hold, fold, eat, repeat</span>★<span>Wood-oven open kitchen</span>★<span>Slow-risen sourdough</span>★<span>Call &amp; order in any language</span>★<span>We sell dough</span>★<span>BYO, no corkage</span>★
+  <span>Hold, fold, eat, repeat</span>★<span>We use imported cheese</span>★<span>Wood-oven open kitchen</span>★<span>Slow-risen sourdough</span>★<span>Call &amp; order in any language</span>★<span>We sell dough</span>★<span>BYO, no corkage</span>★
+  <span>Hold, fold, eat, repeat</span>★<span>We use imported cheese</span>★<span>Wood-oven open kitchen</span>★<span>Slow-risen sourdough</span>★<span>Call &amp; order in any language</span>★<span>We sell dough</span>★<span>BYO, no corkage</span>★
 </div></div>
 
 <section class="visit" id="visit" aria-label="Visit us">
@@ -318,6 +320,37 @@
   </div>
 </section>
 
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Book a table</div>
+      <h2>Dining in? Give us a call</h2>
+      <p>We take table bookings by phone. Call the shop you'd like to visit and we'll set a table aside. BYO wine, no corkage.</p>
+    </div>
+    <div class="book-acts" id="bookActs"><a class="btn btn-primary" href="tel:0870784471">Call 7078 4471</a></div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">FAQs</div>
+      <h2>Good questions</h2>
+    </div>
+    <div class="faq-list">
+      <details><summary>How does pickup work?</summary><p>Tick the pizzas you want on the menu, choose Findon Rd or Grange Rd, pick a pickup time and pay by card. Pickup times run every 15 minutes from 5:30pm.</p></details>
+      <details><summary>Can I order by phone in my language?</summary><p>Yes. Call our AI phone line and order in the language you're most comfortable with.</p></details>
+      <details><summary>Do you deliver?</summary><p>This site is pickup only. For delivery, use the delivery apps.</p></details>
+      <details><summary>Can I bring wine?</summary><p>Yes, BYO with no corkage when you dine in. Beer and wine we sell are dine-in only.</p></details>
+      <details><summary>Do you sell dough?</summary><p>Yes. Ask at either shop or call ahead and we'll put some aside.</p></details>
+      <details><summary>Allergies?</summary><p>Some items contain nuts. Tell us in the order notes, or call the shop to check.</p></details>
+    </div>
+    <p class="faq-more">Something else? Tap the chat bubble and ask us.</p>
+  </div>
+</section>
+
+<div class="ticker-bottom" aria-label="We use imported cheese"><div class="tb-track"><span>We use imported cheese</span><span>Hold, fold, eat, repeat</span><span>We use imported cheese</span><span>Sourdough from the wood oven</span><span>We use imported cheese</span><span>Hold, fold, eat, repeat</span><span>We use imported cheese</span><span>Sourdough from the wood oven</span></div></div>
+
 <footer>
   <div class="wrap fgrid">
     <div class="fcol fbrand">
@@ -399,6 +432,6 @@
 </nav>
 
 <script type="module" src="/app.js"></script>
-<script>document.getElementById("careersLink").onclick=e=>{e.preventDefault();const b=document.getElementById("careersBox");b.hidden=!b.hidden;b.scrollIntoView({behavior:"smooth",block:"center"})}</script>
+<script>document.querySelectorAll("#careersLink,.careers-open").forEach(a=>a.onclick=e=>{e.preventDefault();const b=document.getElementById("careersBox");b.hidden=false;b.scrollIntoView({behavior:"smooth",block:"center"})})</script>
 </body>
 </html>
