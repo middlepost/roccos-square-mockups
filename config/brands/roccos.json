@@ -7,8 +7,8 @@
   "enquiryEmail": "placeholder@example.com",
   "phone": "7078 4471",
   "phoneTel": "0870784471",
-  "logoImage": "/images/brand/roccos-face-logo-cream.png?v=3",
-  "instagram": "",
+  "logoImage": "/images/brand/roccos-face-badge.png?v=1",
+  "instagram": "https://www.instagram.com/roccopizza_italiansourdough/",
   "videoUrl": "/videos/rocco-1.mp4",
   "prepMinutes": 20,
   "currency": "AUD",
@@ -42,8 +42,84 @@
     "cite": "Rocco’s promise"
   },
   "hours": {
-    "findon": null,
-    "grange": null
+    "findon": {
+      "mon": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ],
+      "tue": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ],
+      "wed": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ],
+      "thu": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ],
+      "fri": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ],
+      "sat": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ],
+      "sun": [
+        [
+          "17:00",
+          "21:00"
+        ]
+      ]
+    },
+    "grange": {
+      "mon": [],
+      "tue": [],
+      "wed": [
+        [
+          "17:00",
+          "20:00"
+        ]
+      ],
+      "thu": [
+        [
+          "17:00",
+          "20:00"
+        ]
+      ],
+      "fri": [
+        [
+          "17:00",
+          "20:00"
+        ]
+      ],
+      "sat": [
+        [
+          "17:00",
+          "20:00"
+        ]
+      ],
+      "sun": [
+        [
+          "17:00",
+          "20:00"
+        ]
+      ]
+    }
   },
   "categories": {
     "pizza": "Pizzas",
@@ -59,7 +135,7 @@
       "squareLocationId": "LFXEWDVVKRYC0",
       "phone": "7078 4471",
       "phoneTel": "0870784471",
-      "phoneConfirmed": false,
+      "phoneConfirmed": true,
       "openDays": [
         0,
         1,
@@ -69,7 +145,7 @@
         5,
         6
       ],
-      "daysLabel": "Open 7 days, Monday to Sunday"
+      "daysLabel": "Open 7 days, 5pm to 9pm"
     },
     {
       "key": "grange",
@@ -79,7 +155,7 @@
       "squareLocationId": "LFXEWDVVKRYC0",
       "phone": "7078 4471",
       "phoneTel": "0870784471",
-      "phoneConfirmed": false,
+      "phoneConfirmed": true,
       "openDays": [
         0,
         3,
@@ -87,7 +163,7 @@
         5,
         6
       ],
-      "daysLabel": "Open 5 days, Wednesday to Sunday"
+      "daysLabel": "Wednesday to Sunday, 5pm to 8pm"
     }
   ],
   "deal": {
@@ -175,7 +251,7 @@
     "enabled": true,
     "phone": "7078 4471",
     "phoneTel": "0870784471",
-    "phoneConfirmed": false,
+    "phoneConfirmed": true,
     "headline": "Call and order in any language",
     "body": "Our AI phone line takes pickup orders in English, Italiano, 中文, Tiếng Việt, العربية, Ελληνικά and more. Just call and speak the way you like."
   },
@@ -183,10 +259,10 @@
     "slotMinutes": 15,
     "maxPizzasPerSlot": 10,
     "daysAhead": 7,
-    "hoursConfirmed": false,
+    "hoursConfirmed": true,
     "open": "17:30",
     "close": "21:00",
-    "_note": "Michelle 5 Nov: slots from 17:30 every 15 min, max 10 pizzas each. Close time is a placeholder until Rocco confirms hours."
+    "_note": "Slots from 17:30 (or opening if later) every 15 min, max 10 pizzas, last slot 15 min before each shop closes that day."
   },
   "bestSellers": [
     {
@@ -209,5 +285,7 @@
   "promos": {
     "bar": "Any 3 pizzas for $50. Build your deal",
     "bestSellersNote": "Top sellers as marked on the current roccopizza.com.au menu."
-  }
+  },
+  "hoursSource": "roccopizza.com.au (Findon open 7 days, Grange Wed-Sun) + Google listings via web search 7 Nov 2026: Findon 5-9pm, Grange 5-8pm",
+  "facebook": "https://www.facebook.com/roccopizzaitaliansourdough"
 }

@@ -210,6 +210,21 @@ function paintAi() {
   if (ai.headline) $('#aiHead').textContent = ai.headline;
   if (ai.body) $('#aiBody').textContent = ai.body;
 }
+function paintHeroPhotos() {
+  const box = $('#heroPhotos');
+  if (!box) return;
+  const pizzas = (menu.items || []).filter((item) => item.category === 'pizza' && item.imageUrl);
+  const best = (brand?.bestSellers || []).map((entry) => pizzas.find((item) => item.sku === entry.sku)).filter(Boolean);
+  const picks = [...new Set([...best, ...pizzas])].slice(0, 5);
+  box.innerHTML = picks.map((item, i) => `<button type="button" class="hp hp-${i}" data-sku="${esc(item.sku)}" aria-label="${esc(item.name)}"><img src="${esc(item.imageUrl)}" alt="${esc(item.name)}"><span class="hp-name">${esc(item.name)} · ${money(item.priceCents)}</span></button>`).join('');
+  box.onclick = (event) => {
+    const btn = event.target.closest('.hp');
+    if (!btn) return;
+    const was = btn.classList.contains('show');
+    $$('.hp', box).forEach((b) => b.classList.remove('show'));
+    if (!was) btn.classList.add('show');
+  };
+}
 function paintVideos() {
   const videos = brand.videos || [];
   if (!videos.length) return;
@@ -617,13 +632,22 @@ function slotsFor(dateIndex) {
   const day = adelaideParts(new Date(now.getTime() + dateIndex * 86_400_000));
   const loc = locByKey(store);
   if (loc?.openDays && !loc.openDays.includes(day.dow)) return { day, times: [] };
-  let first = win.open;
+  let open = win.open;
+  let close = win.close;
+  const shopHours = brand?.hours?.[store];
+  if (shopHours) {
+    const ranges = shopHours[DAYS[day.dow]] || [];
+    if (!ranges.length) return { day, times: [] };
+    open = Math.max(open, minutes(ranges[0][0]));
+    close = minutes(ranges[ranges.length - 1][1]) - win.step;
+  }
+  let first = open;
   if (dateIndex === 0) {
     const earliest = adelaideParts(now).min + (brand?.prepMinutes || 20);
-    first = Math.max(first, Math.ceil(earliest / win.step) * win.step);
+    first = Math.max(first, Math.ceil((earliest - open) / win.step) * win.step + open);
   }
   const times = [];
-  for (let t = first; t <= win.close; t += win.step) times.push(t);
+  for (let t = first; t <= close; t += win.step) times.push(t);
   return { day, times };
 }
 function dayLabel(day, index) {
@@ -1056,6 +1080,7 @@ async function start() {
     if (Array.isArray(saved)) lines = saved.filter((line) => line && (line.type === 'deal' || menu.items.some((item) => item.sku === line.sku)));
   } catch { /* ignore */ }
   renderMenu();
+  paintHeroPhotos();
   paintDeal();
   const locations = $('#locations');
   if (locations) {

@@ -31,13 +31,22 @@ export function buildCheckout({ brand, menuItems, body, currency, now = new Date
     }
   }
   if (body.when === 'time' && brand.pickup?.slotMinutes) {
-    const [hh, mm] = String(body.time).split(':').map(Number);
-    const mins = hh * 60 + mm;
     const toMin = (v) => { const [a, b] = String(v).split(':').map(Number); return a * 60 + b; };
-    const open = toMin(brand.pickup.open || '00:00');
-    const close = toMin(brand.pickup.close || '23:59');
-    if (mins < open || mins > close || (mins - open) % brand.pickup.slotMinutes !== 0) {
-      throw new PriceError(`Pick a pickup time from the list (every ${brand.pickup.slotMinutes} minutes from ${brand.pickup.open}).`);
+    const mins = toMin(body.time);
+    const step = brand.pickup.slotMinutes;
+    let open = toMin(brand.pickup.open || '00:00');
+    let close = toMin(brand.pickup.close || '23:59');
+    const shopHours = brand.hours?.[location.key];
+    if (shopHours) {
+      const [y, m, d] = String(body.date).split('-').map(Number);
+      const dayKey = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+      const ranges = shopHours[dayKey] || [];
+      if (!ranges.length) throw new PriceError(`${location.name} is closed that day. Pick another day or the other shop.`);
+      open = Math.max(open, toMin(ranges[0][0]));
+      close = toMin(ranges[ranges.length - 1][1]) - step;
+    }
+    if (mins < open || mins > close || (mins - open) % step !== 0) {
+      throw new PriceError(`Pick a pickup time from the list (every ${step} minutes).`);
     }
   }
   const priced = priceCart(menuItems, brand.deal, body.lines, currency);

@@ -740,3 +740,24 @@ h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-hea
 .fm-ai a{font-weight:700}
 .cf-ready{font-size:1.1rem;color:var(--red)}
 .book .section-head h2,.book .section-head p,.book .section-head .eyebrow{color:var(--cream)!important}
+/* 7 Nov: round photo logo + real photos around the spinning pizza */
+.logo-box,.fbrand .logo-box{background:transparent!important;padding:0!important;border-radius:50%!important;box-shadow:0 6px 16px rgba(200,16,46,.25)!important}
+.logo-box img{height:72px!important;width:72px!important;max-width:none!important;object-fit:contain!important;border-radius:50%;clip-path:none!important}
+.fbrand .logo-box img{height:110px!important;width:110px!important}
+.hero-photos{position:absolute;inset:0;z-index:4;pointer-events:none}
+.hp{position:absolute;pointer-events:auto;width:104px;height:104px;border-radius:50%;padding:0;border:4px solid var(--cream);background:#fff;box-shadow:0 10px 24px rgba(158,12,35,.3);cursor:pointer;transition:transform .2s}
+.hp img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.hp:hover,.hp.show{transform:scale(1.08);z-index:6}
+.hp-name{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;background:var(--red);color:var(--cream);font-weight:700;font-size:.85rem;padding:6px 12px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s}
+.hp.show .hp-name,.hp:hover .hp-name{opacity:1}
+.hp-0{right:-60px;top:4%}
+.hp-1{right:-60px;top:30%}
+.hp-2{right:-60px;top:56%}
+.hp-3{left:150px;bottom:-60px}
+.hp-4{left:270px;bottom:-60px}
+@media (max-width:900px){
+  .hero-photos{position:static;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:0 0 16px;pointer-events:auto}
+  .hp{position:relative;left:auto!important;right:auto!important;top:auto!important;width:62px;height:62px;border-width:3px}
+  .hp-name{font-size:.75rem}
+  .logo-box img{height:60px!important;width:60px!important}
+}
