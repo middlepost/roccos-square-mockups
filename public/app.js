@@ -103,8 +103,8 @@ function applyBrand() {
     || `<a href="tel:${esc(brand.phoneTel)}">${esc(brand.phone)}</a>`;
   $('#footerNote').textContent = square?.environment === 'production' ? 'Pickup orders' : 'Sandbox demo · test cards only';
   const heroMeta = $('#heroMeta');
-  heroMeta.innerHTML = locs.map((loc) => `<div><b>${esc(loc.name)}</b><span class="badge" data-status="${esc(loc.key)}">Checking hours…</span></div>`).join('');
-  if (!locs.length) {
+  if (heroMeta) heroMeta.innerHTML = locs.map((loc) => `<div><b>${esc(loc.name)}</b><span class="badge" data-status="${esc(loc.key)}">Checking hours…</span></div>`).join('');
+  if (!locs.length && heroMeta) {
     heroMeta.innerHTML = `<div><b>Call</b><a href="tel:${esc(brand.phoneTel)}" style="text-decoration:none">${esc(brand.phone)}</a></div>`;
   }
   try { store = sessionStorage.getItem(`store:${brand.id}`); } catch { store = null; }
@@ -167,6 +167,20 @@ function buildStoreButtons() {
   const btn = (loc, cls) => `<button type="button" class="${cls}${loc.key === store ? ' active' : ''}" role="radio" aria-checked="${loc.key === store}" data-store="${esc(loc.key)}"><b>${esc(loc.name)}</b><small>${esc(loc.address)}</small></button>`;
   $('#coStores').innerHTML = locs.map((loc) => btn(loc, 'store-btn')).join('');
   $('#ssBtns').innerHTML = locs.map((loc) => btn(loc, 'ss-btn')).join('');
+  const today = (loc) => {
+    const day = DAYS[adelaideParts(new Date()).dow];
+    const ranges = brand?.hours?.[loc.key]?.[day] || [];
+    return ranges.length ? `Today ${ranges.map((r) => `${fmt(r[0])}–${fmt(r[1])}`).join(', ')}` : 'Closed today';
+  };
+  $('#osCards').innerHTML = locs.map((loc) => `<a href="#menu" class="os-card" role="radio" data-order="${esc(loc.key)}" data-store="${esc(loc.key)}" aria-checked="false">
+      <span class="os-pin">📍</span>
+      <b>${esc(loc.name)}</b>
+      <span class="os-addr">${esc(loc.address)}</span>
+      <span class="badge" data-status="${esc(loc.key)}">Checking hours…</span>
+      <span class="os-today">${esc(today(loc))} · ${esc(loc.daysLabel || '')}</span>
+      <span class="os-go">Order from ${esc(loc.name)} →</span>
+    </a>`).join('');
+  paintStatus();
   paintStore();
 }
 function paintStore() {
@@ -181,7 +195,30 @@ function paintStore() {
   $('#drawerStore').innerHTML = loc ? `Ordering from <b>${esc(loc.name)}</b> (${esc(loc.address)})` : '';
   $('#cartStore').textContent = loc ? `· ${loc.name}` : '';
   $('#storeSwitch').dataset.current = label;
+  paintChosen();
   buildSlots();
+}
+function isChosen() { try { return sessionStorage.getItem(`chosen:${brand?.id}`) === '1'; } catch { return false; } }
+function markChosen() {
+  try { sessionStorage.setItem(`chosen:${brand.id}`, '1'); } catch { /* ignore */ }
+  paintChosen();
+}
+function paintChosen() {
+  const chosen = isChosen();
+  document.body.classList.toggle('shop-chosen', chosen);
+  $$('.os-card').forEach((el) => {
+    const on = chosen && el.dataset.store === store;
+    el.classList.toggle('active', on);
+    el.setAttribute('aria-checked', String(on));
+  });
+  $$('.os-steps li').forEach((li, i) => li.classList.toggle('on', i === (chosen ? 1 : 0)));
+}
+function needShop() {
+  if (isChosen()) return false;
+  const step = $('#order');
+  step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  step.classList.remove('nudge'); void step.offsetWidth; step.classList.add('nudge');
+  return true;
 }
 function setStore(key) {
   if (!locByKey(key) || key === store) return;
@@ -196,6 +233,7 @@ document.addEventListener('click', (event) => {
   if (button) setStore(button.dataset.store);
   const order = event.target.closest('[data-order]');
   if (order) setStore(order.dataset.order);
+  if (button || order) markChosen();
 });
 function paintAi() {
   const ai = brand.aiOrdering;
@@ -415,6 +453,7 @@ function onAdd(event) {
   }
   const button = event.target.closest('.add');
   if (!button) return;
+  if (needShop()) return;
   const article = button.closest('.item');
   const item = itemBySku(article.dataset.sku);
   if (!item) return;
@@ -431,6 +470,7 @@ $('#items').addEventListener('click', onAdd);
 $('#items').addEventListener('change', (event) => {
   const tick = event.target.closest('.tick-in');
   if (!tick) return;
+  if (tick.checked && needShop()) { tick.checked = false; return; }
   const article = tick.closest('.item');
   const item = itemBySku(article.dataset.sku);
   if (!item) return;
@@ -589,7 +629,7 @@ function closeCart() {
   $('#overlay').classList.remove('open');
 }
 $('#openCart').addEventListener('click', openCart);
-$('#mbarOrder').addEventListener('click', () => { lines.length ? openCart() : $('#menu').scrollIntoView(); });
+$('#mbarOrder').addEventListener('click', () => { if (lines.length) openCart(); else if (!needShop()) $('#menu').scrollIntoView(); });
 $('#closeCart').addEventListener('click', closeCart);
 $('#overlay').addEventListener('click', closeCart);
 addEventListener('keydown', (event) => {
