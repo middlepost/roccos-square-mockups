@@ -49,40 +49,24 @@ export function buildCheckout({ brand, menuItems, body, currency, now = new Date
       throw new PriceError(`Pick a pickup time from the list (every ${step} minutes).`);
     }
   }
-  const priced = priceCart(menuItems, brand.deal, body.lines, currency);
+  const priced = priceCart(menuItems, brand.offer, body.lines, currency);
   const pizzas = pizzaCount(priced, menuItems);
   const squareLocationId = location.squareLocationId;
   if (!squareLocationId) throw new PriceError('This store is not linked to a Square location yet.');
 
-  const lineItems = [];
+  const lineItems = priced.lines.map((line) => itemLine(line, currency));
+  // Order-level fixed amount, not a percentage Square would split and round per line.
+  // The cents come from shared/pricing.js (half-up on the whole subtotal) so the
+  // sandbox total_money matches priced.totalCents exactly.
   const discounts = [];
-  for (const line of priced.lines) {
-    if (line.type === 'item') {
-      lineItems.push(itemLine(line, currency));
-    } else if (line.catalogReady) {
-      for (const pick of line.picks) {
-        lineItems.push({
-          catalog_object_id: pick.variationId,
-          quantity: String(pick.qty * line.qty),
-          note: `${line.name} deal`,
-        });
-      }
-      if (line.discountCents > 0) {
-        discounts.push({
-          name: line.name,
-          type: 'FIXED_AMOUNT',
-          scope: 'ORDER',
-          amount_money: { amount: line.discountCents, currency },
-        });
-      }
-    } else {
-      lineItems.push({
-        name: line.name,
-        quantity: String(line.qty),
-        base_price_money: { amount: line.unitCents, currency },
-        note: line.detail,
-      });
-    }
+  if (priced.discountCents > 0) {
+    discounts.push({
+      uid: 'order-offer',
+      name: priced.offer?.name || '10% off',
+      type: 'FIXED_AMOUNT',
+      scope: 'ORDER',
+      amount_money: { amount: priced.discountCents, currency },
+    });
   }
 
   const storeLine = `Pickup · ${location.name} (${location.address})`;
@@ -113,6 +97,8 @@ export function buildCheckout({ brand, menuItems, body, currency, now = new Date
   const summary = [
     ...priced.lines.map((line) => `${line.qty}× ${line.name}${line.detail ? ` (${line.detail})` : ''} — ${formatMoney(line.totalCents, currency)}`),
     '',
+    `Subtotal: ${formatMoney(priced.subtotalCents, currency)}`,
+    priced.discountCents > 0 ? `${priced.offer?.name || 'Discount'}: −${formatMoney(priced.discountCents, currency)}` : null,
     `Total: ${formatMoney(priced.totalCents, currency)}`,
     `Pickup: ${location.name}, ${pickup.label}`,
     `Name: ${name} · ${phone}`,

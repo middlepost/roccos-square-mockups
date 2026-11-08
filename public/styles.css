@@ -792,3 +792,39 @@ h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-hea
 @keyframes osNudge{50%{transform:scale(1.02)}}
 .store-switch{position:sticky;top:84px;z-index:20}
 @media (max-width:700px){.os-cards{grid-template-columns:1fr}.os-card{padding:20px}.os-card b{font-size:1.4rem}.hero .wrap{padding-bottom:56px}.store-switch{top:70px}}
+
+/* 8 Nov: 10% offer, compact path to the pizzas */
+.hero{padding:112px 0 0 !important}
+.hero .wrap{padding-bottom:28px;gap:28px}
+.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);margin:8px 0 10px}
+.hero p.lead{margin-bottom:16px;font-size:1.02rem}
+.offer-line,.offer-banner{font-weight:700;color:var(--ink);background:#fff;border:2px solid var(--red);border-radius:14px;padding:8px 12px}
+.hero .offer-line{display:block;margin-top:12px;max-width:46ch}
+.menu{padding-top:20px;scroll-margin-top:108px}
+.menu .menu-head{margin-bottom:12px}
+.menu-kicker{color:var(--muted);font-size:.9rem;margin:0 0 8px}
+.menu .menu-head h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:0 0 8px}
+.offer-banner{margin:0}
+.store-switch{margin-bottom:14px}
+.ss-btns{display:grid;grid-template-columns:1fr 1fr;flex:1}
+.ss-btn{min-width:0}
+.btn-see{font-size:1.05rem}
+.totals{display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.totals .tot-row{display:flex;justify-content:space-between;gap:12px;font-size:1rem;font-weight:650}
+.totals .grand{font-size:1.25rem;font-weight:800;border-top:1px solid var(--rule);margin-top:4px;padding-top:8px}
+.offer-hint{margin:6px 0 2px;font-weight:700;color:var(--red);font-size:.95rem}
+.mbar a#mbarOrder{background:var(--red);color:var(--cream);border-color:var(--red)}
+.bestsellers .bs-grid{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){
+  .hero{padding-top:100px !important}
+  .hero .wrap{padding-bottom:16px;gap:10px}
+  .hero h1{font-size:2rem;margin:4px 0 8px}
+  .hero p.lead{font-size:.92rem;margin-bottom:10px}
+  .hero-vid{display:none}
+  .hero-art{min-height:72px}
+  .ai-pill{margin-top:8px;padding:6px 10px}
+  .hero-strip{padding:6px 0}
+  .menu{padding-top:8px}
+  .menu-kicker{display:none}
+  .bestsellers .bs-grid{grid-template-columns:1fr 1fr}
+}

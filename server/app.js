@@ -54,7 +54,13 @@ function publicBrand(brand) {
       daysLabel: location.daysLabel || null,
       squareLocationId: location.squareLocationId,
     })),
-    deal: brand.deal && brand.deal.enabled !== false ? brand.deal : null,
+    offer: brand.offer && brand.offer.enabled !== false ? {
+      id: brand.offer.id,
+      name: brand.offer.name,
+      percent: brand.offer.percent,
+      thresholdCents: brand.offer.thresholdCents,
+      copy: brand.offer.copy,
+    } : null,
     features: brand.features || {},
     promos: brand.promos || null,
     bestSellers: brand.bestSellers || [],
@@ -232,7 +238,7 @@ export function createApp({
       if (req.method === 'POST' && pathname === '/api/quote') {
         const body = await readBody(req);
         const current = await currentMenu();
-        sendJson(res, 200, priceCart(current.items, brand.deal, body.lines, current.currency));
+        sendJson(res, 200, priceCart(current.items, brand.offer, body.lines, current.currency));
         return;
       }
       if (req.method === 'POST' && pathname === '/api/enquiries') {

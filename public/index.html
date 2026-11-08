@@ -29,14 +29,14 @@
 </svg>
 
 <header id="top">
-  <a class="promo-bar" id="promoBar" href="#bestsellers"><span class="pb-tag">PROMO</span> <span id="promoText">Any 3 pizzas for $50</span> <span class="pb-go">See deals →</span></a>
+  <a class="promo-bar" id="promoBar" href="#menu"><span class="pb-tag">10% OFF</span> <span id="promoText">10% off when you spend $40+</span></a>
   <div class="wrap nav">
     <a href="#top" class="logo-box" aria-label="Rocco's Italian Sourdough Pizza"><img src="/images/brand/roccos-face-badge.png?v=1" alt="Rocco's — Italian Sourdough Pizza"></a>
     <ul class="main" id="links">
       <li><a href="#story">Our Story</a></li>
       <li><a href="#menu">Menu</a></li>
       <li><a href="#locations">Locations</a></li>
-      <li><a href="#order" class="nav-promo">Order Now</a></li>
+      <li><a href="#menu" class="nav-promo">Order Now</a></li>
       <li><a href="#book">Book a Table</a></li>
       <li><a href="#careers" class="careers-open">Careers</a></li>
       <li><a href="#faq">FAQs</a></li>
@@ -55,9 +55,9 @@
       <h1 id="heroTitle">Hold, fold, eat, <em>repeat.</em></h1>
       <p class="lead" id="heroLead">Slow-risen sourdough, fired in the wood oven in our open kitchen.</p>
       <div class="cta">
-        <a href="#order" class="btn btn-primary">Order for pickup</a>
-        <a href="#bestsellers" class="btn btn-ghost">See promos</a>
+        <a href="#menu" class="btn btn-primary btn-see">Order now / See pizzas</a>
       </div>
+      <p class="offer-line" id="heroOffer">10% off your total order when you spend $40+, applied automatically</p>
       <a class="ai-pill" id="heroAi" href="tel:0870784471"><svg class="ic"><use href="#ph"/></svg><span><b>Call and order in any language</b><small id="heroAiNum">AI phone ordering · 7078 4471</small></span></a>
     </div>
     <div class="hero-art">
@@ -78,6 +78,40 @@
 
 
 
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head menu-head">
+      <h2>Pizzas</h2>
+      <p class="menu-kicker">Fourteen pizzas. Hold, fold, eat, repeat. Cheesy Garlic, Nutella Bomb and Sopressa Salame are on the list.</p>
+      <p class="offer-banner" id="menuOffer">10% off your total order when you spend $40+, applied automatically</p>
+    </div>
+
+    <div class="store-switch" id="storeSwitch">
+      <span class="ss-label">Pickup from</span>
+      <div class="ss-btns" id="ssBtns" role="radiogroup" aria-label="Choose your shop"></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-f="pizza">Pizzas</button>
+        <button class="tab" data-f="dessert">Dessert</button>
+      </div>
+      <div class="filters" id="filters">
+        <label class="chip"><input type="checkbox" id="fVeg"> Vegetarian only</label>
+        <label class="chip"><input type="checkbox" id="fNut"> Hide pizzas with nuts</label>
+      </div>
+    </div>
+    <p class="menu-source" id="menuSource">Loading the menu…</p>
+    <div class="items" id="items"></div>
+
+    <div class="drinks-top" id="drinks">
+      <div class="dt-head"><h3>Drinks</h3><span class="dt-note"><b>Alcohol is dine-in only.</b> Beer and wine can't go in a pickup order. Enjoy them at the shop.</span></div>
+      <div class="dt-list" id="drinkList"></div>
+    </div>
+    <p class="note">Vegetarian pizzas are marked. Pesto and the Nutella dessert contain nuts. Descriptions tagged “To confirm” still need final wording from the kitchen. Please tell us about any allergies when you order. Alcohol is dine-in only.</p>
+  </div>
+</section>
+
 <section class="visit" id="visit" aria-label="Visit us">
   <div class="wrap">
     <div class="visit-grid" id="visitGrid">
@@ -91,19 +125,10 @@
   <div class="wrap">
     <div class="bs-head">
       <span class="bs-label">Best Sellers</span>
-      <h2>Promos &amp; the pizzas everyone orders</h2>
-      <p>Yes, we have promos. Grab the deal or go straight for a top seller.</p>
+      <h2>The pizzas everyone orders</h2>
+      <p>Top sellers from the menu, ready for pickup.</p>
     </div>
-    <div class="bs-layout">
-      <div class="promo-card" id="promoCard">
-        <span class="promo-sticker">PROMO</span>
-        <h3 id="promoName">3 Pizza Deal</h3>
-        <div class="promo-price" id="promoPrice">$50</div>
-        <p id="promoBlurb">Any 3 from the list. A few pizzas cost a little extra.</p>
-        <a class="btn btn-light" href="#dealCard" id="promoGo">Build your deal</a>
-      </div>
-      <div class="bs-grid" id="bsGrid"></div>
-    </div>
+    <div class="bs-grid" id="bsGrid"></div>
   </div>
 </section>
 
@@ -149,67 +174,6 @@
       <div class="step reveal"><div class="n">02</div><h3>Fresh produce</h3><p>Seasonal vegetables, herbs and freshly shredded mozzarella, so what's on your pizza tastes like it should.</p></div>
       <div class="step reveal"><div class="n">03</div><h3>Italian pantry</h3><p>Imported Italian tomatoes, cured meats and olive oil, picked because nothing else comes close.</p></div>
     </div>
-  </div>
-</section>
-
-<section class="order-step" id="order" aria-label="Step 1: choose your shop">
-  <div class="wrap">
-    <div class="os-head">
-      <span class="os-num">Step 1</span>
-      <h2>Choose your shop</h2>
-      <p>We have two shops. Pick the one you'll collect from, then choose your pizzas.</p>
-    </div>
-    <div class="os-cards" id="osCards" role="radiogroup" aria-label="Choose your shop"></div>
-    <ol class="os-steps"><li class="on">1. Choose your shop</li><li>2. Pick your pizzas</li><li>3. Pickup time &amp; pay</li></ol>
-  </div>
-</section>
-
-<section class="menu" id="menu">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Menu &amp; online ordering</div>
-      <h2>Fourteen pizzas. Hold, fold, eat, repeat.</h2>
-      <p>Slow-fermented dough, imported Italian tomatoes, fresh basil and freshly shredded mozzarella. Tap <b>Extras</b> under any pizza to add toppings, then pick up when it's ready.</p>
-    </div>
-
-    <div class="store-switch" id="storeSwitch">
-      <span class="ss-label"><span class="os-num sm">Step 2</span> Pick your pizzas · ordering from</span>
-      <div class="ss-btns" id="ssBtns" role="radiogroup" aria-label="Choose your shop"></div>
-    </div>
-
-    <div class="drinks-top" id="drinks">
-      <div class="dt-head"><h3>Drinks</h3><span class="dt-note"><b>Alcohol is dine-in only.</b> Beer and wine can't go in a pickup order. Enjoy them at the shop.</span></div>
-      <div class="dt-list" id="drinkList"></div>
-    </div>
-
-    <div class="deal reveal" id="dealCard">
-      <span class="promo-sticker sm">PROMO</span><div class="deal-head"><h3 id="dealName">3 Pizza Deal</h3><span class="price" id="dealPrice">$50</span></div>
-      <p class="deal-sub">Choose 3 from:</p>
-      <p id="dealIncluded">Margherita · Cheesy Garlic · Funghi Mushroom · Patata e Cipolla · Nutella Bomb</p>
-      <p class="deal-up" id="dealUpgrades">Upgrades: Vegetariana (+$1) · Smoked Ham &amp; Mushroom (+$2) · Salsiccia – Italian Sausage (+$2) · Sopressa Salame (+$2)</p>
-      <button class="btn btn-dark btn-sm deal-toggle" id="dealToggle" aria-expanded="false">Build your deal</button>
-      <div class="builder" id="builder">
-        <div class="pick-grid" id="pickGrid"></div>
-        <div class="builder-foot">
-          <span class="need" id="dealNeed">Pick 3 pizzas</span>
-          <button class="btn btn-dark btn-sm" id="dealAdd" disabled>Add deal to order</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="toolbar">
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-f="pizza">Pizzas</button>
-        <button class="tab" data-f="dessert">Dessert</button>
-      </div>
-      <div class="filters" id="filters">
-        <label class="chip"><input type="checkbox" id="fVeg"> Vegetarian only</label>
-        <label class="chip"><input type="checkbox" id="fNut"> Hide pizzas with nuts</label>
-      </div>
-    </div>
-    <p class="menu-source" id="menuSource">Loading the menu…</p>
-    <div class="items" id="items"></div>
-    <p class="note">Vegetarian pizzas are marked. Pesto and the Nutella dessert contain nuts. Descriptions tagged “To confirm” still need final wording from the kitchen. Please tell us about any allergies when you order. Alcohol is dine-in only.</p>
   </div>
 </section>
 
@@ -367,7 +331,7 @@
       <p>Hold, fold, eat, repeat. Italian sourdough pizza from the wood oven in Adelaide.</p>
       <a href="#order" class="btn btn-primary fbtn">Order online</a>
     </div>
-    <div class="fcol"><h4>Order</h4><a href="#menu">Menu</a><a href="#order">Order for pickup</a><a href="#bestsellers">Best sellers &amp; promos</a><a href="#gift">Gift cards</a><a href="#dough">Buy dough</a></div>
+    <div class="fcol"><h4>Order</h4><a href="#menu">Menu</a><a href="#menu">Order for pickup</a><a href="#bestsellers">Best sellers</a><a href="#gift">Gift cards</a><a href="#dough">Buy dough</a></div>
     <div class="fcol"><h4>Rocco's</h4><a href="#story">Our story</a><a href="#club" data-feature="club" hidden>Rocco's Club</a><a href="#careers" id="careersLink">Careers</a><a href="#reviews">Reviews</a></div>
     <div class="fcol"><h4>Visit us</h4><div id="footerMeta"></div><a href="#locations">Maps &amp; directions</a></div>
   </div>
@@ -384,7 +348,12 @@
   <div class="drawer-body">
     <div id="cartLines"></div>
     <div id="cartFoot" hidden>
-      <div class="totals"><span>Total</span><span id="cartTotal">$0</span></div>
+      <div class="totals" id="cartTotals">
+        <div class="tot-row"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
+        <div class="tot-row discount" id="cartDiscountRow" hidden><span id="cartDiscountLabel">10% off</span><span id="cartDiscount">−$0</span></div>
+        <div class="tot-row grand"><span>Total</span><span id="cartTotal">$0</span></div>
+        <p class="offer-hint" id="cartHint" hidden></p>
+      </div>
       <form class="checkout" id="checkout">
         <div class="f step-lbl">1. Pick up from which shop?</div>
         <input type="hidden" name="where" id="coWhere">
@@ -437,7 +406,7 @@
 
 <nav class="mbar" aria-label="Quick actions">
   <a id="mbarCall" href="#visit">Visit / Call</a>
-  <button id="mbarOrder">Order <span id="mbarCount"></span></button>
+  <a id="mbarOrder" href="#menu">Order <span id="mbarCount"></span></a>
 </nav>
 
 <script type="module" src="/app.js"></script>

@@ -21,10 +21,21 @@ function asQty(value, label) {
 }
 
 /**
- * Price a cart from the menu. Client prices are ignored.
- * lines: { type:'item', sku, qty, modifierKeys[] } | { type:'deal', qty, picks:[{sku, qty}] }
+ * Half-up to the nearest cent. Square's order total uses the same rounding
+ * for a percentage taken off the whole order (400.5 cents becomes 401).
+ * Integer math avoids a binary float landing on the wrong side of .5.
  */
-export function priceCart(items, deal, lines, currency = 'AUD') {
+export function percentOffCents(subtotalCents, percent) {
+  return Math.floor((subtotalCents * percent + 50) / 100);
+}
+
+/**
+ * Price a cart from the menu. Client prices are ignored.
+ * lines: { type:'item', sku, qty, modifierKeys[] }
+ * offer: { percent, thresholdCents, name, enabled } or null.
+ * At or above the threshold, percent comes off the subtotal automatically.
+ */
+export function priceCart(items, offer, lines, currency = 'AUD') {
   if (!Array.isArray(lines) || lines.length === 0) {
     throw new PriceError('Your order is empty.');
   }
@@ -33,13 +44,49 @@ export function priceCart(items, deal, lines, currency = 'AUD') {
   const priced = [];
 
   for (const line of lines) {
-    if (line?.type === 'deal') priced.push(priceDeal(bySku, deal, line, currency));
-    else if (line?.type === 'item') priced.push(priceItem(bySku, line, currency));
+    if (line?.type === 'deal') throw new PriceError('That deal is no longer on the menu.');
+    if (line?.type === 'item') priced.push(priceItem(bySku, line, currency));
     else throw new PriceError('Something in the cart is not on the menu.');
   }
 
-  const totalCents = priced.reduce((sum, line) => sum + line.totalCents, 0);
-  return { currency, totalCents, lines: priced };
+  const subtotalCents = priced.reduce((sum, line) => sum + line.totalCents, 0);
+  const discount = applyOffer(subtotalCents, offer);
+  return {
+    currency,
+    subtotalCents,
+    discountCents: discount.discountCents,
+    totalCents: subtotalCents - discount.discountCents,
+    shortfallCents: discount.shortfallCents,
+    offer: discount.offer,
+    lines: priced,
+  };
+}
+
+function applyOffer(subtotalCents, offer) {
+  const idle = { discountCents: 0, shortfallCents: 0, offer: null };
+  if (!offer || offer.enabled === false) return idle;
+  const percent = offer.percent;
+  const thresholdCents = offer.thresholdCents;
+  if (!Number.isInteger(percent) || percent < 1 || percent > 100) {
+    throw new PriceError('This offer is not set up correctly.');
+  }
+  if (!Number.isInteger(thresholdCents) || thresholdCents < 1) {
+    throw new PriceError('This offer is not set up correctly.');
+  }
+  const name = offer.name || `${percent}% off`;
+  if (subtotalCents < thresholdCents) {
+    return {
+      discountCents: 0,
+      shortfallCents: thresholdCents - subtotalCents,
+      offer: { name, percent, thresholdCents, applied: false },
+    };
+  }
+  const discountCents = Math.min(subtotalCents, percentOffCents(subtotalCents, percent));
+  return {
+    discountCents,
+    shortfallCents: 0,
+    offer: { name, percent, thresholdCents, applied: discountCents > 0 },
+  };
 }
 
 function priceItem(bySku, line, currency) {
@@ -73,53 +120,6 @@ function priceItem(bySku, line, currency) {
       priceCents: mod.priceCents,
       id: mod.id || null,
     })),
-    currency,
-  };
-}
-
-function priceDeal(bySku, deal, line, currency) {
-  if (!deal || deal.enabled === false) throw new PriceError('That deal is not available.');
-  const qty = asQty(line.qty, deal.name);
-  const picks = Array.isArray(line.picks) ? line.picks : [];
-  const count = picks.reduce((sum, pick) => sum + Number(pick?.qty || 0), 0);
-  if (count !== deal.required) {
-    throw new PriceError(`${deal.name} needs ${deal.required} pizzas.`);
-  }
-  const expanded = picks.map((pick) => {
-    const pickQty = asQty(pick.qty, deal.name);
-    const choice = deal.choices.find((entry) => entry.sku === pick.sku);
-    if (!choice) throw new PriceError(`That pizza is not part of ${deal.name}.`);
-    const item = bySku.get(pick.sku);
-    if (!item) throw new PriceError('A pizza in the deal is no longer on the menu.');
-    return {
-      sku: item.sku,
-      name: item.name,
-      qty: pickQty,
-      upgradeCents: choice.upgradeCents,
-      unitCents: item.priceCents,
-      variationId: item.variationId || null,
-    };
-  });
-  const upgrade = expanded.reduce((sum, pick) => sum + pick.qty * pick.upgradeCents, 0);
-  const promoCents = deal.priceCents + upgrade;
-  const naturalCents = expanded.reduce((sum, pick) => sum + pick.qty * pick.unitCents, 0);
-  const detail = expanded
-    .map((pick) => `${pick.qty}× ${pick.name}${pick.upgradeCents ? ` (+${formatMoney(pick.upgradeCents, currency)})` : ''}`)
-    .join(', ');
-  const catalogReady = expanded.every((pick) => pick.variationId) && naturalCents >= promoCents;
-  return {
-    type: 'deal',
-    id: deal.id,
-    name: deal.name,
-    qty,
-    unitCents: promoCents,
-    totalCents: promoCents * qty,
-    naturalCents,
-    promoCents,
-    discountCents: catalogReady ? (naturalCents - promoCents) * qty : 0,
-    catalogReady,
-    detail,
-    picks: expanded,
     currency,
   };
 }

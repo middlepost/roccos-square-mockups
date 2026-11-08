@@ -14,7 +14,6 @@ let card = null;
 let payments = null;
 let cardLocationId = null;
 let store = null;
-const dealCounts = [];
 const PHONE_ICON = '<svg class="ic" aria-hidden="true"><use href="#ph"/></svg>';
 const on = (flag) => Boolean(brand?.features?.[flag]);
 
@@ -111,6 +110,7 @@ function applyBrand() {
   if (!locs.some((loc) => loc.key === store)) store = locs[0]?.key || null;
   buildVisit();
   buildStoreButtons();
+  if (store) markChosen();
   paintAi();
   paintVideos();
   buildLocs();
@@ -167,19 +167,6 @@ function buildStoreButtons() {
   const btn = (loc, cls) => `<button type="button" class="${cls}${loc.key === store ? ' active' : ''}" role="radio" aria-checked="${loc.key === store}" data-store="${esc(loc.key)}"><b>${esc(loc.name)}</b><small>${esc(loc.address)}</small></button>`;
   $('#coStores').innerHTML = locs.map((loc) => btn(loc, 'store-btn')).join('');
   $('#ssBtns').innerHTML = locs.map((loc) => btn(loc, 'ss-btn')).join('');
-  const today = (loc) => {
-    const day = DAYS[adelaideParts(new Date()).dow];
-    const ranges = brand?.hours?.[loc.key]?.[day] || [];
-    return ranges.length ? `Today ${ranges.map((r) => `${fmt(r[0])}–${fmt(r[1])}`).join(', ')}` : 'Closed today';
-  };
-  $('#osCards').innerHTML = locs.map((loc) => `<a href="#menu" class="os-card" role="radio" data-order="${esc(loc.key)}" data-store="${esc(loc.key)}" aria-checked="false">
-      <span class="os-pin">📍</span>
-      <b>${esc(loc.name)}</b>
-      <span class="os-addr">${esc(loc.address)}</span>
-      <span class="badge" data-status="${esc(loc.key)}">Checking hours…</span>
-      <span class="os-today">${esc(today(loc))} · ${esc(loc.daysLabel || '')}</span>
-      <span class="os-go">Order from ${esc(loc.name)} →</span>
-    </a>`).join('');
   paintStatus();
   paintStore();
 }
@@ -214,10 +201,9 @@ function paintChosen() {
   $$('.os-steps li').forEach((li, i) => li.classList.toggle('on', i === (chosen ? 1 : 0)));
 }
 function needShop() {
-  if (isChosen()) return false;
-  const step = $('#order');
-  step.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  step.classList.remove('nudge'); void step.offsetWidth; step.classList.add('nudge');
+  if (isChosen() || store) return false;
+  const step = $('#storeSwitch') || $('#menu');
+  step?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   return true;
 }
 function setStore(key) {
@@ -304,7 +290,7 @@ function paintVideos() {
 function renderBestSellers() {
   const grid = $('#bsGrid');
   const picks = (brand?.bestSellers || []).map((entry) => ({ ...entry, item: itemBySku(entry.sku) })).filter((entry) => entry.item);
-  $('#bestsellers').hidden = !picks.length && !brand?.deal;
+  $('#bestsellers').hidden = !picks.length;
   grid.innerHTML = picks.map(({ item, badge }) => `<article class="bs-tile" data-sku="${esc(item.sku)}">
       <div class="bs-photo">${item.imageUrl ? `<img src="${esc(item.imageUrl)}" alt="${esc(item.name)}" loading="lazy">` : ''}<span class="bs-badge${/new/i.test(badge) ? ' new' : ''}">${esc(badge || 'Top seller')}</span></div>
       <div class="bs-body"><h3>${esc(item.name)}</h3><span class="bs-price">${money(item.priceCents)}</span>
@@ -337,35 +323,18 @@ function addLine(sku, modifierKeys) {
   return true;
 }
 
-function paintDeal() {
-  const deal = brand?.deal;
-  const card = $('#dealCard');
-  if (!deal) {
-    card.hidden = true;
-    $('#promoCard').hidden = true;
-    $('#promoBar').hidden = true;
-    return;
+function paintOffer() {
+  const text = brand?.offer?.copy || '';
+  const hero = $('#heroOffer');
+  const banner = $('#menuOffer');
+  if (hero && text) hero.textContent = text;
+  if (banner) {
+    banner.hidden = !text;
+    if (text) banner.textContent = text;
   }
-  card.hidden = false;
-  $('#dealName').textContent = deal.name;
-  $('#dealPrice').textContent = money(deal.priceCents);
-  $('#promoName').textContent = deal.name;
-  $('#promoPrice').textContent = money(deal.priceCents);
-  $('#promoBlurb').textContent = deal.blurb || `Any ${deal.required} from the list.`;
-  $('#promoText').textContent = brand.promos?.bar || `${deal.name}: ${deal.required} pizzas for ${money(deal.priceCents)}`;
-  const named = deal.choices.map((choice) => {
-    const item = menu.items.find((entry) => entry.sku === choice.sku);
-    return { ...choice, name: item?.name || choice.sku };
-  });
-  const included = named.filter((choice) => !choice.upgradeCents).map((choice) => choice.name);
-  const upgrades = named
-    .filter((choice) => choice.upgradeCents)
-    .map((choice) => `${choice.name} (+${money(choice.upgradeCents)})`);
-  $('#dealIncluded').textContent = included.join(' · ');
-  $('#dealUpgrades').textContent = upgrades.length ? `Upgrades: ${upgrades.join(' · ')}` : '';
-  dealCounts.length = deal.choices.length;
-  dealCounts.fill(0);
-  renderDeal();
+  const bar = $('#promoText');
+  if (bar && brand?.promos?.bar) bar.textContent = brand.promos.bar;
+  if ($('#promoBar')) $('#promoBar').hidden = !text && !brand?.promos?.bar;
 }
 
 function itemBySku(sku) {
@@ -519,58 +488,9 @@ $$('.tab').forEach((button) => button.addEventListener('click', () => {
 $('#fVeg').addEventListener('change', applyFilters);
 $('#fNut').addEventListener('change', applyFilters);
 
-function renderDeal() {
-  const deal = brand?.deal;
-  if (!deal) return;
-  $('#pickGrid').innerHTML = deal.choices.map((choice, index) => {
-    const item = itemBySku(choice.sku);
-    const name = item?.name || choice.sku;
-    return `<div class="pick"><span class="nm">${esc(name)}${choice.upgradeCents ? `<span class="up">+${money(choice.upgradeCents)}</span>` : ''}</span>
-      <span class="qty"><button type="button" data-i="${index}" data-d="-1" aria-label="Fewer ${esc(name)}">−</button><output>${dealCounts[index] || 0}</output><button type="button" data-i="${index}" data-d="1" aria-label="More ${esc(name)}">+</button></span></div>`;
-  }).join('');
-  const count = dealCounts.reduce((sum, value) => sum + value, 0);
-  const upgrade = dealCounts.reduce((sum, value, index) => sum + value * deal.choices[index].upgradeCents, 0);
-  const ready = count === deal.required;
-  $('#dealNeed').textContent = ready
-    ? `Ready: ${money(deal.priceCents + upgrade)}${upgrade ? ` (includes +${money(upgrade)} upgrades)` : ''}`
-    : `Pick ${deal.required} pizzas (${count}/${deal.required})`;
-  $('#dealAdd').disabled = !ready;
-}
-$('#pickGrid').addEventListener('click', (event) => {
-  const button = event.target.closest('button[data-i]');
-  if (!button || !brand?.deal) return;
-  const count = dealCounts.reduce((sum, value) => sum + value, 0);
-  const index = +button.dataset.i;
-  const delta = +button.dataset.d;
-  if (delta > 0 && count >= brand.deal.required) return;
-  if (delta < 0 && !dealCounts[index]) return;
-  dealCounts[index] += delta;
-  renderDeal();
-});
-$('#dealAdd').addEventListener('click', () => {
-  const deal = brand.deal;
-  const picks = deal.choices
-    .map((choice, index) => ({ sku: choice.sku, qty: dealCounts[index] }))
-    .filter((pick) => pick.qty > 0);
-  lines.push({ type: 'deal', qty: 1, picks });
-  if (!safePrice()) {
-    lines.pop();
-    return;
-  }
-  dealCounts.fill(0);
-  renderDeal();
-  renderCart();
-  bump();
-});
-$('#dealToggle').addEventListener('click', (event) => {
-  const open = $('#builder').classList.toggle('open');
-  event.target.setAttribute('aria-expanded', String(open));
-  event.target.textContent = open ? 'Close builder' : 'Build your deal';
-});
-
 function safePrice() {
   try {
-    priceCart(menu.items, brand?.deal, lines, menu.currency || 'AUD');
+    priceCart(menu.items, brand?.offer, lines, menu.currency || 'AUD');
     return true;
   } catch (error) {
     const status = $('#coStatus');
@@ -581,8 +501,8 @@ function safePrice() {
 }
 
 function currentPrice() {
-  if (!lines.length) return { totalCents: 0, lines: [] };
-  return priceCart(menu.items, brand?.deal, lines, menu.currency || 'AUD');
+  if (!lines.length) return { totalCents: 0, subtotalCents: 0, discountCents: 0, shortfallCents: 0, lines: [] };
+  return priceCart(menu.items, brand?.offer, lines, menu.currency || 'AUD');
 }
 
 function renderCart() {
@@ -601,6 +521,22 @@ function renderCart() {
   box.innerHTML = priced.lines.map((line, index) => `<div class="line"><div class="t">${esc(line.name)}</div><div class="p">${money(line.totalCents)}</div>
     <div class="d">${line.detail ? esc(line.detail) : ''}</div>
     <div class="qty"><button type="button" data-i="${index}" data-d="-1" aria-label="Remove one">−</button><output>${line.qty}</output><button type="button" data-i="${index}" data-d="1" aria-label="Add one">+</button></div></div>`).join('');
+  $('#cartSubtotal').textContent = money(priced.subtotalCents || 0);
+  const discountRow = $('#cartDiscountRow');
+  const hint = $('#cartHint');
+  if (priced.discountCents > 0) {
+    discountRow.hidden = false;
+    $('#cartDiscountLabel').textContent = priced.offer?.name || '10% off';
+    $('#cartDiscount').textContent = `−${money(priced.discountCents)}`;
+    hint.hidden = true;
+  } else {
+    discountRow.hidden = true;
+    const percent = priced.offer?.percent || brand?.offer?.percent || 10;
+    if (priced.shortfallCents > 0) {
+      hint.hidden = false;
+      hint.textContent = `Add ${money(priced.shortfallCents)} more for ${percent}% off`;
+    } else hint.hidden = true;
+  }
   $('#cartTotal').textContent = money(priced.totalCents);
   $('#cartFoot').hidden = false;
   $('#payBtn').textContent = `Pay ${money(priced.totalCents)}`;
@@ -629,7 +565,6 @@ function closeCart() {
   $('#overlay').classList.remove('open');
 }
 $('#openCart').addEventListener('click', openCart);
-$('#mbarOrder').addEventListener('click', () => { if (lines.length) openCart(); else if (!needShop()) $('#menu').scrollIntoView(); });
 $('#closeCart').addEventListener('click', closeCart);
 $('#overlay').addEventListener('click', closeCart);
 addEventListener('keydown', (event) => {
@@ -1016,7 +951,7 @@ function setupBot() {
       { k: [/vegan|dairy/], a: () => `Nothing is marked vegan. The pizzas use mozzarella. Call ${tel()} and ask what we can do.` },
       { k: [/gluten|coeliac|celiac|wheat/], a: () => `The base is sourdough. Call ${tel()} before you count on a gluten-free option.` },
       { k: [/allerg|nut|pesto|hazelnut/], a: () => `${nuts.join(', ') || 'Some items'} contain nuts. Tell us about allergies in the order notes, and call ${tel()} if you need to check.` },
-      { k: [/deal|promo|special|combo|best ?sell|popular|\b50\b/], a: () => brand.deal ? `${esc(brand.deal.name)} is ${money(brand.deal.priceCents)} for ${brand.deal.required} from the list in the ${link('#menu', 'menu')}, with a small upgrade on a few pizzas.` : 'There is no deal on this menu yet.' },
+      { k: [/deal|promo|special|combo|discount|10%|spend|\$40/], a: () => brand.offer?.copy ? `${esc(brand.offer.copy)} It is taken off in the cart once the order reaches the amount.` : 'There is no offer on this menu yet.' },
       { k: [/pineapple|hawaiian/], a: () => 'Yes. Add pineapple to the Smoked Ham & Mushroom.' },
       { k: [/dessert|nutella|sweet|calzone/], a: () => 'The Nutella Bomb is a half-circle calzone with Nutella cream and powdered sugar. It contains nuts.' },
       { k: [/drink|beer|wine|alcohol|byo|corkage|soft|juice|water/], a: () => `Soft drinks can go in a pickup order. Alcohol is dine-in only, and BYO has no corkage. Call ${tel()} if you want to check.` },
@@ -1117,11 +1052,11 @@ async function start() {
   menu = await response.json();
   try {
     const saved = JSON.parse(sessionStorage.getItem(`cart:${brand.id}`) || '[]');
-    if (Array.isArray(saved)) lines = saved.filter((line) => line && (line.type === 'deal' || menu.items.some((item) => item.sku === line.sku)));
+    if (Array.isArray(saved)) lines = saved.filter((line) => line && line.type !== 'deal' && menu.items.some((item) => item.sku === line.sku));
   } catch { /* ignore */ }
   renderMenu();
   paintHeroPhotos();
-  paintDeal();
+  paintOffer();
   const locations = $('#locations');
   if (locations) {
     new IntersectionObserver((entries, observer) => {
@@ -1141,7 +1076,8 @@ async function start() {
   const params = new URLSearchParams(location.search);
   if (params.get('store')) setStore(params.get('store'));
   if (params.get('cart') === 'demo' && !lines.length) {
-    addLine('ROCCO-02', ['prosciutto']);
+    addLine('ROCCO-02', []);
+    addLine('ROCCO-02', []);
     addLine('ROCCO-DR07', []);
   }
   if (params.get('cart')) openCart();

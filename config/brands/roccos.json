@@ -166,52 +166,13 @@
       "daysLabel": "Wednesday to Sunday, 5pm to 8pm"
     }
   ],
-  "deal": {
-    "id": "three-pizza-deal",
-    "name": "3 Pizza Deal",
-    "priceCents": 5000,
-    "required": 3,
-    "blurb": "Any 3 from the list for $50. A few pizzas cost a little extra.",
-    "choices": [
-      {
-        "sku": "ROCCO-02",
-        "upgradeCents": 0
-      },
-      {
-        "sku": "ROCCO-03",
-        "upgradeCents": 0
-      },
-      {
-        "sku": "ROCCO-06",
-        "upgradeCents": 0
-      },
-      {
-        "sku": "ROCCO-08",
-        "upgradeCents": 0
-      },
-      {
-        "sku": "ROCCO-15",
-        "upgradeCents": 0
-      },
-      {
-        "sku": "ROCCO-04",
-        "upgradeCents": 100
-      },
-      {
-        "sku": "ROCCO-05",
-        "upgradeCents": 200
-      },
-      {
-        "sku": "ROCCO-09",
-        "upgradeCents": 200
-      },
-      {
-        "sku": "ROCCO-07",
-        "upgradeCents": 200
-      }
-    ],
-    "enabled": true,
-    "badge": "PROMO"
+  "offer": {
+    "id": "spend-40",
+    "name": "10% off",
+    "percent": 10,
+    "thresholdCents": 4000,
+    "copy": "10% off your total order when you spend $40+, applied automatically",
+    "enabled": true
   },
   "videos": [
     {
@@ -283,7 +244,7 @@
     }
   ],
   "promos": {
-    "bar": "Any 3 pizzas for $50. Build your deal",
+    "bar": "10% off when you spend $40+",
     "bestSellersNote": "Top sellers as marked on the current roccopizza.com.au menu."
   },
   "hoursSource": "roccopizza.com.au (Findon open 7 days, Grange Wed-Sun) + Google listings via web search 7 Nov 2026: Findon 5-9pm, Grange 5-8pm",

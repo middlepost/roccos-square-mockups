@@ -68,7 +68,12 @@ test('the site serves the v3 page, local menu, and photos without a token', asyn
     const config = await (await fetch(`${base}/api/config`)).json();
     assert.equal(config.square.paymentsReady, false);
     assert.equal(config.square.environment, 'sandbox');
-    assert.equal(config.brand.deal.priceCents, 5000);
+    assert.match(html, /10% off your total order when you spend \$40\+, applied automatically/);
+    assert.match(html, /Order now \/ See pizzas/);
+    assert.doesNotMatch(html, /3 Pizza Deal|Build your deal/);
+    assert.equal(config.brand.offer.percent, 10);
+    assert.equal(config.brand.offer.thresholdCents, 4000);
+    assert.equal(config.brand.deal, undefined);
     assert.equal(config.accessToken, undefined);
     const current = await (await fetch(`${base}/api/menu`)).json();
     assert.equal(current.source, 'local');
@@ -160,8 +165,7 @@ test('checkout creates a sandbox order and payment, and refuses a mismatched tot
         phone: '0412345678',
         notes: 'Gate code 12',
         lines: [
-          { type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: ['prosciutto'] },
-          { type: 'deal', qty: 1, picks: [{ sku: 'ROCCO-02', qty: 3 }] },
+          { type: 'item', sku: 'ROCCO-02', qty: 2, modifierKeys: [] },
         ],
       }),
     });
@@ -169,11 +173,13 @@ test('checkout creates a sandbox order and payment, and refuses a mismatched tot
     assert.equal(response.status, 200, JSON.stringify(body));
     assert.equal(body.orderId, 'ORDER1');
     assert.equal(body.paymentId, 'PAY1');
-    assert.equal(body.totalCents, 2600 + 5000);
+    assert.equal(body.totalCents, 3600);
+    assert.equal(calls[0].order.discounts[0].scope, 'ORDER');
+    assert.equal(calls[0].order.discounts[0].amount_money.amount, 400);
     assert.equal(calls[0].type, 'order');
     assert.match(calls[0].order.note, /Grange Rd/);
     assert.match(calls[0].order.note, /Gate code 12/);
-    assert.equal(calls[1].payment.amount_money.amount, 7600);
+    assert.equal(calls[1].payment.amount_money.amount, 3600);
     assert.equal(calls[1].payment.order_id, 'ORDER1');
     assert.equal(calls[1].payment.location_id, 'LFXEWDVVKRYC0');
     assert.equal(calls[1].payment.idempotency_key, 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee-pay');

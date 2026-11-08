@@ -4,13 +4,7 @@ export function pizzaCount(priced, menuItems) {
   const bySku = new Map(menuItems.map((item) => [item.sku, item]));
   let count = 0;
   for (const line of priced.lines) {
-    if (line.type === 'item') {
-      if (bySku.get(line.sku)?.category === 'pizza') count += line.qty;
-    } else {
-      for (const pick of line.picks || []) {
-        if (bySku.get(pick.sku)?.category === 'pizza') count += pick.qty * line.qty;
-      }
-    }
+    if (line.type === 'item' && bySku.get(line.sku)?.category === 'pizza') count += line.qty;
   }
   return count;
 }
