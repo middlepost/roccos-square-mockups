@@ -804,17 +804,13 @@ h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-hea
 .hero p.lead{margin:0 0 18px;font-size:1.05rem;line-height:1.45;max-width:36ch}
 .hero .cta{margin:0}
 .btn-see{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;font-size:1.02rem;line-height:1}
-.offer-line,.offer-banner{font-weight:650;color:var(--ink);background:#fff;border:1px solid rgba(200,16,46,.22);border-left:4px solid var(--red);border-radius:12px;padding:11px 14px;line-height:1.35;font-size:.95rem}
-.hero .offer-line{display:block;margin-top:14px;max-width:42ch}
-.ai-pill{margin-top:14px;align-items:center}
+.ai-pill{margin-top:16px;align-items:center}
 .hero-vid{max-height:360px}
 .hero-art .pizza-art{width:150px;left:-36px;bottom:-28px}
-.offer-banner{max-width:720px}
 .menu{padding-top:20px;padding-bottom:72px;scroll-margin-top:112px}
 .menu .menu-head{margin-bottom:14px}
 .menu .menu-head h2{font-size:clamp(1.7rem,3vw,2.3rem);margin:0 0 6px}
-.menu-kicker{color:var(--muted);font-size:.95rem;margin:0 0 10px;line-height:1.4}
-.offer-banner{margin:0}
+.menu-kicker{color:var(--muted);font-size:.95rem;margin:0;line-height:1.4}
 .menu-source{margin:0 0 14px;font-size:.82rem}
 .store-switch{margin-bottom:16px;align-items:center;top:124px}
 .ss-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1}
@@ -849,8 +845,7 @@ h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-hea
   .hero p.lead{font-size:.9rem;line-height:1.35;margin-bottom:10px;max-width:none}
   .btn-see,.ai-pill{width:100%}
   .btn-see{min-height:48px}
-  .hero .offer-line{margin-top:8px;padding:8px 12px;font-size:.86rem}
-  .ai-pill{margin-top:8px;padding:7px 12px;border-radius:14px;gap:10px}
+  .ai-pill{margin-top:10px;padding:7px 12px;border-radius:14px;gap:10px}
   .ai-pill .ic{width:22px;height:22px}
   .hero-vid{display:none}
   .hero-art{display:flex;align-items:center;justify-content:center;gap:12px;min-height:0;margin-top:2px}
@@ -863,7 +858,6 @@ h1,h2,h3,.section-head h2,.bs-head h2,.story h2,.hero h1,.dt-head h3,.drawer-hea
   .menu .menu-head{margin-bottom:8px}
   .menu .menu-head h2{font-size:1.55rem;margin:0 0 6px}
   .menu-kicker{display:none}
-  .offer-banner{max-width:none;font-size:.86rem;padding:8px 12px}
   .store-switch{flex-direction:column;align-items:stretch;gap:6px;padding:8px;margin-bottom:10px;top:96px}
   .ss-label{font-size:.7rem;letter-spacing:.1em}
   .ss-btn{padding:8px 10px;border-radius:12px}

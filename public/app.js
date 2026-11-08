@@ -325,13 +325,9 @@ function addLine(sku, modifierKeys) {
 
 function paintOffer() {
   const text = brand?.offer?.copy || '';
-  const hero = $('#heroOffer');
-  const banner = $('#menuOffer');
-  if (hero && text) hero.textContent = text;
-  if (banner) {
-    banner.hidden = !text;
-    if (text) banner.textContent = text;
-  }
+  document.querySelectorAll('.mq-offer').forEach((el) => {
+    if (text) el.textContent = text;
+  });
   const bar = $('#promoText');
   if (bar && brand?.promos?.bar) bar.textContent = brand.promos.bar;
   if ($('#promoBar')) $('#promoBar').hidden = !text && !brand?.promos?.bar;
