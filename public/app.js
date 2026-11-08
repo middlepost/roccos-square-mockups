@@ -529,13 +529,17 @@ function renderCart() {
     $('#cartDiscountLabel').textContent = priced.offer?.name || '10% off';
     $('#cartDiscount').textContent = `−${money(priced.discountCents)}`;
     hint.hidden = true;
+    hint.textContent = '';
   } else {
     discountRow.hidden = true;
     const percent = priced.offer?.percent || brand?.offer?.percent || 10;
     if (priced.shortfallCents > 0) {
       hint.hidden = false;
       hint.textContent = `Add ${money(priced.shortfallCents)} more for ${percent}% off`;
-    } else hint.hidden = true;
+    } else {
+      hint.hidden = true;
+      hint.textContent = '';
+    }
   }
   $('#cartTotal').textContent = money(priced.totalCents);
   $('#cartFoot').hidden = false;
