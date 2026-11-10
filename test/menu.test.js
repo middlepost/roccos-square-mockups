@@ -62,19 +62,21 @@ test('each food photo is the approved file and is not a text overlay', () => {
   assert.equal(son.variationId, null);
 });
 
-test('the page keeps the v3 wording and the 1 Nov names', () => {
-  assert.match(html, /Hold, fold, eat, <em>repeat\.<\/em>/);
-  assert.match(html, /Fourteen pizzas\. Hold, fold, eat, repeat\./);
-  assert.doesNotMatch(html, /Hungry Italian|Catering/);
-  assert.match(html, /Best Sellers/);
-  assert.match(html, /Alcohol is dine-in only/);
-  assert.match(html, /We sell dough/);
-  assert.match(html, /Takeaway pizza deserves better\./);
-  assert.match(html, /Cheesy Garlic/);
-  assert.match(html, /Nutella Bomb/);
-  assert.match(html, /Sopressa Salame/);
+test('the page is the simple order flow', () => {
+  assert.match(html, /Choose a store/);
+  assert.match(html, /Findon Rd/);
+  assert.match(html, /Grange Rd/);
+  assert.match(html, /Book a table/);
+  assert.match(html, />Pizzas</);
+  assert.match(html, />Extras</);
+  assert.match(html, />Drinks</);
+  assert.match(html, />Desserts</);
+  assert.match(html, /rocco-live-logo\.png/);
+  assert.match(html, /rocco-family-hero\.jpg/);
+  assert.match(css, /#FFCA09/);
+  assert.doesNotMatch(html, /Hungry Italian|Catering|hero-strip|ticker-bottom/);
   assert.doesNotMatch(html, /President|Hot Salame|Big Nutella|Cheesy Garlic Mozzarella/);
-  assert.match(html, /roccos-face-badge\.png/);
-  assert.match(css, /object-fit:\s*contain/);
-  assert.match(css, /\.item\.photo-card \.photo\{[^}]*background:\s*#fff/);
+  assert.match(menu.items.map((item) => item.name).join(' '), /Cheesy Garlic/);
+  assert.match(menu.items.map((item) => item.name).join(' '), /Nutella Bomb/);
+  assert.match(menu.items.map((item) => item.name).join(' '), /Sopressa Salame/);
 });

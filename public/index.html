@@ -4,346 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Rocco's — Italian Sourdough Pizza, Adelaide</title>
-<meta name="description" content="Woodfired Italian sourdough pizza inspired by the Mediterranean diet. Order online for pickup from Findon Rd or Grange Rd, Adelaide.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" href="/images/brand/roccos-face-badge.png?v=1">
+<title>Rocco's — Italian Sourdough Pizza</title>
+<meta name="description" content="Order Italian sourdough pizza for pickup from Findon Rd or Grange Rd, Adelaide.">
+<link rel="icon" href="/images/brand/rocco-live-logo.png">
 <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="home">
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="mark" viewBox="-120 -120 240 240">
-    <circle r="108" fill="#c8102e"/>
-    <circle r="84" fill="none" stroke="#f4ead5" stroke-width="5"/>
-    <g fill="#f4ead5">
-      <circle cx="-38" cy="-62" r="12"/><circle cx="10" cy="-76" r="13"/><circle cx="52" cy="-44" r="9"/><circle cx="-62" cy="-18" r="14"/>
-      <circle cx="-16" cy="-24" r="7"/><circle cx="30" cy="-14" r="15"/><circle cx="68" cy="6" r="8"/><circle cx="-48" cy="28" r="9"/>
-      <circle cx="-4" cy="26" r="6"/><circle cx="38" cy="50" r="12"/><circle cx="-18" cy="62" r="14"/><circle cx="60" cy="40" r="6"/>
-      <circle cx="-70" cy="56" r="6"/><circle cx="22" cy="-52" r="5"/><circle cx="-30" cy="-2" r="5"/>
-    </g>
-  </symbol>
-  <symbol id="ph" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></symbol>
-</svg>
-
-<header id="top">
-  <a class="promo-bar" id="promoBar" href="#menu"><span class="pb-tag">10% OFF</span> <span id="promoText">Orders of $40 or more</span></a>
-  <div class="wrap nav">
-    <a href="#top" class="logo-box" aria-label="Rocco's Italian Sourdough Pizza"><img src="/images/brand/roccos-face-badge.png?v=1" alt="Rocco's — Italian Sourdough Pizza"></a>
-    <ul class="main" id="links">
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#menu">Menu</a></li>
-      <li><a href="#locations">Locations</a></li>
-      <li><a href="#menu" class="nav-promo">Order Now</a></li>
-      <li><a href="#book">Book a Table</a></li>
-      <li><a href="#careers" class="careers-open">Careers</a></li>
-      <li><a href="#faq">FAQs</a></li>
-    </ul>
-    <div style="display:flex;gap:10px;align-items:center">
-      <button class="cart-btn" id="openCart" aria-label="Open your order"><span class="lbl">Your order</span><span class="cart-store" id="cartStore"></span><span class="count" id="cartCount">0</span></button>
-      <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    </div>
-  </div>
+<header class="bar">
+  <a class="logo" href="#home" aria-label="Rocco's Italian Sourdough Pizza"><img src="/images/brand/rocco-live-logo.png" alt="Rocco's — Italian Sourdough Pizza"></a>
+  <nav class="bar-nav">
+    <a href="#order">Order</a>
+    <a href="#book">Book a table</a>
+    <button class="cart-btn" id="openCart" type="button">Cart <span id="cartCount">0</span></button>
+  </nav>
 </header>
 
-<div class="hero">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow" id="heroEyebrow">Wood oven · Sourdough · Adelaide</div>
-      <h1 id="heroTitle">Hold, fold, eat, <em>repeat.</em></h1>
-      <p class="lead" id="heroLead">Slow-risen sourdough, fired in the wood oven in our open kitchen.</p>
-      <div class="cta">
-        <a href="#menu" class="btn btn-primary btn-see">Order now / See pizzas</a>
-      </div>
-      <a class="ai-pill" id="heroAi" href="tel:0870784471"><svg class="ic"><use href="#ph"/></svg><span><b>Call and order in any language</b><small id="heroAiNum">AI phone ordering · 7078 4471</small></span></a>
+<main>
+  <section id="view-home" class="view home-view">
+    <img class="hero-photo" src="/images/brand/rocco-family-hero.jpg" alt="Rocco stretching dough in the shop, a family photo on the wall behind him">
+    <div class="home-copy">
+      <p class="tagline">Italian sourdough pizza.</p>
+      <a class="btn btn-yellow" href="#order">Order</a>
+      <a class="btn btn-plain" href="#book">Book a table</a>
     </div>
-    <div class="hero-art">
-    <div class="hero-photos" id="heroPhotos" aria-label="Our pizzas"></div>
-    <div class="pizza-art"><svg viewBox="-120 -120 240 240" role="img" aria-label="Rocco's pizza mark"><use href="#mark" x="-120" y="-120" width="240" height="240"/></svg></div>
-    <div class="hero-vid" id="heroVid">
-      <video id="heroVideo" src="/videos/rocco-1.mp4" poster="/videos/rocco-1.jpg" muted autoplay playsinline preload="metadata" aria-label="Rocco making pizza"></video>
-      <div class="hv-dots" id="hvDots"></div>
-      <span class="hv-tag">Wood-oven open kitchen</span>
-    </div>
-    </div>
-  </div>
-</div>
-<div class="strip hero-strip" aria-hidden="true"><div>
-  <span>Hold, fold, eat, repeat</span>★<span class="mq-offer">10% off your total order when you spend $40+, applied automatically</span>★<span>We use imported cheese</span>★<span>Wood-oven open kitchen</span>★<span>Slow-risen sourdough</span>★<span>Call &amp; order in any language</span>★<span>We sell dough</span>★<span>BYO, no corkage</span>★
-  <span>Hold, fold, eat, repeat</span>★<span class="mq-offer">10% off your total order when you spend $40+, applied automatically</span>★<span>We use imported cheese</span>★<span>Wood-oven open kitchen</span>★<span>Slow-risen sourdough</span>★<span>Call &amp; order in any language</span>★<span>We sell dough</span>★<span>BYO, no corkage</span>★
-</div></div>
+  </section>
 
+  <section id="view-order" class="view" hidden>
+    <div class="sheet">
+      <h1>Choose a store</h1>
+      <div class="stores" id="storeChoice"></div>
+    </div>
+  </section>
 
+  <section id="view-menu" class="view" hidden>
+    <div class="catbar" id="catbar" role="tablist" aria-label="Menu">
+      <button type="button" class="active" data-f="pizza" role="tab">Pizzas</button>
+      <button type="button" data-f="extras" role="tab">Extras</button>
+      <button type="button" data-f="drinks" role="tab">Drinks</button>
+      <button type="button" data-f="dessert" role="tab">Desserts</button>
+    </div>
+    <p class="cat-note" id="catNote"></p>
+    <div class="grid" id="grid"></div>
+  </section>
 
-<section class="menu" id="menu">
-  <div class="wrap">
-    <div class="section-head menu-head">
-      <h2>Pizzas</h2>
-      <p class="menu-kicker">Fourteen pizzas. Hold, fold, eat, repeat.</p>
-      <p class="sr">Cheesy Garlic, Nutella Bomb and Sopressa Salame are on the list.</p>
+  <section id="view-book" class="view" hidden>
+    <div class="sheet">
+      <h1>Book a table</h1>
+      <p class="lead">Call the shop and we’ll set a table aside.</p>
+      <div class="stores" id="bookShops"></div>
     </div>
-
-    <div class="store-switch" id="storeSwitch">
-      <span class="ss-label">Pickup from</span>
-      <div class="ss-btns" id="ssBtns" role="radiogroup" aria-label="Choose your shop"></div>
-    </div>
-
-    <div class="toolbar">
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-f="pizza">Pizzas</button>
-        <button class="tab" data-f="dessert">Dessert</button>
-      </div>
-      <div class="filters" id="filters">
-        <label class="chip"><input type="checkbox" id="fVeg"> Vegetarian only</label>
-        <label class="chip"><input type="checkbox" id="fNut"> Hide pizzas with nuts</label>
-      </div>
-    </div>
-    <p class="menu-source" id="menuSource">Loading the menu…</p>
-    <div class="items" id="items"></div>
-
-    <div class="drinks-top" id="drinks">
-      <div class="dt-head"><h3>Drinks</h3><span class="dt-note"><b>Alcohol is dine-in only.</b> Beer and wine can't go in a pickup order. Enjoy them at the shop.</span></div>
-      <div class="dt-list" id="drinkList"></div>
-    </div>
-    <p class="note">Vegetarian pizzas are marked. Pesto and the Nutella dessert contain nuts. Descriptions tagged “To confirm” still need final wording from the kitchen. Please tell us about any allergies when you order. Alcohol is dine-in only.</p>
-  </div>
-</section>
-
-<section class="visit" id="visit" aria-label="Visit us">
-  <div class="wrap">
-    <div class="visit-grid" id="visitGrid">
-      <div class="visit-card"><div class="vk">Visit us</div><h3>Findon Rd</h3><p>336 Findon Rd</p></div>
-      <div class="visit-card"><div class="vk">Visit us</div><h3>Grange Rd</h3><p>466 Grange Rd</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="bestsellers" id="bestsellers">
-  <div class="wrap">
-    <div class="bs-head">
-      <span class="bs-label">Best Sellers</span>
-      <h2>The pizzas everyone orders</h2>
-      <p>Top sellers from the menu, ready for pickup.</p>
-    </div>
-    <div class="bs-grid" id="bsGrid"></div>
-  </div>
-</section>
-
-<section class="ai-order" id="ai-order">
-  <div class="wrap ai-wrap">
-    <div class="ai-icon"><svg class="ic"><use href="#ph"/></svg></div>
-    <div>
-      <div class="eyebrow">AI phone ordering</div>
-      <h2 id="aiHead">Call and order in any language</h2>
-      <p id="aiBody">Our AI phone line takes pickup orders in your language. Just call and speak the way you like.</p>
-      <div class="hellos" aria-hidden="true"><span>Hello</span><span>Ciao</span><span>你好</span><span>Xin chào</span><span>Γεια σου</span><span>مرحبا</span><span>Hola</span><span>नमस्ते</span></div>
-    </div>
-    <a class="btn btn-primary ai-call" id="aiCall" href="tel:0870784471"><svg class="ic"><use href="#ph"/></svg> <span id="aiNum">7078 4471</span></a>
-  </div>
-</section>
-
-<section class="story" id="story">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">Our story</div>
-      <h2 id="storyHeading">Takeaway pizza deserves better.</h2>
-      <div id="storyBody">
-        <p>Rocco started the pizzeria with a simple conviction: takeaway pizza has copped an unfair fast-food reputation, and it doesn't have to be that way.</p>
-        <p>So the pizzas here follow the principles of the Mediterranean diet: a sourdough base, lots of vegetables, good olive oil and honest toppings.</p>
-      </div>
-    </div>
-    <div class="story-card reveal">
-      <blockquote id="storyQuote">“Slow-fermented dough, imported tomatoes, fresh basil. <span>No shortcuts. No unnecessary extras.</span>”</blockquote>
-      <cite id="storyCite">Rocco’s promise</cite>
-    </div>
-  </div>
-</section>
-
-<section class="process" id="process">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">From the kitchen</div>
-      <h2>Three things we won't compromise on</h2>
-      <p>Watch your pizza go into the wood oven. Our kitchen is open, and there's nothing to hide.</p>
-    </div>
-    <div class="steps">
-      <div class="step reveal"><div class="n">01</div><h3>Sourdough base</h3><p>A naturally leavened dough, given time to develop flavour and digestibility, then fired in the wood oven until blistered and chewy.</p></div>
-      <div class="step reveal"><div class="n">02</div><h3>Fresh produce</h3><p>Seasonal vegetables, herbs and freshly shredded mozzarella, so what's on your pizza tastes like it should.</p></div>
-      <div class="step reveal"><div class="n">03</div><h3>Italian pantry</h3><p>Imported Italian tomatoes, cured meats and olive oil, picked because nothing else comes close.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="gallery" id="gallery">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Behind the counter</div>
-      <h2>See how it's made</h2>
-      <p>Slow-fermented dough, an open kitchen and a lot of care.</p>
-    </div>
-    <div class="vid reveal">
-      <div class="vid-frame" id="vidFrame">
-        <div><div class="play"></div><strong>Watch Rocco make the dough</strong></div>
-      </div>
-      <div>
-        <h3>From flour to fire</h3>
-        <p>Rocco cutting the dough, firing the wood oven and folding a slice the right way. Hold, fold, eat, repeat.</p>
-        <div class="vid-list" id="vidList"></div>
-      </div>
-    </div>
-    <div class="grid6" id="grid6"></div>
-    <p class="ig" id="igWrap" hidden><a class="btn btn-dark" id="igLink" target="_blank" rel="noopener">Follow us on Instagram</a></p>
-  </div>
-</section>
-
-<section class="locations" id="locations">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Find us</div>
-    </div>
-    <div class="loc-tabs" role="tablist" id="locTabs"></div>
-    <div id="locPanels"></div>
-  </div>
-</section>
-
-<section class="reviews" id="reviews">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">What people say</div>
-      <h2>Reviews</h2>
-      <p>Been in? Tell Adelaide what you thought.</p>
-    </div>
-    <div class="rev-grid" id="revGrid" hidden></div>
-    <div class="rev-cta" id="revCta">
-      <div class="rev-card">
-        <h3>Leave a Google review</h3>
-        <p>Your review helps other people find slow-fermented pizza done properly.</p>
-        <a class="btn btn-primary btn-sm" id="gReview" target="_blank" rel="noopener">Write a review</a>
-      </div>
-      <div class="rev-card">
-        <h3>Listed on Broadsheet Adelaide</h3>
-        <p>Broadsheet covers Rocco's approach to healthier pizza, built around the Mediterranean diet.</p>
-        <a class="btn btn-ghost btn-sm" href="https://www.broadsheet.com.au/adelaide/kidman-park/restaurants/roccopizza" target="_blank" rel="noopener">Read the listing</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="rules" id="rules">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">House rules</div>
-      <h2>Low fuss, high standards</h2>
-    </div>
-    <div class="grid">
-      <div class="rule reveal"><div class="big">✂️</div><h3>Cut with scissors</h3><p>Dining in? We cut your pizza with scissors and hand it straight over. No cutlery, it's eaten with hands.</p></div>
-      <div class="rule reveal"><div class="big">🔥</div><h3>Wood-oven open kitchen</h3><p>Pull up a seat and watch your pizza go into the wood oven.</p></div>
-      <div class="rule reveal"><div class="big">🍺</div><h3>Alcohol is dine-in only</h3><p>Beer and wine are served at the shop, not in pickup orders. BYO, no corkage.</p></div>
-      <div class="rule reveal"><div class="big">🥖</div><h3>We sell dough</h3><p>Take our slow-fermented sourdough home and make your own. Ask in store or call ahead.</p></div>
-      <div class="rule reveal"><div class="big">📞</div><h3>Order in any language</h3><p>Call our AI phone line and order in the language you're most comfortable with.</p></div>
-      <div class="rule reveal"><div class="big">🍍</div><h3>Pineapple? Yes.</h3><p>We do pineapple now. Add it to any pizza with Extras.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="extras" id="extras">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Beyond the slice</div>
-      <h2>Gift cards and dough to take home</h2>
-    </div>
-    <div class="ex-grid">
-      <div class="ex-card reveal" id="dough">
-        <h3>We sell dough</h3>
-        <p>Our slow-fermented sourdough dough balls, ready to stretch at home. Ask at either shop or call ahead to put some aside.</p>
-        <div class="dough-acts" id="doughActs"></div>
-      </div>
-      <div class="ex-card reveal" id="gift">
-        <h3>Gift cards</h3>
-        <p>Give someone a night off cooking. Pick an amount and we'll arrange the card. This sends a request — it does not charge a card.</p>
-        <form data-form="Gift card request">
-          <div class="amounts" role="radiogroup" aria-label="Amount">
-            <label><input type="radio" name="amount" value="$25" checked><span>$25</span></label>
-            <label><input type="radio" name="amount" value="$50"><span>$50</span></label>
-            <label><input type="radio" name="amount" value="$100"><span>$100</span></label>
-          </div>
-          <input required type="text" name="from" placeholder="Your name" aria-label="Your name">
-          <input required type="email" name="email" placeholder="Your email" aria-label="Your email">
-          <input type="text" name="to" placeholder="Who is it for?" aria-label="Recipient">
-          <textarea name="message" rows="2" placeholder="Message (optional)" aria-label="Message"></textarea>
-          <button class="btn btn-primary" type="submit">Request gift card</button>
-          <div class="status"></div>
-        </form>
-      </div>
-      <div class="ex-card reveal" id="club" data-feature="club" hidden>
-        <h3 id="clubTitle">Rocco's Club</h3>
-        <p>Be first to hear about new pizzas, specials and offers. No spam.</p>
-        <form data-form="Rocco's Club signup">
-          <input required type="text" name="name" placeholder="First name" aria-label="First name">
-          <input required type="email" name="email" placeholder="Email" aria-label="Email">
-          <label class="chip" ><input type="checkbox" name="specials" checked> Send me specials</label>
-          <button class="btn btn-primary" type="submit">Join the club</button>
-          <div class="status"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="book" id="book">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Book a table</div>
-      <h2>Dining in? Give us a call</h2>
-      <p>We take table bookings by phone. Call the shop you'd like to visit and we'll set a table aside. BYO wine, no corkage.</p>
-    </div>
-    <div class="book-acts" id="bookActs"><a class="btn btn-primary" href="tel:0870784471">Call 7078 4471</a></div>
-  </div>
-</section>
-
-<section class="faq" id="faq">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">FAQs</div>
-      <h2>Good questions</h2>
-    </div>
-    <div class="faq-list">
-      <details><summary>How does pickup work?</summary><p>Tick the pizzas you want on the menu, choose Findon Rd or Grange Rd, pick a pickup time and pay by card. Pickup times run every 15 minutes from 5:30pm.</p></details>
-      <details><summary>Can I order by phone in my language?</summary><p>Yes. Call our AI phone line and order in the language you're most comfortable with.</p></details>
-      <details><summary>Do you deliver?</summary><p>This site is pickup only. For delivery, use the delivery apps.</p></details>
-      <details><summary>Can I bring wine?</summary><p>Yes, BYO with no corkage when you dine in. Beer and wine we sell are dine-in only.</p></details>
-      <details><summary>Do you sell dough?</summary><p>Yes. Ask at either shop or call ahead and we'll put some aside.</p></details>
-      <details><summary>Allergies?</summary><p>Some items contain nuts. Tell us in the order notes, or call the shop to check.</p></details>
-    </div>
-    <p class="faq-more">Something else? Tap the chat bubble and ask us.</p>
-  </div>
-</section>
-
-<div class="ticker-bottom" aria-label="We use imported cheese"><div class="tb-track"><span>We use imported cheese</span><span>Hold, fold, eat, repeat</span><span>We use imported cheese</span><span>Sourdough from the wood oven</span><span>We use imported cheese</span><span>Hold, fold, eat, repeat</span><span>We use imported cheese</span><span>Sourdough from the wood oven</span></div></div>
+  </section>
+</main>
 
 <footer>
-  <div class="wrap fgrid">
-    <div class="fcol fbrand">
-      <a href="#top" class="logo-box" aria-label="Rocco's"><img src="/images/brand/roccos-face-badge.png?v=1" alt="Rocco's — Italian Sourdough Pizza"></a>
-      <p>Hold, fold, eat, repeat. Italian sourdough pizza from the wood oven in Adelaide.</p>
-      <a href="#menu" class="btn btn-primary fbtn">Order online</a>
-    </div>
-    <div class="fcol"><h4>Order</h4><a href="#menu">Menu</a><a href="#menu">Order for pickup</a><a href="#bestsellers">Best sellers</a><a href="#gift">Gift cards</a><a href="#dough">Buy dough</a></div>
-    <div class="fcol"><h4>Rocco's</h4><a href="#story">Our story</a><a href="#club" data-feature="club" hidden>Rocco's Club</a><a href="#careers" id="careersLink">Careers</a><a href="#reviews">Reviews</a></div>
-    <div class="fcol"><h4>Visit us</h4><div id="footerMeta"></div><a href="#locations">Maps &amp; directions</a></div>
-  </div>
-  <div class="wrap fbottom">
-    <span>&copy; 2026 Rocco's Italian Sourdough Pizza</span>
-    <span id="footerNote">Sandbox demo · test cards only</span>
-  </div>
-  <div id="careersBox" class="careers-box" hidden><b>Join the Rocco's team.</b> We're always keen to meet pizza makers, front-of-house and drivers. Call <a href="tel:0870784471">7078 4471</a> or drop into either store with your CV.</div>
+  <p>Findon Rd · 336 Findon Rd<br>Grange Rd · 466 Grange Rd<br><a href="tel:0870784471">7078 4471</a></p>
+  <p id="footerNote">Sandbox demo · test cards only</p>
 </footer>
 
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Your order">
-  <div class="drawer-head"><div><h3>Your order</h3><div class="dh-store" id="drawerStore"></div></div><button class="x" id="closeCart" aria-label="Close">✕</button></div>
+  <div class="drawer-head">
+    <div>
+      <h2>Your order</h2>
+      <p class="dh-store" id="drawerStore"></p>
+    </div>
+    <button class="x" id="closeCart" type="button" aria-label="Close">✕</button>
+  </div>
   <div class="drawer-body">
     <div id="cartLines"></div>
     <div id="cartFoot" hidden>
@@ -354,24 +81,27 @@
         <p class="offer-hint" id="cartHint" hidden></p>
       </div>
       <form class="checkout" id="checkout">
-        <div class="f step-lbl">1. Pick up from which shop?</div>
+        <p class="step">Pickup</p>
         <input type="hidden" name="where" id="coWhere">
-        <div class="store-btns" id="coStores" role="radiogroup" aria-label="Pickup shop"></div>
-        <div class="f step-lbl">2. When?</div>
-        <div class="when-btns" role="radiogroup" aria-label="Pickup time">
-          <label><input type="radio" name="when" value="asap" checked><span id="asapLbl">As soon as possible</span></label>
-          <label><input type="radio" name="when" value="time"><span>Pick an exact time</span></label>
+        <div class="store-btns" id="coStores"></div>
+        <p class="step">When</p>
+        <div class="when">
+          <label><input type="radio" name="when" value="asap" checked><span id="asapLbl">Pick up within 30 minutes</span></label>
+          <label><input type="radio" name="when" value="time"><span>Pick a time</span></label>
         </div>
         <div class="row" id="coTimeWrap" hidden>
-          <label class="f">Day<select name="date" id="coDate"></select></label>
-          <label class="f">Pickup at<select name="time" id="coTime"></select></label>
+          <label>Day<select name="date" id="coDate"></select></label>
+          <label>Time<select name="time" id="coTime"></select></label>
         </div>
-        <div class="f step-lbl">3. Your details</div>
-        <div class="row"><input required type="text" name="name" placeholder="Your name" aria-label="Name" autocomplete="name"><input required type="tel" name="phone" placeholder="Phone" aria-label="Phone" autocomplete="tel"></div>
+        <p class="step">Your details</p>
+        <div class="row">
+          <input required type="text" name="name" placeholder="Your name" aria-label="Name" autocomplete="name">
+          <input required type="tel" name="phone" placeholder="Phone" aria-label="Phone" autocomplete="tel">
+        </div>
         <textarea name="notes" rows="2" placeholder="Notes or allergies" aria-label="Notes"></textarea>
         <div id="card-container"></div>
         <p class="pay-note" id="payNote"></p>
-        <button class="btn btn-primary" type="submit" id="payBtn">Pay and place order</button>
+        <button class="btn btn-yellow" type="submit" id="payBtn">Pay</button>
         <div class="status" id="coStatus"></div>
       </form>
     </div>
@@ -379,36 +109,6 @@
   </div>
 </aside>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"><div class="box" id="lbBox"></div></div>
-
-<div id="bot" class="notip" role="complementary" aria-label="Rocco's FAQ assistant">
-  <div class="bot-panel" id="botPanel" role="dialog" aria-label="Rocco's FAQ assistant">
-    <div class="bot-head" id="botHead" title="Drag to move">
-      <div class="av"><svg viewBox="-120 -120 240 240"><use href="#mark" x="-120" y="-120" width="240" height="240"/></svg></div>
-      <div class="ttl"><b>Ask Rocco's</b><small>Automated FAQ assistant</small></div>
-      <span class="bot-grip" aria-hidden="true">⠿</span>
-      <button id="botMin" aria-label="Collapse chat" title="Collapse">−</button>
-    </div>
-    <div class="bot-log" id="botLog" aria-live="polite"></div>
-    <div class="bot-chips" id="botChips"></div>
-    <form class="bot-form" id="botForm" autocomplete="off">
-      <input type="text" id="botInput" placeholder="Type your question…" aria-label="Your question" maxlength="200">
-      <button type="submit">Send</button>
-    </form>
-    <div class="bot-note">Automated answers from our menu and site info. For anything else, call <span id="botPhone">7078 4471</span>.</div>
-  </div>
-  <span class="bot-tip" id="botTip">Questions? Ask us</span>
-  <button class="bot-bubble" id="botBubble" aria-label="Open FAQ chat" aria-expanded="false" title="Ask us a question (drag to move)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 10h6M9 14h4"/></svg>
-  </button>
-</div>
-
-<nav class="mbar" aria-label="Quick actions">
-  <a id="mbarCall" href="#visit">Visit / Call</a>
-  <a id="mbarOrder" href="#menu">Order <span id="mbarCount"></span></a>
-</nav>
-
 <script type="module" src="/app.js"></script>
-<script>document.querySelectorAll("#careersLink,.careers-open").forEach(a=>a.onclick=e=>{e.preventDefault();const b=document.getElementById("careersBox");b.hidden=false;b.scrollIntoView({behavior:"smooth",block:"center"})})</script>
 </body>
 </html>
