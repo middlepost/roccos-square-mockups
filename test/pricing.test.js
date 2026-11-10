@@ -190,6 +190,16 @@ test('alcohol is dine-in only and cannot go in a pickup order', () => {
   }
 });
 
+test('a gift card does not count toward the two-pizza discount', () => {
+  const gift = [{ sku: 'GIFT', name: 'Gift card', priceCents: 10000, category: 'gift-card', modifiers: [] }];
+  const priced = priceCart(gift, brand.offer, [
+    { type: 'item', sku: 'GIFT', qty: 2, modifierKeys: [] },
+  ]);
+  assert.equal(priced.pizzaQty, 0);
+  assert.equal(priced.discountCents, 0);
+  assert.equal(priced.totalCents, 20000);
+});
+
 test('a switched-off offer does not discount two pizzas', () => {
   const priced = priceCart(items, { ...brand.offer, enabled: false }, [
     { type: 'item', sku: 'ROCCO-02', qty: 2, modifierKeys: [] },

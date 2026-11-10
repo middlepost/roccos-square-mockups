@@ -11,7 +11,9 @@ let menu = { items: [], currency: 'AUD', source: 'local' };
 let lines = [];
 let tab = 'pizza';
 let card = null;
+let giftCard = null;
 let payments = null;
+let giftAmount = 5000;
 let cardLocationId = null;
 let store = null;
 const slotUse = { key: '', used: {}, max: null, loading: false };
@@ -39,19 +41,27 @@ function extrasCatalog() {
 }
 
 function show(name) {
-  const view = name === 'order' || name === 'menu' || name === 'book' || name === 'read' ? name : 'home';
+  const view = name === 'order' || name === 'menu' || name === 'book' || name === 'read' || name === 'gift' ? name : 'home';
   document.body.classList.toggle('home', view === 'home');
   $('#view-home').hidden = view !== 'home';
   $('#view-order').hidden = view !== 'order';
   $('#view-menu').hidden = view !== 'menu';
   $('#view-book').hidden = view !== 'book';
   $('#view-read').hidden = view !== 'read';
+  $('#view-gift').hidden = view !== 'gift';
   if (view === 'menu' && !store) {
     location.hash = 'order';
     return;
   }
   if (view === 'menu') renderMenu();
   if (view === 'read') renderReadMenu();
+  if (view === 'gift') {
+    initGiftCard().catch((error) => {
+      const message = error?.message || '';
+      if (/secure context|https/i.test(message)) return;
+      giftSay(message || 'The card form could not load.', true);
+    });
+  }
   window.scrollTo(0, 0);
 }
 
@@ -259,7 +269,7 @@ function renderCart() {
   const hint = $('#cartHint');
   if (priced.discountCents > 0) {
     discountRow.hidden = false;
-    $('#cartDiscountLabel').textContent = priced.offer?.name || '10% off';
+    $('#cartDiscountLabel').textContent = brand?.offer?.copy || '10% off your entire order when you order two or more pizzas';
     $('#cartDiscount').textContent = `−${money(priced.discountCents)}`;
     hint.hidden = true;
     hint.textContent = '';
@@ -438,6 +448,85 @@ function buildTimes() {
   }
 }
 
+function giftMoney(cents) {
+  return formatMoney(cents, menu.currency || 'AUD');
+}
+function selectedGiftCents() {
+  if (giftAmount !== 'custom') return giftAmount;
+  const dollars = Number($('#giftCustom').value);
+  if (!Number.isInteger(dollars)) return null;
+  return dollars * 100;
+}
+function paintGiftPay() {
+  const cents = selectedGiftCents();
+  $('#giftPay').textContent = cents ? `Pay ${giftMoney(cents)}` : 'Pay';
+}
+$('#giftAmounts').addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-amount]');
+  if (!button) return;
+  giftAmount = button.dataset.amount === 'custom' ? 'custom' : Number(button.dataset.amount);
+  $$('#giftAmounts button').forEach((el) => el.classList.toggle('active', el === button));
+  $('#giftCustomWrap').hidden = giftAmount !== 'custom';
+  paintGiftPay();
+});
+$('#giftCustom')?.addEventListener('input', paintGiftPay);
+
+function giftSay(message, isError) {
+  const el = $('#giftStatus');
+  el.className = `status show${isError ? ' err' : ''}`;
+  el.textContent = message || '';
+}
+async function initGiftCard() {
+  if (!square?.applicationId || giftCard || !window.isSecureContext) return;
+  const location = brand.locations?.[0];
+  const locationId = location?.squareLocationId || square.locationId;
+  await loadScript(square.sdkUrl);
+  if (!payments) payments = window.Square.payments(square.applicationId, locationId);
+  giftCard = await payments.card();
+  $('#gift-card-container').innerHTML = '';
+  await giftCard.attach('#gift-card-container');
+}
+$('#giftForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const button = $('#giftPay');
+  button.disabled = true;
+  giftSay('', false);
+  try {
+    const cents = selectedGiftCents();
+    if (!cents || cents < 1000 || cents > 50000) throw new Error('Choose a gift card from $10 to $500.');
+    if (!giftCard) await initGiftCard();
+    if (!giftCard) throw new Error('The card form is not available.');
+    const token = await giftCard.tokenize();
+    if (token.status !== 'OK') throw new Error(token.errors?.map((entry) => entry.message).join(' ') || 'Check the card details.');
+    const data = Object.fromEntries(new FormData(event.target).entries());
+    const response = await fetch('/api/gift-card', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        idempotencyKey: crypto.randomUUID(),
+        sourceId: token.token,
+        amountCents: cents,
+        toName: data.toName,
+        toEmail: data.toEmail,
+        fromName: data.fromName,
+        message: data.message,
+      }),
+    });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.error || 'Payment failed.');
+    const loaded = body.issued
+      ? 'The balance is on this Square gift card.'
+      : 'Quote this code at the shop.';
+    $('#giftConfirm').innerHTML = `<h2>Gift card paid</h2><p>${esc(giftMoney(body.totalCents))} for ${esc(body.toName)} at ${esc(body.toEmail)}.</p><p class="gift-code">${esc(body.giftCode)}</p><p>${loaded}</p>`;
+    $('#giftConfirm').hidden = false;
+    $('#giftForm').hidden = true;
+  } catch (error) {
+    giftSay(error.message || 'Payment failed.', true);
+  } finally {
+    button.disabled = false;
+  }
+});
+
 function say(message, isError) {
   const el = $('#coStatus');
   el.className = `status show${isError ? ' err' : ''}`;
@@ -532,12 +621,16 @@ async function start() {
   document.title = `${brand.name} — ${brand.tagline}`;
   $('#footerNote').textContent = square?.environment === 'production' ? 'Pickup orders' : 'Sandbox demo · test cards only';
   const pay = $('#payNote');
+  const giftNote = $('#giftPayNote');
   if (square?.environment === 'sandbox') {
-    pay.textContent = square.paymentsReady
+    const sandboxNote = square.paymentsReady
       ? 'Square sandbox. Test card 4111 1111 1111 1111, any future expiry, any CVV. No real money moves.'
       : 'The card form can load, but the server has no SQUARE_ACCESS_TOKEN yet, so a payment cannot be completed.';
+    pay.textContent = sandboxNote;
+    if (giftNote) giftNote.textContent = sandboxNote;
   } else {
     pay.textContent = 'Card details go to Square. We never see the card number.';
+    if (giftNote) giftNote.textContent = pay.textContent;
   }
   try { store = sessionStorage.getItem(`store:${brand.id}`); } catch { store = null; }
   if (!locByKey(store)) store = null;

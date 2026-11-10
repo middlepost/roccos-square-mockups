@@ -68,7 +68,10 @@ test('the page is the simple order flow', () => {
   assert.match(html, /Grange Rd/);
   assert.match(html, /Book a table/);
   assert.match(html, /href="#read">Menu</);
-  assert.match(html, /10% off your entire order when you order 2 or more pizzas/);
+  assert.match(html, /10% off your entire order when you order two or more pizzas/);
+  assert.match(html, /Buy a gift card/);
+  assert.match(html, /href="#gift"/);
+  assert.match(css, /\.deal-strip \{[^}]*background:\s*#000/);
   assert.match(css, /\.hero-photo \{[^}]*height:\s*480px/);
   assert.match(css, /height:\s*72vw/);
   assert.match(html, />Pizzas</);

@@ -4,6 +4,7 @@ import { presentLocalMenu } from './brand.js';
 import { menuFromCatalog } from './catalog.js';
 import { recordEnquiry, notifyEnquiry, validateEnquiry } from './enquiries.js';
 import { buildCheckout, paymentBody } from './orders.js';
+import { buildGiftCardCheckout, placeholderGiftCode } from './giftcards.js';
 import { SquareError } from './square.js';
 import { createSlotBook } from './slots.js';
 import { PriceError, priceCart } from '../shared/pricing.js';
@@ -264,6 +265,106 @@ export function createApp({
         sendJson(res, 200, {
           max: brand.pickup?.maxPizzasPerSlot || null,
           used: slotBook.forDay(url.searchParams.get('location') || '', url.searchParams.get('date') || ''),
+        });
+        return;
+      }
+      if (req.method === 'POST' && pathname === '/api/gift-card') {
+        if (squareConfig.environment !== 'sandbox') {
+          sendJson(res, 403, { error: 'Gift cards stay on the Square sandbox. Nothing was charged.' });
+          return;
+        }
+        if (!square) {
+          sendJson(res, 503, {
+            error: 'Card payments need a Square sandbox access token on the server. Set SQUARE_ACCESS_TOKEN and restart. Nothing was charged.',
+          });
+          return;
+        }
+        const body = await readBody(req);
+        const checkout = buildGiftCardCheckout({
+          brand,
+          body,
+          currency: menu.currency || 'AUD',
+        });
+        let squareCard = null;
+        if (typeof square.createGiftCard === 'function') {
+          try {
+            const created = await square.createGiftCard({
+              locationId: checkout.squareLocationId,
+              idempotencyKey: `${checkout.idempotencyKey}-card`,
+            });
+            squareCard = created.gift_card || null;
+          } catch (error) {
+            console.log(`Gift card issue skipped: ${error.message}`);
+            squareCard = null;
+          }
+        }
+        if (squareCard) checkout.order.line_items[0].item_type = 'GIFT_CARD';
+        const created = await square.createOrder(checkout.order, `${checkout.idempotencyKey}-order`);
+        const order = created.order;
+        const amount = order?.total_money?.amount;
+        const orderCurrency = order?.total_money?.currency;
+        if (!order?.id || amount == null) {
+          throw new SquareError('Square did not return an order total. Nothing was charged.', { status: 502 });
+        }
+        if (amount !== checkout.amountCents || orderCurrency !== checkout.currency) {
+          sendJson(res, 409, {
+            error: `Square totalled this gift card differently (${amount} ${orderCurrency} vs ${checkout.amountCents} ${checkout.currency}). No card was charged.`,
+            orderId: order.id,
+          });
+          return;
+        }
+        let paid;
+        try {
+          paid = await square.createPayment({
+            source_id: checkout.sourceId,
+            idempotency_key: `${checkout.idempotencyKey}-pay`,
+            amount_money: { amount, currency: checkout.currency },
+            order_id: order.id,
+            location_id: checkout.squareLocationId,
+            autocomplete: true,
+            reference_id: checkout.order.reference_id,
+            note: 'Gift card',
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : 'The card was declined.';
+          sendJson(res, 402, { error: `${message} No charge was completed.`, orderId: order.id });
+          return;
+        }
+        const payment = paid.payment;
+        if (!payment || (payment.status !== 'COMPLETED' && payment.status !== 'APPROVED')) {
+          sendJson(res, 402, { error: 'The card was not charged.', orderId: order.id, status: payment?.status || 'UNKNOWN' });
+          return;
+        }
+        let issued = false;
+        const lineUid = order.line_items?.[0]?.uid;
+        if (squareCard?.id && lineUid && typeof square.activateGiftCard === 'function') {
+          try {
+            await square.activateGiftCard({
+              giftCardId: squareCard.id,
+              locationId: checkout.squareLocationId,
+              orderId: order.id,
+              lineItemUid: lineUid,
+              idempotencyKey: `${checkout.idempotencyKey}-activate`,
+            });
+            issued = true;
+          } catch (error) {
+            console.log(`Gift card activate skipped: ${error.message}`);
+          }
+        }
+        const giftCode = squareCard?.gan || placeholderGiftCode(checkout.idempotencyKey);
+        console.log(`Gift card ${order.id} ${amount} ${checkout.currency} issued=${issued}`);
+        sendJson(res, 200, {
+          ok: true,
+          orderId: order.id,
+          paymentId: payment.id,
+          receiptUrl: payment.receipt_url || null,
+          status: payment.status,
+          totalCents: amount,
+          currency: checkout.currency,
+          giftCode,
+          issued,
+          toName: checkout.toName,
+          toEmail: checkout.toEmail,
         });
         return;
       }

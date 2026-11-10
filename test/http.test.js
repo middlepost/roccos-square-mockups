@@ -70,8 +70,8 @@ test('the site serves the v3 page, local menu, and photos without a token', asyn
     const config = await (await fetch(`${base}/api/config`)).json();
     assert.equal(config.square.paymentsReady, false);
     assert.equal(config.square.environment, 'sandbox');
-    assert.match(config.brand.offer.copy, /10% off your entire order when you order 2 or more pizzas/);
-    assert.match(html, /10% off your entire order when you order 2 or more pizzas/);
+    assert.match(config.brand.offer.copy, /10% off your entire order when you order two or more pizzas/);
+    assert.match(html, /10% off your entire order when you order two or more pizzas/);
     assert.match(html, /id="cartSubtotal"/);
     assert.match(html, /id="cartHint"/);
     assert.match(html, /id="view-read"/);

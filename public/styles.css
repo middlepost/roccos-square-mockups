@@ -64,8 +64,8 @@ body.home .logo img { width: min(460px, 82vw); }
 
 .deal-strip {
   margin: 0;
-  background: var(--yellow);
-  color: var(--ink);
+  background: #000;
+  color: #fff;
   text-align: center;
   padding: 7px 16px;
   font-size: .92rem;
@@ -118,6 +118,28 @@ body.home .logo img { width: min(460px, 82vw); }
 }
 .btn-yellow { background: var(--yellow); color: var(--ink); }
 .btn-plain { background: var(--white); color: var(--ink); border-color: var(--grey); }
+.text-link {
+  color: var(--grey);
+  font-size: .95rem;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.gift-form { display: grid; gap: 12px; max-width: 480px; margin: 0 auto; text-align: left; }
+.amounts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.amounts button {
+  min-width: 76px;
+  min-height: 48px;
+  border: 2px solid var(--line);
+  background: var(--white);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.amounts button.active { border-color: var(--yellow); background: #fff8d6; }
+.custom-amt { display: grid; gap: 6px; color: var(--grey); font-size: .9rem; }
+.gift-code { margin: 8px 0 0; font-size: 1.5rem; font-weight: 800; letter-spacing: .06em; }
+#gift-card-container { background: #fafafa; border-radius: 8px; padding: 8px; min-height: 70px; }
 
 .read {
   max-width: 720px;
@@ -292,7 +314,8 @@ footer a { color: var(--ink); }
 .line .qty button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--ink); background: var(--white); cursor: pointer; }
 .totals { margin: 12px 0; }
 .tot-row { display: flex; justify-content: space-between; padding: 6px 0; }
-.tot-row.discount { background: #fff6cc; border-radius: 8px; padding: 8px 10px; color: var(--ink); font-weight: 700; }
+.tot-row.discount { background: #fff6cc; border-radius: 8px; padding: 8px 10px; color: var(--ink); font-weight: 700; gap: 12px; }
+.tot-row.discount span:first-child { flex: 1; }
 .tot-row.grand { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 10px; font-size: 1.25rem; font-weight: 800; }
 .offer-hint { margin: 8px 0 0; color: var(--ink); background: var(--yellow); border-radius: 8px; padding: 8px 10px; font-weight: 700; }
 .checkout { display: grid; gap: 10px; }
@@ -335,6 +358,7 @@ input[type="radio"], input[type="checkbox"] { width: auto; padding: 0; border: 0
   .bar-nav { gap: 8px 12px; }
   .bar-nav a { font-size: .8rem; letter-spacing: .02em; }
   .cart-btn { font-size: .85rem; padding: 6px 12px; }
+  .nav-rest { display: none; }
   .grid { gap: 10px; padding: 14px 10px 64px; }
   .card h2 { font-size: 1rem; }
   .bar-nav { gap: 14px; }

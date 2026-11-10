@@ -20,11 +20,12 @@
   <nav class="bar-nav">
     <a href="#order">Order</a>
     <a href="#read">Menu</a>
-    <a href="#book">Book a table</a>
+    <a href="#book">Book<span class="nav-rest"> a table</span></a>
+    <a href="#gift">Gift<span class="nav-rest"> cards</span></a>
     <button class="cart-btn" id="openCart" type="button">Cart <span id="cartCount">0</span></button>
   </nav>
 </header>
-<p class="deal-strip">10% off your entire order when you order 2 or more pizzas</p>
+<p class="deal-strip">10% off your entire order when you order two or more pizzas</p>
 
 <main>
   <section id="view-home" class="view home-view">
@@ -35,6 +36,7 @@
       <a class="btn btn-yellow" href="#order">Order</a>
       <a class="btn btn-plain" href="#book">Book a table</a>
       <a class="btn btn-plain" href="#read">Menu</a>
+      <a class="text-link" href="#gift">Buy a gift card</a>
     </div>
   </section>
 
@@ -61,6 +63,33 @@
       <h1>Menu</h1>
       <a class="btn btn-yellow" href="#order">Order</a>
       <div id="readList"></div>
+    </div>
+  </section>
+
+  <section id="view-gift" class="view" hidden>
+    <div class="sheet gift">
+      <h1>Gift card</h1>
+      <p class="lead">Pick an amount and who it’s for.</p>
+      <form class="gift-form" id="giftForm">
+        <div class="amounts" id="giftAmounts">
+          <button type="button" data-amount="2500">$25</button>
+          <button type="button" class="active" data-amount="5000">$50</button>
+          <button type="button" data-amount="10000">$100</button>
+          <button type="button" data-amount="custom">Other</button>
+        </div>
+        <label class="custom-amt" id="giftCustomWrap" hidden>Amount in dollars ($10–$500)
+          <input id="giftCustom" type="number" min="10" max="500" step="1" inputmode="numeric" placeholder="10–500" aria-label="Custom amount in dollars">
+        </label>
+        <input required name="toName" type="text" placeholder="Recipient name" aria-label="Recipient name" autocomplete="name">
+        <input required name="toEmail" type="email" placeholder="Recipient email" aria-label="Recipient email" autocomplete="email">
+        <input required name="fromName" type="text" placeholder="Your name" aria-label="Your name" autocomplete="name">
+        <textarea name="message" rows="2" maxlength="200" placeholder="Message (optional)" aria-label="Message"></textarea>
+        <div id="gift-card-container"></div>
+        <p class="pay-note" id="giftPayNote"></p>
+        <button class="btn btn-yellow" type="submit" id="giftPay">Pay $50</button>
+        <p class="status" id="giftStatus"></p>
+      </form>
+      <div class="confirm" id="giftConfirm" hidden></div>
     </div>
   </section>
 
@@ -92,7 +121,7 @@
     <div id="cartFoot" hidden>
       <div class="totals" id="cartTotals">
         <div class="tot-row"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
-        <div class="tot-row discount" id="cartDiscountRow" hidden><span id="cartDiscountLabel">10% off</span><span id="cartDiscount">−$0</span></div>
+        <div class="tot-row discount" id="cartDiscountRow" hidden><span id="cartDiscountLabel">10% off your entire order when you order two or more pizzas</span><span id="cartDiscount">−$0</span></div>
         <div class="tot-row grand"><span>Total</span><span id="cartTotal">$0</span></div>
         <p class="offer-hint" id="cartHint" hidden></p>
       </div>

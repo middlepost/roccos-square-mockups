@@ -111,5 +111,26 @@ export function createSquareClient({
     async createPayment(payment) {
       return request('POST', '/v2/payments', payment);
     },
+    async createGiftCard({ locationId, idempotencyKey }) {
+      return request('POST', '/v2/gift-cards', {
+        idempotency_key: idempotencyKey,
+        location_id: locationId,
+        gift_card: { type: 'DIGITAL' },
+      });
+    },
+    async activateGiftCard({ giftCardId, locationId, orderId, lineItemUid, idempotencyKey }) {
+      return request('POST', '/v2/gift-cards/activities', {
+        idempotency_key: idempotencyKey,
+        gift_card_activity: {
+          type: 'ACTIVATE',
+          location_id: locationId,
+          gift_card_id: giftCardId,
+          activate_activity_details: {
+            order_id: orderId,
+            line_item_uid: lineItemUid,
+          },
+        },
+      });
+    },
   };
 }

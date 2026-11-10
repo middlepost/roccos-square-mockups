@@ -165,7 +165,7 @@
     "name": "10% off",
     "percent": 10,
     "minPizzas": 2,
-    "copy": "10% off your entire order when you order 2 or more pizzas",
+    "copy": "10% off your entire order when you order two or more pizzas",
     "enabled": true
   },
   "videos": [
@@ -238,7 +238,7 @@
     }
   ],
   "promos": {
-    "bar": "10% off your entire order when you order 2 or more pizzas",
+    "bar": "10% off your entire order when you order two or more pizzas",
     "bestSellersNote": "Top sellers as marked on the current roccopizza.com.au menu."
   },
   "hoursSource": "roccopizza.com.au (Findon open 7 days, Grange Wed-Sun) + Google listings via web search 7 Nov 2026: Findon 5-9pm, Grange 5-8pm",
