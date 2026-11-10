@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { pizzaIngredients } from '../shared/pizza.js';
 
 const SAFE_ID = /^[a-z0-9-]+$/;
 
@@ -42,6 +43,7 @@ export function presentLocalItem(item) {
     alcohol: Boolean(item.alcohol),
     toConfirm: Boolean(item.toConfirm) || /^to confirm/i.test(item.description || ''),
     imageUrl: item.image ? `/images/products/${item.image}` : null,
+    ingredients: item.category === 'pizza' ? pizzaIngredients(item) : [],
     variationId: null,
     modifiers: (item.modifiers || []).map((mod) => ({
       key: mod.key,

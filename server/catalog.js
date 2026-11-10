@@ -1,4 +1,5 @@
 import { presentLocalMenu } from './brand.js';
+import { pizzaIngredients } from '../shared/pizza.js';
 
 const CATEGORY_KEYS = ['pizza', 'dessert', 'drinks'];
 
@@ -246,6 +247,7 @@ export function menuFromCatalog(objects, localMenu, brand) {
         : Boolean(local?.containsNuts),
       toConfirm: /^to confirm/i.test(description),
       imageUrl: image?.image_data?.url || (local?.image ? `/images/products/${local.image}` : null),
+      ingredients: key === 'pizza' ? pizzaIngredients({ category: 'pizza', description, ingredients: local?.ingredients }) : [],
       variationId: variation.id,
       modifiers: Array.isArray(data.modifier_list_info)
         ? modifiers
@@ -273,6 +275,7 @@ export function menuFromCatalog(objects, localMenu, brand) {
       ...squareItem,
       number: local.number ?? squareItem.number,
       imageUrl: squareItem.imageUrl || local.imageUrl,
+      ingredients: local.ingredients?.length ? local.ingredients : (squareItem.ingredients || []),
     });
   }
   for (const squareItem of items) {

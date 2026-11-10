@@ -210,6 +210,9 @@
     "headline": "Call and order in any language",
     "body": "Our AI phone line takes pickup orders in English, Italiano, 中文, Tiếng Việt, العربية, Ελληνικά and more. Just call and speak the way you like."
   },
+  "booking": {
+    "maxParty": 10
+  },
   "pickup": {
     "slotMinutes": 15,
     "maxPizzasPerSlot": 10,

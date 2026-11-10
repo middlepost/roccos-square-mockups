@@ -6,11 +6,14 @@ const KINDS = {
   catering: ['name', 'phone', 'date', 'people'],
   'gift-card': ['from', 'email', 'amount'],
   club: ['name', 'email'],
+  // Square Bookings is an appointments API (a service, a team member, a customer).
+  // A restaurant table is stored here instead, for the shop to confirm.
+  booking: ['name', 'phone', 'email', 'date', 'time', 'party', 'location'],
 };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function validateEnquiry(body) {
+export function validateEnquiry(body, { maxParty = 10 } = {}) {
   const kind = body?.kind;
   if (!KINDS[kind]) return 'Unknown form.';
   const fields = body.fields && typeof body.fields === 'object' ? body.fields : {};
@@ -27,6 +30,17 @@ export function validateEnquiry(body) {
   }
   if ((kind === 'club' || kind === 'gift-card') && !EMAIL.test(String(fields.email))) return 'Enter a valid email.';
   if (kind === 'catering' && fields.email && !EMAIL.test(String(fields.email))) return 'Enter a valid email.';
+  if (kind === 'booking') {
+    if (!EMAIL.test(String(fields.email))) return 'Enter a valid email.';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(fields.date))) return 'Enter a date.';
+    if (!/^\d{2}:\d{2}$/.test(String(fields.time))) return 'Enter a time.';
+    const party = Number(fields.party);
+    const limit = Number.isInteger(maxParty) && maxParty > 0 ? maxParty : 10;
+    if (!Number.isInteger(party) || party < 1 || party > 40) return 'Enter a party size.';
+    if (party > limit && String(fields.preorder) !== 'yes') {
+      return `Parties larger than ${limit} must pre-order.`;
+    }
+  }
   return null;
 }
 

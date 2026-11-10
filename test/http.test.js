@@ -102,6 +102,47 @@ test('the site serves the v3 page, local menu, and photos without a token', asyn
   });
 });
 
+test('a table booking is stored, and a party over the limit must pre-order', async () => {
+  await withServer(null, async (base, enquiryFile) => {
+    const config = await (await fetch(`${base}/api/config`)).json();
+    assert.equal(config.brand.booking.maxParty, 10);
+    const tooBig = await fetch(`${base}/api/enquiries`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        kind: 'booking',
+        fields: { name: 'Alex', phone: '0412345678', email: 'alex@example.com', date: '2026-12-01', time: '18:00', party: '12', location: 'Findon Rd' },
+      }),
+    });
+    const denied = await tooBig.json();
+    assert.equal(tooBig.status, 400);
+    assert.match(denied.error, /larger than 10 must pre-order/);
+    const ok = await fetch(`${base}/api/enquiries`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        kind: 'booking',
+        fields: { name: 'Alex', phone: '0412345678', email: 'alex@example.com', date: '2026-12-01', time: '18:00', party: '4', location: 'Grange Rd', preorder: 'no' },
+      }),
+    });
+    assert.equal(ok.status, 200);
+    const big = await fetch(`${base}/api/enquiries`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        kind: 'booking',
+        fields: { name: 'Alex', phone: '0412345678', email: 'alex@example.com', date: '2026-12-01', time: '18:30', party: '12', location: 'Findon Rd', preorder: 'yes' },
+      }),
+    });
+    assert.equal(big.status, 200);
+    const lines = fs.readFileSync(enquiryFile, 'utf8').trim().split('\n').map((line) => JSON.parse(line));
+    assert.equal(lines.length, 2);
+    assert.equal(lines[0].kind, 'booking');
+    assert.equal(lines[1].fields.preorder, 'yes');
+    assert.doesNotMatch(JSON.stringify(lines), /EAAAsuper-secret-token/);
+  });
+});
+
 test('forms are stored for the configured inbox', async () => {
   await withServer(null, async (base, enquiryFile) => {
     const ok = await fetch(`${base}/api/enquiries`, {

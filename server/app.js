@@ -67,6 +67,9 @@ function publicBrand(brand) {
     bestSellers: brand.bestSellers || [],
     aiOrdering: brand.aiOrdering || null,
     pickup: brand.pickup || null,
+    booking: {
+      maxParty: Number.isInteger(brand.booking?.maxParty) && brand.booking.maxParty > 0 ? brand.booking.maxParty : 10,
+    },
   };
 }
 
@@ -244,7 +247,7 @@ export function createApp({
       }
       if (req.method === 'POST' && pathname === '/api/enquiries') {
         const body = await readBody(req);
-        const problem = validateEnquiry(body);
+        const problem = validateEnquiry(body, { maxParty: brand.booking?.maxParty || 10 });
         if (problem) {
           sendJson(res, 400, { error: problem });
           return;

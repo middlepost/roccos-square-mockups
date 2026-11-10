@@ -75,9 +75,14 @@ test('the page is the simple order flow', () => {
   assert.match(css, /\.hero-photo \{[^}]*height:\s*480px/);
   assert.match(css, /height:\s*72vw/);
   assert.match(html, />Pizzas</);
-  assert.match(html, />Extras</);
+  assert.doesNotMatch(html, /data-f="extras"/);
   assert.match(html, />Drinks</);
   assert.match(html, />Desserts</);
+  assert.match(html, /Add or Remove/);
+  assert.match(html, /href="#contact"/);
+  assert.match(html, /phone-icon/);
+  assert.match(html, /id="bookForm"/);
+  assert.doesNotMatch(html, /Call the shop/);
   assert.match(html, /rocco-live-logo\.png/);
   assert.match(html, /rocco-family-hero\.jpg/);
   assert.match(css, /#FFCA09/);

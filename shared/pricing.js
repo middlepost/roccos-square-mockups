@@ -1,3 +1,5 @@
+import { pizzaIngredients } from './pizza.js';
+
 export class PriceError extends Error {
   constructor(message) {
     super(message);
@@ -31,7 +33,7 @@ export function percentOffCents(subtotalCents, percent) {
 
 /**
  * Price a cart from the menu. Client prices are ignored.
- * lines: { type:'item', sku, qty, modifierKeys[] }
+ * lines: { type:'item', sku, qty, modifierKeys[], removed[] }
  * offer: { percent, minPizzas, name, enabled } or null.
  * Once the cart has minPizzas pizzas (by quantity), percent comes off the whole order.
  * Drinks, desserts and extras do not count toward that number, and they are still discounted.
@@ -107,9 +109,24 @@ function priceItem(bySku, line, currency) {
     if (!mod) throw new PriceError(`${item.name} does not have that add-on.`);
     return mod;
   });
+  const requested = Array.isArray(line.removed) ? line.removed : [];
+  if (requested.length && item.category !== 'pizza') {
+    throw new PriceError(`${item.name} cannot have toppings removed.`);
+  }
+  const known = pizzaIngredients(item);
+  const removed = requested.map((name) => {
+    const match = known.find((entry) => entry.toLowerCase() === String(name).trim().toLowerCase());
+    if (!match) throw new PriceError(`${item.name} does not come with ${name}.`);
+    return match;
+  });
+  if (new Set(removed.map((name) => name.toLowerCase())).size !== removed.length) {
+    throw new PriceError(`Remove the duplicate topping on ${item.name}.`);
+  }
   const extra = modifiers.reduce((sum, mod) => sum + mod.priceCents, 0);
   const unitCents = item.priceCents + extra;
-  const detail = modifiers.length ? `+ ${modifiers.map((mod) => mod.name).join(', ')}` : '';
+  const addDetail = modifiers.length ? `+ ${modifiers.map((mod) => mod.name).join(', ')}` : '';
+  const cutDetail = removed.length ? `No ${removed.join(', ')}` : '';
+  const detail = [addDetail, cutDetail].filter(Boolean).join(' · ');
   return {
     type: 'item',
     sku: item.sku,
@@ -119,6 +136,7 @@ function priceItem(bySku, line, currency) {
     totalCents: unitCents * qty,
     baseCents: item.priceCents,
     detail,
+    removed,
     variationId: item.variationId || null,
     modifiers: modifiers.map((mod) => ({
       key: mod.key,

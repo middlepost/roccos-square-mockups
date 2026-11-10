@@ -1,4 +1,5 @@
 import { formatMoney, priceCart } from '/shared/pricing.js';
+import { pizzaIngredients } from '/shared/pizza.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -16,6 +17,10 @@ let payments = null;
 let giftAmount = 5000;
 let cardLocationId = null;
 let store = null;
+let pizzaSku = null;
+let pizzaQty = 1;
+const pizzaAdded = new Set();
+const pizzaRemoved = new Set();
 const slotUse = { key: '', used: {}, max: null, loading: false };
 
 const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -30,18 +35,14 @@ function locByKey(key) {
 function itemBySku(sku) {
   return menu.items.find((item) => item.sku === sku);
 }
-function extrasCatalog() {
-  const seen = new Map();
-  for (const item of menu.items) {
-    for (const mod of item.modifiers || []) {
-      if (!seen.has(mod.key)) seen.set(mod.key, mod);
-    }
-  }
-  return [...seen.values()];
+function maxParty() {
+  const n = Number(brand?.booking?.maxParty);
+  return Number.isInteger(n) && n > 0 ? n : 10;
 }
 
 function show(name) {
-  const view = name === 'order' || name === 'menu' || name === 'book' || name === 'read' || name === 'gift' ? name : 'home';
+  closePizza();
+  const view = name === 'order' || name === 'menu' || name === 'book' || name === 'read' || name === 'gift' || name === 'contact' ? name : 'home';
   document.body.classList.toggle('home', view === 'home');
   $('#view-home').hidden = view !== 'home';
   $('#view-order').hidden = view !== 'order';
@@ -49,6 +50,7 @@ function show(name) {
   $('#view-book').hidden = view !== 'book';
   $('#view-read').hidden = view !== 'read';
   $('#view-gift').hidden = view !== 'gift';
+  $('#view-contact').hidden = view !== 'contact';
   if (view === 'menu' && !store) {
     location.hash = 'order';
     return;
@@ -73,13 +75,20 @@ function paintStores() {
       <small>${esc(loc.address)}</small>
       <small>${esc(loc.daysLabel || '')}</small>
     </button>`).join('');
+  const chosenShop = $('#bookForm input[name=location]:checked')?.value;
   $('#bookShops').innerHTML = locs.map((loc) => `
-    <a class="book-card" href="tel:${esc(loc.phoneTel || brand.phoneTel)}">
+    <label class="book-card">
+      <input type="radio" name="location" value="${esc(loc.name)}"${loc.name === chosenShop ? ' checked' : ''} required>
       <b>${esc(loc.name)}</b>
       <span>${esc(loc.address)}</span>
       <span>${esc(loc.daysLabel || '')}</span>
-      <span>Call ${esc(loc.phone || brand.phone)}</span>
-    </a>`).join('');
+    </label>`).join('');
+  $('#contactShops').innerHTML = locs.map((loc) => `
+    <article class="book-card">
+      <b>${esc(loc.name)}</b>
+      <span>${esc(loc.address)}</span>
+      <span>${esc(loc.daysLabel || '')}</span>
+    </article>`).join('');
   $('#coStores').innerHTML = locs.map((loc) => `
     <button type="button" class="store-btn${loc.key === store ? ' active' : ''}" data-store="${esc(loc.key)}">
       <b>${esc(loc.name)}</b><small>${esc(loc.address)}</small>
@@ -122,15 +131,8 @@ function qtyOf(sku, modifierKeys) {
 }
 
 function renderReadMenu() {
-  const extras = extrasCatalog().map((mod) => ({
-    name: mod.name,
-    priceCents: mod.priceCents,
-    description: 'Add on a pizza.',
-    plus: true,
-  }));
   const groups = [
     ['Pizzas', menu.items.filter((item) => item.category === 'pizza')],
-    ['Extras', extras],
     ['Drinks', menu.items.filter((item) => item.category === 'drinks')],
     ['Desserts', menu.items.filter((item) => item.category === 'dessert')],
   ];
@@ -149,36 +151,25 @@ function renderReadMenu() {
 function renderMenu() {
   const note = $('#catNote');
   const grid = $('#grid');
-  if (tab === 'extras') {
-    note.textContent = 'Add any of these on a pizza.';
-    grid.innerHTML = extrasCatalog().map((mod) => `
-      <article class="card extra-card">
-        <div class="body">
-          <h2>${esc(mod.name)}</h2>
-          <div class="price">+${money(mod.priceCents)}</div>
-        </div>
-      </article>`).join('');
-    return;
-  }
   if (tab === 'drinks') note.textContent = 'Alcohol is dine-in only. Beer and wine stay at the shop.';
-  else if (tab === 'pizza') note.textContent = store ? `Pickup from ${locByKey(store)?.name || ''}` : '';
+  else if (tab === 'pizza') note.textContent = store ? `Pickup from ${locByKey(store)?.name || ''}. Tap a pizza to add or remove toppings.` : '';
   else note.textContent = '';
 
   const items = menu.items.filter((item) => item.category === tab);
   grid.innerHTML = items.map((item) => {
-    const extras = (item.modifiers || []).map((mod) => `
-      <li><label><input type="checkbox" data-key="${esc(mod.key)}"> ${esc(mod.name)} <span>+${money(mod.priceCents)}</span></label></li>`).join('');
+    const pizza = item.category === 'pizza' && !item.dineInOnly;
     const qty = qtyOf(item.sku);
     const controls = item.dineInOnly
       ? '<p class="dine">At the shop</p>'
-      : `<div class="qtybar"><button type="button" data-qty="-1" aria-label="Remove one ${esc(item.name)}">−</button><output>${qty}</output><button type="button" data-qty="1" aria-label="Add one ${esc(item.name)}">+</button></div>`;
-    return `<article class="card" data-sku="${esc(item.sku)}">
+      : pizza
+        ? '<span class="customise">Add or remove</span>'
+        : `<div class="qtybar"><button type="button" data-qty="-1" aria-label="Remove one ${esc(item.name)}">−</button><output>${qty}</output><button type="button" data-qty="1" aria-label="Add one ${esc(item.name)}">+</button></div>`;
+    return `<article class="card${pizza ? ' pizza-card' : ''}" data-sku="${esc(item.sku)}"${pizza ? ` tabindex="0" role="button" aria-label="Customise ${esc(item.name)}"` : ''}>
       ${item.imageUrl ? `<div class="photo"><img src="${esc(item.imageUrl)}" alt="${esc(item.name)}"></div>` : ''}
       <div class="body">
         <h2>${esc(item.name)}</h2>
         <div class="price">${money(item.priceCents)}</div>
-        ${item.description ? `<p>${esc(item.description)}</p>` : ''}
-        ${extras ? `<ul class="extras">${extras}</ul>` : ''}
+        ${item.description ? `<p class="desc">${esc(item.description)}</p>` : '<p class="desc"></p>'}
         ${controls}
       </div>
     </article>`;
@@ -197,18 +188,23 @@ function selectedMods(article) {
   return $$('input[data-key]:checked', article).map((input) => input.dataset.key).sort();
 }
 
-function changeQty(sku, delta, modifierKeys) {
+function lineSignature(keys, removed) {
+  return `${keys.join(',')}|${removed.join(',')}`;
+}
+
+function changeQty(sku, delta, modifierKeys, removed) {
   if (!store) {
     location.hash = 'order';
     return;
   }
   const before = JSON.stringify(lines);
   const keys = [...(modifierKeys || [])].sort();
-  const signature = keys.join(',');
-  const existing = lines.find((line) => line.type === 'item' && line.sku === sku && line.modifierKeys.join(',') === signature);
+  const cuts = [...(removed || [])].sort();
+  const signature = lineSignature(keys, cuts);
+  const existing = lines.find((line) => line.type === 'item' && line.sku === sku && (line.modifierKeys || []).join(',') === keys.join(',') && (line.removed || []).join(',') === cuts.join(','));
   if (delta > 0) {
     if (existing) existing.qty += 1;
-    else lines.push({ type: 'item', key: `${sku}|${signature}`, sku, qty: 1, modifierKeys: keys });
+    else lines.push({ type: 'item', key: `${sku}|${signature}`, sku, qty: 1, modifierKeys: keys, removed: cuts });
   } else if (existing) {
     existing.qty -= 1;
     if (existing.qty <= 0) lines.splice(lines.indexOf(existing), 1);
@@ -234,13 +230,134 @@ function changeQty(sku, delta, modifierKeys) {
 
 $('#grid').addEventListener('click', (event) => {
   const button = event.target.closest('button[data-qty]');
-  if (!button) return;
-  const article = button.closest('[data-sku]');
-  const item = itemBySku(article.dataset.sku);
-  if (!item || item.dineInOnly) return;
-  const delta = Number(button.dataset.qty);
-  changeQty(item.sku, delta, delta > 0 ? selectedMods(article) : null);
+  if (button) {
+    const article = button.closest('[data-sku]');
+    const item = itemBySku(article.dataset.sku);
+    if (!item || item.dineInOnly || item.category === 'pizza') return;
+    const delta = Number(button.dataset.qty);
+    changeQty(item.sku, delta, delta > 0 ? selectedMods(article) : null);
+    return;
+  }
+  const card = event.target.closest('.pizza-card');
+  if (!card) return;
+  openPizza(card.dataset.sku);
 });
+$('#grid').addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  const card = event.target.closest('.pizza-card');
+  if (!card) return;
+  event.preventDefault();
+  openPizza(card.dataset.sku);
+});
+
+function toppingsFor(item) {
+  return item.ingredients?.length ? item.ingredients : pizzaIngredients(item);
+}
+
+function openPizza(sku) {
+  const item = itemBySku(sku);
+  if (!item || item.category !== 'pizza' || item.dineInOnly) return;
+  if (!store) {
+    location.hash = 'order';
+    return;
+  }
+  pizzaSku = sku;
+  pizzaQty = 1;
+  pizzaAdded.clear();
+  pizzaRemoved.clear();
+  $('#pizzaPhoto').hidden = !item.imageUrl;
+  if (item.imageUrl) {
+    $('#pizzaPhoto').src = item.imageUrl;
+    $('#pizzaPhoto').alt = item.name;
+  }
+  $('#pizzaTitle').textContent = item.name;
+  $('#pizzaDesc').textContent = item.description || '';
+  const kept = toppingsFor(item).map((name) => `<li><label>
+    <input type="checkbox" data-keep="${esc(name)}" checked>
+    <span>${esc(name)}</span>
+    <span class="mod-note">on the pizza</span>
+  </label></li>`);
+  const adds = (item.modifiers || []).map((mod) => `<li><label>
+    <input type="checkbox" data-add="${esc(mod.key)}">
+    <span>${esc(mod.name)}</span>
+    <span class="mod-price">+${money(mod.priceCents)}</span>
+  </label></li>`);
+  $('#pizzaMods').innerHTML = [...kept, ...adds].join('');
+  $('#pizzaStatus').textContent = '';
+  $('#pizzaStatus').className = 'status';
+  updatePizzaPrice();
+  $('#pizzaPanel').classList.add('open');
+  $('#pizzaPanel').setAttribute('aria-hidden', 'false');
+  $('#pizzaPanel').inert = false;
+  $('#pizzaOverlay').classList.add('open');
+  $('#pizzaBody').scrollTop = 0;
+  $('#closePizza').focus();
+}
+
+function closePizza() {
+  const panel = $('#pizzaPanel');
+  if (!panel) return;
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
+  panel.inert = true;
+  $('#pizzaOverlay')?.classList.remove('open');
+}
+
+function updatePizzaPrice() {
+  const item = itemBySku(pizzaSku);
+  if (!item) return;
+  const extra = (item.modifiers || []).filter((mod) => pizzaAdded.has(mod.key)).reduce((sum, mod) => sum + mod.priceCents, 0);
+  const unit = item.priceCents + extra;
+  $('#pizzaPrice').textContent = money(unit);
+  $('#pizzaQtyOut').textContent = String(pizzaQty);
+  $('#pizzaAdd').textContent = `Add to order · ${money(unit * pizzaQty)}`;
+}
+
+$('#pizzaMods').addEventListener('change', (event) => {
+  const add = event.target.dataset.add;
+  const keep = event.target.dataset.keep;
+  if (add) {
+    if (event.target.checked) pizzaAdded.add(add);
+    else pizzaAdded.delete(add);
+  }
+  if (keep) {
+    if (event.target.checked) pizzaRemoved.delete(keep);
+    else pizzaRemoved.add(keep);
+  }
+  updatePizzaPrice();
+});
+$('#pizzaLess').addEventListener('click', () => {
+  pizzaQty = Math.max(1, pizzaQty - 1);
+  updatePizzaPrice();
+});
+$('#pizzaMore').addEventListener('click', () => {
+  pizzaQty = Math.min(30, pizzaQty + 1);
+  updatePizzaPrice();
+});
+$('#pizzaAdd').addEventListener('click', () => {
+  const item = itemBySku(pizzaSku);
+  if (!item) return;
+  const before = JSON.stringify(lines);
+  const keys = [...pizzaAdded].sort();
+  const cuts = [...pizzaRemoved].sort();
+  const signature = lineSignature(keys, cuts);
+  const existing = lines.find((line) => line.type === 'item' && line.sku === item.sku && (line.modifierKeys || []).join(',') === keys.join(',') && (line.removed || []).join(',') === cuts.join(','));
+  if (existing) existing.qty += pizzaQty;
+  else lines.push({ type: 'item', key: `${item.sku}|${signature}`, sku: item.sku, qty: pizzaQty, modifierKeys: keys, removed: cuts });
+  try {
+    priceCart(menu.items, brand?.offer, lines, menu.currency || 'AUD');
+  } catch (error) {
+    lines = JSON.parse(before);
+    $('#pizzaStatus').className = 'status show err';
+    $('#pizzaStatus').textContent = error.message;
+    return;
+  }
+  renderCart();
+  if (!$('#view-menu').hidden) renderMenu();
+  closePizza();
+});
+$('#closePizza').addEventListener('click', closePizza);
+$('#pizzaOverlay').addEventListener('click', closePizza);
 
 function currentPrice() {
   if (!lines.length) return { totalCents: 0, subtotalCents: 0, discountCents: 0, shortfallPizzas: 0, lines: [] };
@@ -321,7 +438,11 @@ function closeCart() {
 $('#openCart').addEventListener('click', openCart);
 $('#closeCart').addEventListener('click', closeCart);
 $('#overlay').addEventListener('click', closeCart);
-addEventListener('keydown', (event) => { if (event.key === 'Escape') closeCart(); });
+addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  if ($('#pizzaPanel').classList.contains('open')) closePizza();
+  else closeCart();
+});
 
 function adelaideNow() {
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-AU', {
@@ -486,6 +607,70 @@ async function initGiftCard() {
   $('#gift-card-container').innerHTML = '';
   await giftCard.attach('#gift-card-container');
 }
+function syncPartyRule() {
+  const party = Number($('#bookParty').value);
+  const limit = maxParty();
+  const over = Number.isInteger(party) && party > limit;
+  const note = $('#bookPreorder');
+  const ack = $('#bookPreorderAck');
+  note.hidden = !over;
+  ack.hidden = !over;
+  note.textContent = over
+    ? `Parties larger than ${limit} must pre-order. Order the food online before you arrive, and tick the box so we know.`
+    : '';
+  const box = $('input[name=preorder]', ack);
+  box.required = over;
+  if (!over) box.checked = false;
+}
+$('#bookParty').addEventListener('input', syncPartyRule);
+
+function bookSay(message, isError) {
+  const el = $('#bookStatus');
+  el.className = `status show${isError ? ' err' : ''}`;
+  el.textContent = message || '';
+}
+$('#bookForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const button = event.target.querySelector('button[type=submit]');
+  button.disabled = true;
+  bookSay('', false);
+  try {
+    const data = Object.fromEntries(new FormData(event.target).entries());
+    const party = Number(data.party);
+    const limit = maxParty();
+    if (!data.location) throw new Error('Choose Findon Rd or Grange Rd.');
+    if (party > limit && data.preorder !== 'yes') throw new Error(`Parties larger than ${limit} must pre-order.`);
+    const response = await fetch('/api/enquiries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        kind: 'booking',
+        fields: {
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          date: data.date,
+          time: data.time,
+          party: String(party),
+          location: data.location,
+          preorder: party > limit ? 'yes' : 'no',
+          notes: data.notes || '',
+        },
+      }),
+    });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.error || 'The booking could not be sent.');
+    const extra = party > limit ? ` Parties larger than ${limit} must pre-order, so please order the food as well.` : '';
+    $('#bookConfirm').innerHTML = `<h2>Booking requested</h2><p>Table for ${party} at ${esc(data.location)} on ${esc(data.date)} at ${esc(fmt(data.time))}. We'll confirm by email.${esc(extra)}</p>`;
+    $('#bookConfirm').hidden = false;
+    $('#bookForm').hidden = true;
+  } catch (error) {
+    bookSay(error.message || 'The booking could not be sent.', true);
+  } finally {
+    button.disabled = false;
+  }
+});
+
 $('#giftForm').addEventListener('submit', async (event) => {
   event.preventDefault();
   const button = $('#giftPay');

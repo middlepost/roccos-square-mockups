@@ -22,6 +22,7 @@
     <a href="#read">Menu</a>
     <a href="#book">Book<span class="nav-rest"> a table</span></a>
     <a href="#gift">Gift<span class="nav-rest"> cards</span></a>
+    <a href="#contact">Contact<span class="nav-rest"> us</span></a>
     <button class="cart-btn" id="openCart" type="button">Cart <span id="cartCount">0</span></button>
   </nav>
 </header>
@@ -50,7 +51,6 @@
   <section id="view-menu" class="view" hidden>
     <div class="catbar" id="catbar" role="tablist" aria-label="Menu">
       <button type="button" class="active" data-f="pizza" role="tab">Pizzas</button>
-      <button type="button" data-f="extras" role="tab">Extras</button>
       <button type="button" data-f="drinks" role="tab">Drinks</button>
       <button type="button" data-f="dessert" role="tab">Desserts</button>
     </div>
@@ -96,16 +96,75 @@
   <section id="view-book" class="view" hidden>
     <div class="sheet">
       <h1>Book a table</h1>
-      <p class="lead">Call the shop and we’ll set a table aside.</p>
-      <div class="stores" id="bookShops"></div>
+      <p class="lead">Send a request and the shop will confirm it.</p>
+      <form class="book-form" id="bookForm">
+        <div class="stores" id="bookShops"></div>
+        <input required name="name" type="text" placeholder="Your name" aria-label="Your name" autocomplete="name">
+        <input required name="phone" type="tel" placeholder="Phone" aria-label="Phone" autocomplete="tel">
+        <input required name="email" type="email" placeholder="Email" aria-label="Email" autocomplete="email">
+        <div class="row">
+          <label class="field">Date
+            <input required name="date" type="date" aria-label="Date">
+          </label>
+          <label class="field">Time
+            <input required name="time" type="time" aria-label="Time">
+          </label>
+        </div>
+        <label class="field">Party size
+          <input required name="party" id="bookParty" type="number" min="1" max="40" inputmode="numeric" value="2" aria-label="Party size">
+        </label>
+        <p class="preorder" id="bookPreorder" hidden></p>
+        <label class="preorder-ack" id="bookPreorderAck" hidden>
+          <input type="checkbox" name="preorder" value="yes">
+          <span>We will pre-order the food</span>
+        </label>
+        <textarea name="notes" rows="2" maxlength="400" placeholder="Notes (optional)" aria-label="Notes"></textarea>
+        <button class="btn btn-yellow" type="submit">Request booking</button>
+        <p class="status" id="bookStatus"></p>
+      </form>
+      <div class="confirm" id="bookConfirm" hidden></div>
+    </div>
+  </section>
+
+  <section id="view-contact" class="view" hidden>
+    <div class="sheet">
+      <h1>Contact us</h1>
+      <p class="lead contact-phone"><a class="phone-link" href="tel:0870784471"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.3 1L6.6 10.8z"/></svg>7078 4471</a></p>
+      <div class="stores" id="contactShops"></div>
     </div>
   </section>
 </main>
 
 <footer>
-  <p>Findon Rd · 336 Findon Rd<br>Grange Rd · 466 Grange Rd<br><a href="tel:0870784471">7078 4471</a></p>
+  <p>Findon Rd · 336 Findon Rd<br>Grange Rd · 466 Grange Rd</p>
+  <p><a class="phone-link" href="tel:0870784471"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.3 1L6.6 10.8z"/></svg>7078 4471</a></p>
   <p id="footerNote">Sandbox demo · test cards only</p>
 </footer>
+
+<div class="pizza-overlay" id="pizzaOverlay"></div>
+<aside class="pizza-panel" id="pizzaPanel" role="dialog" aria-modal="true" aria-labelledby="pizzaTitle" aria-hidden="true" inert>
+  <div class="pizza-head">
+    <button class="x" id="closePizza" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="pizza-scroll" id="pizzaBody">
+    <img id="pizzaPhoto" alt="" hidden>
+    <h2 id="pizzaTitle"></h2>
+    <p class="pizza-price" id="pizzaPrice"></p>
+    <p class="pizza-desc" id="pizzaDesc"></p>
+    <h3>Add or Remove</h3>
+    <p class="mod-help">Untick anything to leave it off. Tick an extra to add it.</p>
+    <ul class="mods" id="pizzaMods"></ul>
+    <p class="status" id="pizzaStatus"></p>
+    <div class="pizza-actions">
+      <div class="qtybar">
+        <button type="button" id="pizzaLess" aria-label="Fewer">−</button>
+        <output id="pizzaQtyOut">1</output>
+        <button type="button" id="pizzaMore" aria-label="More">+</button>
+      </div>
+      <button type="button" class="btn btn-yellow" id="pizzaAdd">Add to order</button>
+    </div>
+  </div>
+</aside>
 
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Your order">
