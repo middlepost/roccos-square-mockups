@@ -69,7 +69,8 @@ test('the page is the simple order flow', () => {
   assert.match(html, /Book a table/);
   assert.match(html, /href="#read">Menu</);
   assert.match(html, /10% off your entire order when you order 2 or more pizzas/);
-  assert.match(css, /object-fit:\s*contain/);
+  assert.match(css, /\.hero \{\s*[^}]*height:\s*480px/);
+  assert.match(css, /height:\s*72vw/);
   assert.match(html, />Pizzas</);
   assert.match(html, />Extras</);
   assert.match(html, />Drinks</);

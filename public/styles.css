@@ -72,12 +72,19 @@ body.home .logo img { width: min(460px, 82vw); }
   font-weight: 700;
   line-height: 1.35;
 }
-.hero { position: relative; background: var(--white); }
+.hero {
+  position: relative;
+  height: 480px;
+  overflow: hidden;
+  background: var(--white);
+}
 .hero-photo {
-  width: min(100%, 720px);
-  height: auto;
+  display: block;
+  width: auto;
+  height: 116%;
+  max-width: none;
   margin: 0 auto;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center top;
   background: var(--white);
 }
@@ -87,7 +94,7 @@ body.home .logo img { width: min(460px, 82vw); }
   left: 0;
   right: 0;
   bottom: 0;
-  height: 18%;
+  height: 26%;
   background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.35) 42%, #fff 100%);
   pointer-events: none;
 }
@@ -329,6 +336,7 @@ input[type="radio"], input[type="checkbox"] { width: auto; padding: 0; border: 0
 
 @media (max-width: 700px) {
   .stores { grid-template-columns: 1fr; }
+  .hero { height: 72vw; }
   .home-copy { padding: 4px 16px 56px; }
   .deal-strip { font-size: .82rem; padding: 6px 12px; }
   .bar-nav { gap: 8px 12px; }
