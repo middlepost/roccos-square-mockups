@@ -204,6 +204,7 @@ body.home .logo img { width: min(460px, 82vw); }
   top: 0;
   z-index: 5;
   display: flex;
+  justify-content: center;
   gap: 8px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
