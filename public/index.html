@@ -19,10 +19,12 @@
   <a class="logo" href="#home" aria-label="Rocco's Italian Sourdough Pizza"><img src="/images/brand/rocco-live-logo.png" alt="Rocco's — Italian Sourdough Pizza"></a>
   <nav class="bar-nav">
     <a href="#order">Order</a>
+    <a href="#read">Menu</a>
     <a href="#book">Book a table</a>
     <button class="cart-btn" id="openCart" type="button">Cart <span id="cartCount">0</span></button>
   </nav>
 </header>
+<p class="deal-strip">10% off your entire order when you order 2 or more pizzas</p>
 
 <main>
   <section id="view-home" class="view home-view">
@@ -32,6 +34,7 @@
     <div class="home-copy">
       <a class="btn btn-yellow" href="#order">Order</a>
       <a class="btn btn-plain" href="#book">Book a table</a>
+      <a class="btn btn-plain" href="#read">Menu</a>
     </div>
   </section>
 
@@ -51,6 +54,14 @@
     </div>
     <p class="cat-note" id="catNote"></p>
     <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="view-read" class="view" hidden>
+    <div class="read">
+      <h1>Menu</h1>
+      <a class="btn btn-yellow" href="#order">Order</a>
+      <div id="readList"></div>
+    </div>
   </section>
 
   <section id="view-book" class="view" hidden>

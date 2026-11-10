@@ -70,12 +70,15 @@ test('the site serves the v3 page, local menu, and photos without a token', asyn
     const config = await (await fetch(`${base}/api/config`)).json();
     assert.equal(config.square.paymentsReady, false);
     assert.equal(config.square.environment, 'sandbox');
-    assert.match(config.brand.offer.copy, /10% off your total order when you spend \$40\+/);
+    assert.match(config.brand.offer.copy, /10% off your entire order when you order 2 or more pizzas/);
+    assert.match(html, /10% off your entire order when you order 2 or more pizzas/);
     assert.match(html, /id="cartSubtotal"/);
     assert.match(html, /id="cartHint"/);
+    assert.match(html, /id="view-read"/);
     assert.doesNotMatch(html, /hero-strip|ticker-bottom|3 Pizza Deal|Build your deal/);
     assert.equal(config.brand.offer.percent, 10);
-    assert.equal(config.brand.offer.thresholdCents, 4000);
+    assert.equal(config.brand.offer.minPizzas, 2);
+    assert.equal(config.brand.offer.thresholdCents, undefined);
     assert.equal(config.brand.deal, undefined);
     assert.equal(config.accessToken, undefined);
     const current = await (await fetch(`${base}/api/menu`)).json();

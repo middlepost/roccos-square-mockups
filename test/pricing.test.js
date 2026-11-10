@@ -28,31 +28,59 @@ test('add-ons use the 1 Nov prices and the old deal is refused', () => {
   ]), PriceError);
 });
 
-test('10% off applies at $40, stays off below it, and rounds half up', () => {
-  const below = priceCart(items, brand.offer, [
+test('10% off applies at 2 pizzas, stays off below that, and rounds half up', () => {
+  const one = priceCart(items, brand.offer, [
     { type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: [] },
   ]);
-  assert.equal(below.subtotalCents, 2000);
-  assert.equal(below.discountCents, 0);
-  assert.equal(below.totalCents, 2000);
-  assert.equal(below.shortfallCents, 2000);
+  assert.equal(one.subtotalCents, 2000);
+  assert.equal(one.discountCents, 0);
+  assert.equal(one.totalCents, 2000);
+  assert.equal(one.pizzaQty, 1);
+  assert.equal(one.shortfallPizzas, 1);
 
-  const at = priceCart(items, brand.offer, [
+  const drinkOnly = priceCart(items, brand.offer, [
+    { type: 'item', sku: 'ROCCO-DR07', qty: 3, modifierKeys: [] },
+    { type: 'item', sku: 'ROCCO-15', qty: 2, modifierKeys: [] },
+  ]);
+  assert.equal(drinkOnly.pizzaQty, 0);
+  assert.equal(drinkOnly.discountCents, 0);
+  assert.equal(drinkOnly.shortfallPizzas, 2);
+
+  const two = priceCart(items, brand.offer, [
     { type: 'item', sku: 'ROCCO-02', qty: 2, modifierKeys: [] },
   ]);
-  assert.equal(at.subtotalCents, 4000);
-  assert.equal(at.discountCents, 400);
-  assert.equal(at.totalCents, 3600);
-  assert.equal(at.shortfallCents, 0);
+  assert.equal(two.subtotalCents, 4000);
+  assert.equal(two.discountCents, 400);
+  assert.equal(two.totalCents, 3600);
+  assert.equal(two.shortfallPizzas, 0);
 
-  const odd = [{ sku: 'ODD', name: 'Odd', priceCents: 4005, category: 'pizza', modifiers: [] }];
-  const rounded = priceCart(odd, brand.offer, [{ type: 'item', sku: 'ODD', qty: 1, modifierKeys: [] }]);
-  assert.equal(percentOffCents(4005, 10), 401);
-  assert.equal(rounded.discountCents, 401);
-  assert.equal(rounded.totalCents, 3604);
-  const down = priceCart([{ ...odd[0], priceCents: 4004 }], brand.offer, [
-    { type: 'item', sku: 'ODD', qty: 1, modifierKeys: [] },
+  const withDrink = priceCart(items, brand.offer, [
+    { type: 'item', sku: 'ROCCO-02', qty: 2, modifierKeys: [] },
+    { type: 'item', sku: 'ROCCO-DR07', qty: 1, modifierKeys: [] },
   ]);
+  assert.equal(withDrink.pizzaQty, 2);
+  assert.equal(withDrink.subtotalCents, 4390);
+  assert.equal(withDrink.discountCents, 439);
+  assert.equal(withDrink.totalCents, 3951);
+
+  const odd = [
+    { sku: 'ODD', name: 'Odd', priceCents: 2003, category: 'pizza', modifiers: [] },
+    { sku: 'SIDE', name: 'Side', priceCents: 2002, category: 'dessert', modifiers: [] },
+  ];
+  const rounded = priceCart(odd, brand.offer, [
+    { type: 'item', sku: 'ODD', qty: 2, modifierKeys: [] },
+    { type: 'item', sku: 'SIDE', qty: 1, modifierKeys: [] },
+  ]);
+  assert.equal(percentOffCents(6008, 10), 601);
+  assert.equal(rounded.subtotalCents, 6008);
+  assert.equal(rounded.discountCents, 601);
+  assert.equal(rounded.totalCents, 5407);
+  const down = priceCart(
+    [{ sku: 'ODD', name: 'Odd', priceCents: 2002, category: 'pizza', modifiers: [] }],
+    brand.offer,
+    [{ type: 'item', sku: 'ODD', qty: 2, modifierKeys: [] }],
+  );
+  assert.equal(down.subtotalCents, 4004);
   assert.equal(down.discountCents, 400);
   assert.equal(down.totalCents, 3604);
 });
@@ -162,7 +190,7 @@ test('alcohol is dine-in only and cannot go in a pickup order', () => {
   }
 });
 
-test('a switched-off offer does not discount a $40 order', () => {
+test('a switched-off offer does not discount two pizzas', () => {
   const priced = priceCart(items, { ...brand.offer, enabled: false }, [
     { type: 'item', sku: 'ROCCO-02', qty: 2, modifierKeys: [] },
   ]);

@@ -39,17 +39,19 @@ function extrasCatalog() {
 }
 
 function show(name) {
-  const view = name === 'order' || name === 'menu' || name === 'book' ? name : 'home';
+  const view = name === 'order' || name === 'menu' || name === 'book' || name === 'read' ? name : 'home';
   document.body.classList.toggle('home', view === 'home');
   $('#view-home').hidden = view !== 'home';
   $('#view-order').hidden = view !== 'order';
   $('#view-menu').hidden = view !== 'menu';
   $('#view-book').hidden = view !== 'book';
+  $('#view-read').hidden = view !== 'read';
   if (view === 'menu' && !store) {
     location.hash = 'order';
     return;
   }
   if (view === 'menu') renderMenu();
+  if (view === 'read') renderReadMenu();
   window.scrollTo(0, 0);
 }
 
@@ -107,6 +109,31 @@ function qtyOf(sku, modifierKeys) {
   const key = modifierKeys ? [...modifierKeys].sort().join(',') : null;
   return lines.filter((line) => line.type === 'item' && line.sku === sku && (key === null || line.modifierKeys.join(',') === key))
     .reduce((sum, line) => sum + line.qty, 0);
+}
+
+function renderReadMenu() {
+  const extras = extrasCatalog().map((mod) => ({
+    name: mod.name,
+    priceCents: mod.priceCents,
+    description: 'Add on a pizza.',
+    plus: true,
+  }));
+  const groups = [
+    ['Pizzas', menu.items.filter((item) => item.category === 'pizza')],
+    ['Extras', extras],
+    ['Drinks', menu.items.filter((item) => item.category === 'drinks')],
+    ['Desserts', menu.items.filter((item) => item.category === 'dessert')],
+  ];
+  $('#readList').innerHTML = groups.map(([title, group]) => `
+    <section class="read-group">
+      <h2>${esc(title)}</h2>
+      ${group.map((item) => `
+        <article class="read-item">
+          <div class="read-top"><h3>${esc(item.name)}</h3><span>${item.plus ? '+' : ''}${money(item.priceCents)}</span></div>
+          ${item.description ? `<p>${esc(item.description)}</p>` : ''}
+          ${item.dineInOnly ? '<p>At the shop</p>' : ''}
+        </article>`).join('')}
+    </section>`).join('');
 }
 
 function renderMenu() {
@@ -206,12 +233,12 @@ $('#grid').addEventListener('click', (event) => {
 });
 
 function currentPrice() {
-  if (!lines.length) return { totalCents: 0, subtotalCents: 0, discountCents: 0, shortfallCents: 0, lines: [] };
+  if (!lines.length) return { totalCents: 0, subtotalCents: 0, discountCents: 0, shortfallPizzas: 0, lines: [] };
   return priceCart(menu.items, brand?.offer, lines, menu.currency || 'AUD');
 }
 
 function renderCart() {
-  let priced = { totalCents: 0, subtotalCents: 0, discountCents: 0, shortfallCents: 0, lines: [] };
+  let priced = { totalCents: 0, subtotalCents: 0, discountCents: 0, shortfallPizzas: 0, lines: [] };
   try { priced = currentPrice(); } catch { lines = []; }
   const count = lines.reduce((sum, line) => sum + line.qty, 0);
   $('#cartCount').textContent = String(count);
@@ -239,9 +266,10 @@ function renderCart() {
   } else {
     discountRow.hidden = true;
     const percent = priced.offer?.percent || brand?.offer?.percent || 10;
-    if (priced.shortfallCents > 0) {
+    const need = priced.shortfallPizzas || 0;
+    if (need > 0) {
       hint.hidden = false;
-      hint.textContent = `Add ${money(priced.shortfallCents)} more for ${percent}% off`;
+      hint.textContent = `Add ${need} more pizza${need === 1 ? '' : 's'} for ${percent}% off`;
     } else {
       hint.hidden = true;
       hint.textContent = '';

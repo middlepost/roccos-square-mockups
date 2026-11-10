@@ -32,8 +32,9 @@ export function percentOffCents(subtotalCents, percent) {
 /**
  * Price a cart from the menu. Client prices are ignored.
  * lines: { type:'item', sku, qty, modifierKeys[] }
- * offer: { percent, thresholdCents, name, enabled } or null.
- * At or above the threshold, percent comes off the subtotal automatically.
+ * offer: { percent, minPizzas, name, enabled } or null.
+ * Once the cart has minPizzas pizzas (by quantity), percent comes off the whole order.
+ * Drinks, desserts and extras do not count toward that number, and they are still discounted.
  */
 export function priceCart(items, offer, lines, currency = 'AUD') {
   if (!Array.isArray(lines) || lines.length === 0) {
@@ -50,42 +51,47 @@ export function priceCart(items, offer, lines, currency = 'AUD') {
   }
 
   const subtotalCents = priced.reduce((sum, line) => sum + line.totalCents, 0);
-  const discount = applyOffer(subtotalCents, offer);
+  const pizzaQty = priced.reduce((sum, line) => {
+    const item = bySku.get(line.sku);
+    return sum + (item?.category === 'pizza' ? line.qty : 0);
+  }, 0);
+  const discount = applyOffer(subtotalCents, offer, pizzaQty);
   return {
     currency,
     subtotalCents,
     discountCents: discount.discountCents,
     totalCents: subtotalCents - discount.discountCents,
-    shortfallCents: discount.shortfallCents,
+    shortfallPizzas: discount.shortfallPizzas,
+    pizzaQty,
     offer: discount.offer,
     lines: priced,
   };
 }
 
-function applyOffer(subtotalCents, offer) {
-  const idle = { discountCents: 0, shortfallCents: 0, offer: null };
+function applyOffer(subtotalCents, offer, pizzaQty) {
+  const idle = { discountCents: 0, shortfallPizzas: 0, offer: null };
   if (!offer || offer.enabled === false) return idle;
   const percent = offer.percent;
-  const thresholdCents = offer.thresholdCents;
+  const minPizzas = offer.minPizzas;
   if (!Number.isInteger(percent) || percent < 1 || percent > 100) {
     throw new PriceError('This offer is not set up correctly.');
   }
-  if (!Number.isInteger(thresholdCents) || thresholdCents < 1) {
+  if (!Number.isInteger(minPizzas) || minPizzas < 1) {
     throw new PriceError('This offer is not set up correctly.');
   }
   const name = offer.name || `${percent}% off`;
-  if (subtotalCents < thresholdCents) {
+  if (pizzaQty < minPizzas) {
     return {
       discountCents: 0,
-      shortfallCents: thresholdCents - subtotalCents,
-      offer: { name, percent, thresholdCents, applied: false },
+      shortfallPizzas: minPizzas - pizzaQty,
+      offer: { name, percent, minPizzas, applied: false },
     };
   }
   const discountCents = Math.min(subtotalCents, percentOffCents(subtotalCents, percent));
   return {
     discountCents,
-    shortfallCents: 0,
-    offer: { name, percent, thresholdCents, applied: discountCents > 0 },
+    shortfallPizzas: 0,
+    offer: { name, percent, minPizzas, applied: discountCents > 0 },
   };
 }
 

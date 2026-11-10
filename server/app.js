@@ -58,7 +58,7 @@ function publicBrand(brand) {
       id: brand.offer.id,
       name: brand.offer.name,
       percent: brand.offer.percent,
-      thresholdCents: brand.offer.thresholdCents,
+      minPizzas: brand.offer.minPizzas,
       copy: brand.offer.copy,
     } : null,
     features: brand.features || {},
