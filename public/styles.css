@@ -124,13 +124,11 @@ body.home .logo img { width: min(460px, 82vw); }
 #gift-card-container { background: #fafafa; border-radius: 8px; padding: 8px; min-height: 70px; }
 
 .read {
-  max-width: 960px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 48px 20px 80px;
   text-align: center;
 }
-.read .grid { padding: 12px 0 8px; }
-.read-group .card { text-align: left; }
 .read .btn { margin: 4px auto 12px; }
 .read-group { margin: 40px 0 0; text-align: left; }
 .read-group h2 {

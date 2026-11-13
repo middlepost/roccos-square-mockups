@@ -163,12 +163,21 @@ function renderReadMenu() {
   $('#readList').innerHTML = MENU_GROUPS.map(([key, title]) => {
     const group = menu.items.filter((item) => item.category === key);
     if (!group.length) return '';
-    return `<section class="read-group"><h2>${esc(title)}</h2><div class="grid">${group.map(itemCard).join('')}</div></section>`;
+    return `<section class="read-group">
+      <h2>${esc(title)}</h2>
+      ${group.map((item) => `
+        <button type="button" class="read-item" data-sku="${esc(item.sku)}" aria-label="Order ${esc(item.name)}">
+          <div class="read-top"><h3>${esc(item.name)}</h3><span>${money(item.priceCents)}</span></div>
+          ${item.description ? `<p>${esc(item.description)}</p>` : ''}
+        </button>`).join('')}
+    </section>`;
   }).join('');
 }
 
 function orderItem(sku) {
-  if (!itemBySku(sku)) return;
+  const item = itemBySku(sku);
+  if (!item) return;
+  if (MENU_GROUPS.some(([key]) => key === item.category)) tab = item.category;
   pendingSku = sku;
   const target = store ? 'menu' : 'order';
   if (location.hash === `#${target}`) show(target);
@@ -183,6 +192,11 @@ function renderMenu() {
   else if (tab === 'side') note.textContent = '72 hr sourdough, 280g each.';
   else note.textContent = '';
 
+  $$('#catbar button').forEach((el) => {
+    const on = el.dataset.f === tab;
+    el.classList.toggle('active', on);
+    el.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
   const items = menu.items.filter((item) => item.category === tab);
   grid.innerHTML = items.map(itemCard).join('') || '<p class="empty">Nothing in this category.</p>';
 }
@@ -212,16 +226,9 @@ $('#grid').addEventListener('keydown', (event) => {
   openItem(card.dataset.sku);
 });
 $('#readList').addEventListener('click', (event) => {
-  const button = event.target.closest('[data-sku]');
+  const button = event.target.closest('button[data-sku]');
   if (!button) return;
   orderItem(button.dataset.sku);
-});
-$('#readList').addEventListener('keydown', (event) => {
-  if (event.key !== 'Enter' && event.key !== ' ') return;
-  const card = event.target.closest('.menu-card');
-  if (!card) return;
-  event.preventDefault();
-  orderItem(card.dataset.sku);
 });
 
 function optionSignature(options) {
