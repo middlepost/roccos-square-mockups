@@ -72,28 +72,10 @@ body.home .logo img { width: min(460px, 82vw); }
   font-weight: 700;
   line-height: 1.35;
 }
-.hero { position: relative; }
-.hero-photo {
-  width: 100%;
-  height: 480px;
-  object-fit: cover;
-  object-position: center 12%;
-  background: #111;
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 48%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.35) 42%, #fff 100%);
-  pointer-events: none;
-}
 .home-copy {
   max-width: 520px;
   margin: 0 auto;
-  padding: 8px 20px 64px;
+  padding: 40px 20px 72px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -158,6 +140,18 @@ body.home .logo img { width: min(460px, 82vw); }
   text-transform: uppercase;
 }
 .read-item { padding: 16px 0; border-bottom: 1px solid var(--line); }
+button.read-item {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+button.read-item:hover { background: #fff8d6; }
+.cat-blurb { text-align: center; color: var(--grey); margin: 0 0 8px; }
 .read-top { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
 .read-top h3 { margin: 0; font-size: 1.2rem; font-weight: 700; }
 .read-top span { font-weight: 700; white-space: nowrap; }
@@ -204,7 +198,7 @@ body.home .logo img { width: min(460px, 82vw); }
   top: 0;
   z-index: 5;
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   gap: 8px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -293,12 +287,18 @@ body.home .logo img { width: min(460px, 82vw); }
 .extra-card h2 { font-size: 1.05rem; }
 
 footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   border-top: 1px solid var(--line);
   text-align: center;
   color: var(--grey);
   padding: 28px 16px 40px;
   font-size: .95rem;
 }
+footer p { margin: 0; }
+.footer-mark { width: 64px; height: 64px; border-radius: 14px; }
 footer a { color: var(--ink); }
 .phone-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; text-decoration: none; }
 .phone-icon { width: 22px; height: 22px; color: #d40000; flex: none; }
@@ -390,17 +390,31 @@ article.book-card { cursor: default; }
 .pizza-desc { margin: 0; color: var(--grey); }
 .pizza-panel h3 { margin: 18px 0 4px; font-size: 1.2rem; }
 .mod-help { margin: 0 0 10px; color: var(--grey); font-size: .95rem; }
-.mods { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.mods label { display: grid; grid-template-columns: 22px 1fr auto; gap: 8px; align-items: center; min-height: 44px; }
+.mod-group { margin: 18px 0 0; }
+.mod-group h3 { margin: 0; font-size: 1.15rem; }
+.mods { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.mods label, .mod-row { display: grid; grid-template-columns: 22px 1fr auto; gap: 8px; align-items: center; min-height: 44px; }
+.mod-row.qty-row { grid-template-columns: 1fr auto auto; }
 .mods .mod-note, .mods .mod-price { color: var(--grey); font-size: .85rem; white-space: nowrap; }
+.opt-qty { display: inline-flex; align-items: center; gap: 4px; }
+.opt-qty button {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--yellow);
+  font-weight: 700;
+  cursor: pointer;
+}
+.opt-qty output { min-width: 1.2em; text-align: center; font-weight: 700; }
 .pizza-actions {
-  position: sticky;
-  bottom: 0;
   display: grid;
   gap: 10px;
-  padding: 12px 0 4px;
+  padding: 12px 18px 16px;
   background: var(--white);
+  border-top: 1px solid var(--line);
 }
+#pizzaStatus { padding: 0 18px; }
 .pizza-actions .btn { width: 100%; min-height: 56px; }
 #pizzaPhoto { width: 100%; height: 180px; object-fit: cover; object-position: center; border-radius: 10px; margin-bottom: 12px; background: #fafafa; }
 @media (max-width: 700px) {
@@ -423,9 +437,8 @@ article.book-card { cursor: default; }
 
 @media (max-width: 700px) {
   .stores { grid-template-columns: 1fr; }
-  .hero-photo { height: 72vw; object-position: center 16%; }
-  .hero::after { height: 52%; }
-  .home-copy { padding: 4px 16px 56px; }
+  .home-copy { padding: 28px 16px 64px; }
+  .footer-mark { width: 56px; height: 56px; }
   .deal-strip { font-size: .82rem; padding: 6px 12px; }
   .bar-nav { gap: 4px 8px; }
   .bar-nav a { font-size: .74rem; letter-spacing: .01em; }

@@ -1,10 +1,17 @@
 import { presentLocalMenu } from './brand.js';
 import { pizzaIngredients } from '../shared/pizza.js';
+import { groupLimits } from '../shared/pricing.js';
 
-const CATEGORY_KEYS = ['pizza', 'dessert', 'drinks'];
+const CATEGORY_KEYS = ['pizza', 'dessert', 'drinks', 'side'];
 
 function categoryNames(brand) {
-  return brand.categories || { pizza: 'Pizzas', dessert: 'Dessert', drinks: 'Drinks' };
+  return {
+    pizza: 'Pizzas',
+    dessert: 'Dessert',
+    drinks: 'Drinks',
+    side: 'Sides',
+    ...(brand.categories || {}),
+  };
 }
 
 function slugId(prefix, value) {
@@ -66,7 +73,38 @@ function modifierListObject(mod, existing, currency) {
   return object;
 }
 
-function itemObject({ item, existing, categoryId, modifierListIds, currency }) {
+function groupListObject(group, existing, currency) {
+  const existingMods = existing?.modifier_list_data?.modifiers || [];
+  const limits = groupLimits(group);
+  const object = {
+    type: 'MODIFIER_LIST',
+    id: existing?.id || slugId('mod', group.id),
+    present_at_all_locations: true,
+    modifier_list_data: {
+      name: group.name,
+      selection_type: limits.max === 1 && !limits.allowQuantity ? 'SINGLE' : 'MULTIPLE',
+      modifiers: (group.options || []).map((opt) => {
+        const prev = existingMods.find((entry) => entry.modifier_data?.name === opt.name);
+        const mod = {
+          type: 'MODIFIER',
+          id: prev?.id || slugId('modopt', opt.key),
+          present_at_all_locations: true,
+          modifier_data: {
+            name: opt.name,
+            price_money: { amount: opt.priceCents, currency },
+            on_by_default: false,
+          },
+        };
+        if (prev?.version != null) mod.version = prev.version;
+        return mod;
+      }),
+    },
+  };
+  if (existing?.version != null) object.version = existing.version;
+  return object;
+}
+
+function itemObject({ item, existing, categoryId, modifierLists, currency }) {
   const variation = existing?.variation;
   const object = {
     type: 'ITEM',
@@ -105,12 +143,12 @@ function itemObject({ item, existing, categoryId, modifierListIds, currency }) {
   if (item.category !== 'drinks') {
     object.item_data.food_and_beverage_details = { dietary_preferences: dietaryPreferences(item) };
   }
-  if (modifierListIds.length) {
-    object.item_data.modifier_list_info = modifierListIds.map((id) => ({
-      modifier_list_id: id,
+  if (modifierLists.length) {
+    object.item_data.modifier_list_info = modifierLists.map((list) => ({
+      modifier_list_id: list.id,
       enabled: true,
-      min_selected_modifiers: 0,
-      max_selected_modifiers: 1,
+      min_selected_modifiers: list.min,
+      max_selected_modifiers: list.max,
     }));
   }
   return object;
@@ -136,11 +174,22 @@ export function planCatalog(menu, existingObjects, { currency = 'AUD', brand }) 
     categoryIds[key] = object.id;
   }
 
+  const groupById = new Map();
   const modifierByKey = new Map();
   for (const item of menu.items || []) {
+    for (const group of item.groups || []) {
+      if (!groupById.has(group.id)) groupById.set(group.id, group);
+    }
+    if ((item.groups || []).length) continue;
     for (const mod of item.modifiers || []) {
       if (!modifierByKey.has(mod.key)) modifierByKey.set(mod.key, mod);
     }
+  }
+  const groupIds = new Map();
+  for (const group of groupById.values()) {
+    const object = groupListObject(group, index.modifierLists.get(group.name), currency);
+    objects.push(object);
+    groupIds.set(group.id, object.id);
   }
   const modifierIds = new Map();
   for (const mod of modifierByKey.values()) {
@@ -152,12 +201,17 @@ export function planCatalog(menu, existingObjects, { currency = 'AUD', brand }) 
   const imageJobs = [];
   for (const item of menu.items || []) {
     const existing = index.itemsBySku.get(item.sku);
-    const listIds = (item.modifiers || []).map((mod) => modifierIds.get(mod.key)).filter(Boolean);
+    const lists = (item.groups || []).length
+      ? item.groups.map((group) => {
+        const limits = groupLimits(group);
+        return { id: groupIds.get(group.id), min: limits.min, max: limits.max ?? 30 };
+      }).filter((list) => list.id)
+      : (item.modifiers || []).map((mod) => ({ id: modifierIds.get(mod.key), min: 0, max: 1 })).filter((list) => list.id);
     objects.push(itemObject({
       item,
       existing,
       categoryId: categoryIds[item.category] || categoryIds.pizza,
-      modifierListIds: listIds,
+      modifierLists: lists,
       currency,
     }));
     const hasImage = existing?.item?.item_data?.image_ids?.length;
@@ -276,13 +330,15 @@ export function menuFromCatalog(objects, localMenu, brand) {
       number: local.number ?? squareItem.number,
       imageUrl: squareItem.imageUrl || local.imageUrl,
       ingredients: local.ingredients?.length ? local.ingredients : (squareItem.ingredients || []),
+      menuCategory: local.menuCategory || null,
+      groups: local.groups || [],
     });
   }
   for (const squareItem of items) {
     if (!covered.has(squareItem.sku)) merged.push(squareItem);
   }
   merged.sort((a, b) => (a.number ?? 999) - (b.number ?? 999) || a.name.localeCompare(b.name));
-  return { source: 'square', currency, notice: null, items: merged };
+  return { source: 'square', currency, notice: null, categories: localMenu.categories || [], items: merged };
 }
 
 function slugKey(name) {

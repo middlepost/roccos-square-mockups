@@ -88,8 +88,8 @@ test('seed dry-run needs no token and prints the 1 Nov menu', () => {
   }, ['--dry-run']);
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Dry run only/);
-  assert.match(result.stdout, /Number 1 Son/);
-  assert.match(result.stdout, /Honey Pesto Chicken/);
+  assert.match(result.stdout, /NUMBER 1 SON/);
+  assert.match(result.stdout, /HONEY PESTO CHICKEN/);
   assert.match(result.stdout, /squareupsandbox\.com/);
   assert.doesNotMatch(`${result.stdout}${result.stderr}`, /President|EAAA/);
 });

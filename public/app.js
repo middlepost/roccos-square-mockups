@@ -1,5 +1,4 @@
-import { formatMoney, priceCart } from '/shared/pricing.js';
-import { pizzaIngredients } from '/shared/pizza.js';
+import { formatMoney, groupLimits, priceCart } from '/shared/pricing.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -10,7 +9,8 @@ let brand = boot?.brand || null;
 let square = boot?.square || null;
 let menu = { items: [], currency: 'AUD', source: 'local' };
 let lines = [];
-let tab = 'pizza';
+let tab = '';
+let pendingSku = null;
 let card = null;
 let giftCard = null;
 let payments = null;
@@ -19,8 +19,7 @@ let cardLocationId = null;
 let store = null;
 let pizzaSku = null;
 let pizzaQty = 1;
-const pizzaAdded = new Set();
-const pizzaRemoved = new Set();
+const pizzaAdded = new Map();
 const slotUse = { key: '', used: {}, max: null, loading: false };
 
 const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -55,7 +54,16 @@ function show(name) {
     location.hash = 'order';
     return;
   }
-  if (view === 'menu') renderMenu();
+  if (view === 'menu') {
+    renderMenu();
+    if (pendingSku) {
+      const sku = pendingSku;
+      pendingSku = null;
+      openItem(sku);
+    }
+  } else if (view !== 'order') {
+    pendingSku = null;
+  }
   if (view === 'read') renderReadMenu();
   if (view === 'gift') {
     initGiftCard().catch((error) => {
@@ -130,41 +138,54 @@ function qtyOf(sku, modifierKeys) {
     .reduce((sum, line) => sum + line.qty, 0);
 }
 
+function renderCats() {
+  const cats = menu.categories || [];
+  if (!cats.some((cat) => cat.id === tab)) tab = cats[0]?.id || '';
+  const bar = $('#catbar');
+  if (!bar) return;
+  bar.innerHTML = cats.map((cat) => `
+    <button type="button" data-f="${esc(cat.id)}" role="tab" aria-selected="${cat.id === tab ? 'true' : 'false'}" class="${cat.id === tab ? 'active' : ''}">${esc(cat.name)}</button>`).join('');
+}
+
 function renderReadMenu() {
-  const groups = [
-    ['Pizzas', menu.items.filter((item) => item.category === 'pizza')],
-    ['Drinks', menu.items.filter((item) => item.category === 'drinks')],
-    ['Desserts', menu.items.filter((item) => item.category === 'dessert')],
-  ];
-  $('#readList').innerHTML = groups.map(([title, group]) => `
+  const cats = menu.categories || [];
+  $('#readList').innerHTML = cats.map((cat) => {
+    const group = menu.items.filter((item) => item.menuCategory === cat.id);
+    if (!group.length) return '';
+    return `
     <section class="read-group">
-      <h2>${esc(title)}</h2>
+      <h2>${esc(cat.name)}</h2>
+      ${cat.description ? `<p class="cat-blurb">${esc(cat.description)}</p>` : ''}
       ${group.map((item) => `
-        <article class="read-item">
-          <div class="read-top"><h3>${esc(item.name)}</h3><span>${item.plus ? '+' : ''}${money(item.priceCents)}</span></div>
+        <button type="button" class="read-item" data-sku="${esc(item.sku)}" aria-label="Order ${esc(item.name)}">
+          <div class="read-top"><h3>${esc(item.name)}</h3><span>${money(item.priceCents)}</span></div>
           ${item.description ? `<p>${esc(item.description)}</p>` : ''}
-          ${item.dineInOnly ? '<p>At the shop</p>' : ''}
-        </article>`).join('')}
-    </section>`).join('');
+        </button>`).join('')}
+    </section>`;
+  }).join('');
+}
+
+function orderItem(sku) {
+  if (!itemBySku(sku)) return;
+  pendingSku = sku;
+  const target = store ? 'menu' : 'order';
+  if (location.hash === `#${target}`) show(target);
+  else location.hash = target;
 }
 
 function renderMenu() {
   const note = $('#catNote');
   const grid = $('#grid');
-  if (tab === 'drinks') note.textContent = 'Alcohol is dine-in only. Beer and wine stay at the shop.';
-  else if (tab === 'pizza') note.textContent = store ? `Pickup from ${locByKey(store)?.name || ''}. Tap a pizza to add or remove toppings.` : '';
-  else note.textContent = '';
+  const cat = (menu.categories || []).find((entry) => entry.id === tab);
+  note.textContent = cat?.description || '';
 
-  const items = menu.items.filter((item) => item.category === tab);
+  const items = menu.items.filter((item) => item.menuCategory === tab);
   grid.innerHTML = items.map((item) => {
-    const pizza = item.category === 'pizza' && !item.dineInOnly;
     const qty = qtyOf(item.sku);
     const controls = item.dineInOnly
       ? '<p class="dine">At the shop</p>'
-      : pizza
-        ? '<span class="customise">Add or remove</span>'
-        : `<div class="qtybar"><button type="button" data-qty="-1" aria-label="Remove one ${esc(item.name)}">−</button><output>${qty}</output><button type="button" data-qty="1" aria-label="Add one ${esc(item.name)}">+</button></div>`;
-    return `<article class="card${pizza ? ' pizza-card' : ''}" data-sku="${esc(item.sku)}"${pizza ? ` tabindex="0" role="button" aria-label="Customise ${esc(item.name)}"` : ''}>
+      : `<span class="customise">${qty ? `${qty} in your order` : 'Choose'}</span>`;
+    return `<article class="card menu-card" data-sku="${esc(item.sku)}" tabindex="0" role="button" aria-label="Order ${esc(item.name)}">
       ${item.imageUrl ? `<div class="photo"><img src="${esc(item.imageUrl)}" alt="${esc(item.name)}"></div>` : ''}
       <div class="body">
         <h2>${esc(item.name)}</h2>
@@ -184,87 +205,52 @@ $('#catbar').addEventListener('click', (event) => {
   renderMenu();
 });
 
-function selectedMods(article) {
-  return $$('input[data-key]:checked', article).map((input) => input.dataset.key).sort();
-}
-
-function lineSignature(keys, removed) {
-  return `${keys.join(',')}|${removed.join(',')}`;
-}
-
-function changeQty(sku, delta, modifierKeys, removed) {
-  if (!store) {
-    location.hash = 'order';
-    return;
-  }
-  const before = JSON.stringify(lines);
-  const keys = [...(modifierKeys || [])].sort();
-  const cuts = [...(removed || [])].sort();
-  const signature = lineSignature(keys, cuts);
-  const existing = lines.find((line) => line.type === 'item' && line.sku === sku && (line.modifierKeys || []).join(',') === keys.join(',') && (line.removed || []).join(',') === cuts.join(','));
-  if (delta > 0) {
-    if (existing) existing.qty += 1;
-    else lines.push({ type: 'item', key: `${sku}|${signature}`, sku, qty: 1, modifierKeys: keys, removed: cuts });
-  } else if (existing) {
-    existing.qty -= 1;
-    if (existing.qty <= 0) lines.splice(lines.indexOf(existing), 1);
-  } else {
-    for (let i = lines.length - 1; i >= 0; i -= 1) {
-      if (lines[i].sku === sku) {
-        lines[i].qty -= 1;
-        if (lines[i].qty <= 0) lines.splice(i, 1);
-        break;
-      }
-    }
-  }
-  try {
-    priceCart(menu.items, brand?.offer, lines, menu.currency || 'AUD');
-  } catch (error) {
-    lines = JSON.parse(before);
-    say(error.message, true);
-    return;
-  }
-  renderCart();
-  if (!$('#view-menu').hidden) renderMenu();
-}
-
 $('#grid').addEventListener('click', (event) => {
-  const button = event.target.closest('button[data-qty]');
-  if (button) {
-    const article = button.closest('[data-sku]');
-    const item = itemBySku(article.dataset.sku);
-    if (!item || item.dineInOnly || item.category === 'pizza') return;
-    const delta = Number(button.dataset.qty);
-    changeQty(item.sku, delta, delta > 0 ? selectedMods(article) : null);
-    return;
-  }
-  const card = event.target.closest('.pizza-card');
+  const card = event.target.closest('.menu-card');
   if (!card) return;
-  openPizza(card.dataset.sku);
+  openItem(card.dataset.sku);
 });
 $('#grid').addEventListener('keydown', (event) => {
   if (event.key !== 'Enter' && event.key !== ' ') return;
-  const card = event.target.closest('.pizza-card');
+  const card = event.target.closest('.menu-card');
   if (!card) return;
   event.preventDefault();
-  openPizza(card.dataset.sku);
+  openItem(card.dataset.sku);
+});
+$('#readList').addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-sku]');
+  if (!button) return;
+  orderItem(button.dataset.sku);
 });
 
-function toppingsFor(item) {
-  return item.ingredients?.length ? item.ingredients : pizzaIngredients(item);
+function optionSignature(options) {
+  return (options || []).map((opt) => `${opt.key}:${opt.qty}`).sort().join(',');
 }
 
-function openPizza(sku) {
+function groupHelp(group) {
+  const limits = groupLimits(group);
+  if (limits.min > 0 && limits.max) return `Choose ${limits.min}${limits.max === limits.min ? '' : ` to ${limits.max}`}`;
+  if (limits.min > 0) return `Choose at least ${limits.min}`;
+  if (limits.max === 1) return 'Optional · choose 1';
+  if (limits.max) return `Optional · up to ${limits.max}`;
+  return 'Optional';
+}
+
+function chosenOptions() {
+  return [...pizzaAdded.entries()].filter(([, qty]) => qty > 0).map(([key, qty]) => ({ key, qty }));
+}
+
+function openItem(sku) {
   const item = itemBySku(sku);
-  if (!item || item.category !== 'pizza' || item.dineInOnly) return;
+  if (!item || item.dineInOnly) return;
   if (!store) {
-    location.hash = 'order';
+    pendingSku = sku;
+    if (location.hash !== '#order') location.hash = 'order';
     return;
   }
   pizzaSku = sku;
   pizzaQty = 1;
   pizzaAdded.clear();
-  pizzaRemoved.clear();
   $('#pizzaPhoto').hidden = !item.imageUrl;
   if (item.imageUrl) {
     $('#pizzaPhoto').src = item.imageUrl;
@@ -272,17 +258,34 @@ function openPizza(sku) {
   }
   $('#pizzaTitle').textContent = item.name;
   $('#pizzaDesc').textContent = item.description || '';
-  const kept = toppingsFor(item).map((name) => `<li><label>
-    <input type="checkbox" data-keep="${esc(name)}" checked>
-    <span>${esc(name)}</span>
-    <span class="mod-note">on the pizza</span>
-  </label></li>`);
-  const adds = (item.modifiers || []).map((mod) => `<li><label>
-    <input type="checkbox" data-add="${esc(mod.key)}">
-    <span>${esc(mod.name)}</span>
-    <span class="mod-price">+${money(mod.priceCents)}</span>
-  </label></li>`);
-  $('#pizzaMods').innerHTML = [...kept, ...adds].join('');
+  const groups = item.groups || [];
+  $('#pizzaMods').innerHTML = groups.map((group) => {
+    const limits = groupLimits(group);
+    const rows = (group.options || []).map((opt) => {
+      const price = opt.priceCents ? `<span class="mod-price">+${money(opt.priceCents)}</span>` : '<span class="mod-price"></span>';
+      if (limits.allowQuantity) {
+        return `<li class="mod-row qty-row">
+          <span>${esc(opt.name)}</span>
+          ${price}
+          <span class="opt-qty">
+            <button type="button" data-step="${esc(opt.key)}" data-group="${esc(group.id)}" data-delta="-1" aria-label="Fewer ${esc(opt.name)}">−</button>
+            <output>0</output>
+            <button type="button" data-step="${esc(opt.key)}" data-group="${esc(group.id)}" data-delta="1" aria-label="More ${esc(opt.name)}">+</button>
+          </span>
+        </li>`;
+      }
+      return `<li><label>
+        <input type="checkbox" data-opt="${esc(opt.key)}" data-group="${esc(group.id)}">
+        <span>${esc(opt.name)}</span>
+        ${price}
+      </label></li>`;
+    }).join('');
+    return `<section class="mod-group">
+      <h3>${esc(group.name)}</h3>
+      <p class="mod-help">${esc(groupHelp(group))}</p>
+      <ul class="mods">${rows}</ul>
+    </section>`;
+  }).join('') || '<p class="mod-help">Nothing to add.</p>';
   $('#pizzaStatus').textContent = '';
   $('#pizzaStatus').className = 'status';
   updatePizzaPrice();
@@ -303,27 +306,88 @@ function closePizza() {
   $('#pizzaOverlay')?.classList.remove('open');
 }
 
+function optionByKey(item, key) {
+  for (const group of item.groups || []) {
+    const option = (group.options || []).find((entry) => entry.key === key);
+    if (option) return { group, option };
+  }
+  return null;
+}
+
+function groupCount(item, group, exceptKey) {
+  return (group.options || []).reduce((sum, opt) => {
+    if (opt.key === exceptKey) return sum;
+    return sum + (pizzaAdded.get(opt.key) || 0);
+  }, 0);
+}
+
 function updatePizzaPrice() {
   const item = itemBySku(pizzaSku);
   if (!item) return;
-  const extra = (item.modifiers || []).filter((mod) => pizzaAdded.has(mod.key)).reduce((sum, mod) => sum + mod.priceCents, 0);
+  let extra = 0;
+  for (const sel of chosenOptions()) {
+    const found = optionByKey(item, sel.key);
+    if (found) extra += found.option.priceCents * sel.qty;
+  }
   const unit = item.priceCents + extra;
   $('#pizzaPrice').textContent = money(unit);
   $('#pizzaQtyOut').textContent = String(pizzaQty);
+  const problem = selectionProblem(item);
+  $('#pizzaAdd').disabled = Boolean(problem);
   $('#pizzaAdd').textContent = `Add to order · ${money(unit * pizzaQty)}`;
+  if (problem) {
+    $('#pizzaStatus').className = 'status show err';
+    $('#pizzaStatus').textContent = problem;
+  } else if ($('#pizzaStatus').classList.contains('err')) {
+    $('#pizzaStatus').className = 'status';
+    $('#pizzaStatus').textContent = '';
+  }
+}
+
+function selectionProblem(item) {
+  for (const group of item.groups || []) {
+    const limits = groupLimits(group);
+    const count = groupCount(item, group);
+    if (count < limits.min) return `Choose ${limits.min} from ${group.name}.`;
+    if (limits.max != null && count > limits.max) return `Choose at most ${limits.max} from ${group.name}.`;
+  }
+  return '';
 }
 
 $('#pizzaMods').addEventListener('change', (event) => {
-  const add = event.target.dataset.add;
-  const keep = event.target.dataset.keep;
-  if (add) {
-    if (event.target.checked) pizzaAdded.add(add);
-    else pizzaAdded.delete(add);
+  const input = event.target;
+  const key = input.dataset.opt;
+  if (!key) return;
+  const item = itemBySku(pizzaSku);
+  const found = item && optionByKey(item, key);
+  if (!found) return;
+  const limits = groupLimits(found.group);
+  if (input.checked && limits.max === 1) {
+    for (const other of $$(`input[data-group="${found.group.id}"]`, $('#pizzaMods'))) {
+      if (other !== input) {
+        other.checked = false;
+        pizzaAdded.delete(other.dataset.opt);
+      }
+    }
   }
-  if (keep) {
-    if (event.target.checked) pizzaRemoved.delete(keep);
-    else pizzaRemoved.add(keep);
-  }
+  if (input.checked) pizzaAdded.set(key, 1);
+  else pizzaAdded.delete(key);
+  updatePizzaPrice();
+});
+$('#pizzaMods').addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-step]');
+  if (!button) return;
+  const item = itemBySku(pizzaSku);
+  const found = item && optionByKey(item, button.dataset.step);
+  if (!found) return;
+  const limits = groupLimits(found.group);
+  const delta = Number(button.dataset.delta);
+  const next = Math.max(0, (pizzaAdded.get(found.option.key) || 0) + delta);
+  if (next > 20) return;
+  if (limits.max != null && groupCount(item, found.group, found.option.key) + next > limits.max) return;
+  if (next === 0) pizzaAdded.delete(found.option.key);
+  else pizzaAdded.set(found.option.key, next);
+  button.parentElement.querySelector('output').textContent = String(next);
   updatePizzaPrice();
 });
 $('#pizzaLess').addEventListener('click', () => {
@@ -338,12 +402,11 @@ $('#pizzaAdd').addEventListener('click', () => {
   const item = itemBySku(pizzaSku);
   if (!item) return;
   const before = JSON.stringify(lines);
-  const keys = [...pizzaAdded].sort();
-  const cuts = [...pizzaRemoved].sort();
-  const signature = lineSignature(keys, cuts);
-  const existing = lines.find((line) => line.type === 'item' && line.sku === item.sku && (line.modifierKeys || []).join(',') === keys.join(',') && (line.removed || []).join(',') === cuts.join(','));
+  const options = chosenOptions();
+  const signature = optionSignature(options);
+  const existing = lines.find((line) => line.type === 'item' && line.sku === item.sku && optionSignature(line.options) === signature && !(line.modifierKeys || []).length && !(line.removed || []).length);
   if (existing) existing.qty += pizzaQty;
-  else lines.push({ type: 'item', key: `${item.sku}|${signature}`, sku: item.sku, qty: pizzaQty, modifierKeys: keys, removed: cuts });
+  else lines.push({ type: 'item', key: `${item.sku}|${signature}`, sku: item.sku, qty: pizzaQty, modifierKeys: [], removed: [], options });
   try {
     priceCart(menu.items, brand?.offer, lines, menu.currency || 'AUD');
   } catch (error) {
@@ -832,6 +895,7 @@ async function start() {
     lines.push({ type: 'item', key: 'ROCCO-02|', sku: 'ROCCO-02', qty: 2, modifierKeys: [] });
     lines.push({ type: 'item', key: 'ROCCO-DR07|', sku: 'ROCCO-DR07', qty: 1, modifierKeys: [] });
   }
+  renderCats();
   paintStores();
   renderCart();
   route();

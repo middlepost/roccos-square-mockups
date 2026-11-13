@@ -12,14 +12,19 @@ function pathRoot() {
   return new URL('..', import.meta.url).pathname;
 }
 
-test('add-ons use the 1 Nov prices and the old deal is refused', () => {
+function optionNamed(sku, name) {
+  return items.find((item) => item.sku === sku).groups.flatMap((group) => group.options).find((opt) => opt.name === name);
+}
+
+test('add-ons use the GloriaFood prices and the old deal is refused', () => {
+  const prosciutto = optionNamed('ROCCO-02', 'PROSCIUTTO');
   const margherita = priceCart(items, brand.offer, [
-    { type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: ['prosciutto'] },
+    { type: 'item', sku: 'ROCCO-02', qty: 1, options: [{ key: prosciutto.key, qty: 1 }] },
   ]);
   assert.equal(margherita.subtotalCents, 2600);
   assert.equal(margherita.discountCents, 0);
   assert.equal(margherita.totalCents, 2600);
-  assert.equal(margherita.lines[0].detail, '+ Prosciutto');
+  assert.equal(margherita.lines[0].detail, 'PROSCIUTTO');
   assert.throws(() => priceCart(items, brand.offer, [
     { type: 'deal', qty: 1, picks: [{ sku: 'ROCCO-02', qty: 3 }] },
   ]), /no longer on the menu/);
@@ -59,9 +64,14 @@ test('10% off applies at 2 pizzas, stays off below that, and rounds half up', ()
     { type: 'item', sku: 'ROCCO-DR07', qty: 1, modifierKeys: [] },
   ]);
   assert.equal(withDrink.pizzaQty, 2);
-  assert.equal(withDrink.subtotalCents, 4390);
-  assert.equal(withDrink.discountCents, 439);
-  assert.equal(withDrink.totalCents, 3951);
+  assert.equal(withDrink.subtotalCents, 4400);
+  assert.equal(withDrink.discountCents, 440);
+  assert.equal(withDrink.totalCents, 3960);
+  const dough = priceCart(items, brand.offer, [
+    { type: 'item', sku: 'ROCCO-DB01', qty: 2, modifierKeys: [] },
+  ]);
+  assert.equal(dough.pizzaQty, 0);
+  assert.equal(dough.discountCents, 0);
 
   const odd = [
     { sku: 'ODD', name: 'Odd', priceCents: 2003, category: 'pizza', modifiers: [] },
@@ -100,7 +110,7 @@ test('checkout ignores any price the browser sends and names the store', () => {
       sourceId: 'cnon:card-nonce',
       idempotencyKey: 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee',
       lines: [
-        { type: 'item', sku: 'ROCCO-05', qty: 1, modifierKeys: ['pineapple'], unitCents: 1 },
+        { type: 'item', sku: 'ROCCO-05', qty: 1, options: [{ key: optionNamed('ROCCO-05', 'PINEAPPLE').key, qty: 1 }], unitCents: 1 },
       ],
     },
   });
@@ -114,7 +124,7 @@ test('checkout ignores any price the browser sends and names the store', () => {
   assert.equal(checkout.order.pricing_options.auto_apply_taxes, false);
   const line = checkout.order.line_items[0];
   assert.equal(line.base_price_money.amount, 2300);
-  assert.match(line.name, /Pineapple/);
+  assert.match(line.name, /PINEAPPLE/);
   assert.equal(checkout.order.line_items[0].catalog_object_id, undefined);
 });
 
@@ -172,13 +182,13 @@ test('Square order-level discount matches the shared 10% total, including a half
   assert.equal(under.order.discounts, undefined);
 });
 
-test('removing an ingredient is free and is written on the Square line', () => {
+test('a chosen extra is priced from the menu and written on the Square line', () => {
+  const prosciutto = optionNamed('ROCCO-02', 'PROSCIUTTO');
   const priced = priceCart(items, brand.offer, [
-    { type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: ['prosciutto'], removed: ['fresh basil'] },
+    { type: 'item', sku: 'ROCCO-02', qty: 1, options: [{ key: prosciutto.key, qty: 1 }] },
   ]);
   assert.equal(priced.totalCents, 2600);
-  assert.equal(priced.lines[0].detail, '+ Prosciutto · No fresh basil');
-  assert.deepEqual(priced.lines[0].removed, ['fresh basil']);
+  assert.equal(priced.lines[0].detail, 'PROSCIUTTO');
   const checkout = buildCheckout({
     brand,
     menuItems: items,
@@ -186,33 +196,49 @@ test('removing an ingredient is free and is written on the Square line', () => {
     now: new Date('2026-11-03T07:00:00.000Z'),
     body: {
       locationKey: 'findon', when: 'asap', name: 'Sam', phone: '0870784471', sourceId: 'cnon:card-nonce',
-      lines: [{ type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: ['anchovy'], removed: ['herbs'] }],
+      lines: [{ type: 'item', sku: 'ROCCO-02', qty: 1, options: [{ key: prosciutto.key, qty: 1 }] }],
     },
   });
-  assert.equal(checkout.order.line_items[0].name, 'Margherita + Anchovy');
-  assert.equal(checkout.order.line_items[0].note, '+ Anchovy · No herbs');
-  assert.equal(checkout.order.line_items[0].base_price_money.amount, 2200);
+  assert.equal(checkout.order.line_items[0].name, 'MARGHERITA (v) + PROSCIUTTO');
+  assert.equal(checkout.order.line_items[0].note, 'PROSCIUTTO');
+  assert.equal(checkout.order.line_items[0].base_price_money.amount, 2600);
+  assert.throws(() => priceCart(items, brand.offer, [
+    { type: 'item', sku: 'ROCCO-02', qty: 1, options: [{ key: 'missing', qty: 1 }] },
+  ]), /does not have that add-on/);
   assert.throws(() => priceCart(items, brand.offer, [
     { type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: [], removed: ['pineapple'] },
   ]), /does not come with/);
 });
 
-test('every pizza offers the full extras list', () => {
-  const pizza = items.find((item) => item.sku === 'ROCCO-02');
-  const keys = pizza.modifiers.map((mod) => mod.key).sort();
-  assert.deepEqual(keys, ['anchovy', 'chicken', 'chilli-salsa', 'hot-honey', 'pineapple', 'prosciutto', 'sausage']);
+test('every pizza carries the GloriaFood option groups', () => {
+  const names = ['Cut My Pizza Please', 'DRINKS', 'More Cheese', 'More Flavour', 'More Protein', 'More Veg', 'Vegan Mozzarella'];
+  const pizzas = items.filter((item) => item.category === 'pizza');
+  assert.equal(pizzas.length, 14);
+  for (const pizza of pizzas) {
+    assert.deepEqual(pizza.groups.map((group) => group.name).sort(), names);
+    assert.ok(pizza.groups.every((group) => group.required === false));
+  }
+  const marg = items.find((item) => item.sku === 'ROCCO-02');
+  const honey = optionNamed('ROCCO-02', 'HOT HONEY');
+  const pineapple = optionNamed('ROCCO-02', 'PINEAPPLE');
   const total = priceCart(items, brand.offer, [
-    { type: 'item', sku: 'ROCCO-02', qty: 1, modifierKeys: ['hot-honey', 'pineapple'] },
+    { type: 'item', sku: 'ROCCO-02', qty: 1, options: [{ key: honey.key, qty: 1 }, { key: pineapple.key, qty: 1 }] },
   ]).totalCents;
-  assert.equal(total, pizza.priceCents + 200);
+  assert.equal(total, marg.priceCents + 200);
+  const water = marg.groups.find((group) => group.name === 'DRINKS').options[0];
+  assert.throws(() => priceCart(items, brand.offer, [
+    { type: 'item', sku: 'ROCCO-02', qty: 1, options: [{ key: water.key, qty: 5 }] },
+  ]), /at most 4/);
 });
 
-test('alcohol is dine-in only and cannot go in a pickup order', () => {
-  for (const sku of ['ROCCO-DR01', 'ROCCO-DR02', 'ROCCO-DR03', 'ROCCO-DR04', 'ROCCO-DR05']) {
-    assert.throws(() => priceCart(items, brand.offer, [
-      { type: 'item', sku, qty: 1, modifierKeys: [] },
-    ]), /dine-in only/);
-  }
+test('beer and wine are not on the pickup menu, and a dine-in item is still refused', () => {
+  const names = items.map((item) => item.name).join(' ');
+  assert.doesNotMatch(names, /Peroni|Hahn|Shiraz|Ginger Beer/);
+  assert.throws(() => priceCart([
+    { sku: 'BEER', name: 'Beer', priceCents: 800, category: 'drinks', dineInOnly: true, modifiers: [] },
+  ], brand.offer, [
+    { type: 'item', sku: 'BEER', qty: 1, modifierKeys: [] },
+  ]), /dine-in only/);
 });
 
 test('a gift card does not count toward the two-pizza discount', () => {

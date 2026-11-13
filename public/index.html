@@ -30,9 +30,6 @@
 
 <main>
   <section id="view-home" class="view home-view">
-    <div class="hero">
-      <img class="hero-photo" src="/images/brand/rocco-family-hero.jpg" alt="Rocco stretching dough in the shop, a family photo on the wall behind him">
-    </div>
     <div class="home-copy">
       <a class="btn btn-yellow" href="#order">Order</a>
       <a class="btn btn-plain" href="#book">Book a table</a>
@@ -49,11 +46,7 @@
   </section>
 
   <section id="view-menu" class="view" hidden>
-    <div class="catbar" id="catbar" role="tablist" aria-label="Menu">
-      <button type="button" class="active" data-f="pizza" role="tab">Pizzas</button>
-      <button type="button" data-f="drinks" role="tab">Drinks</button>
-      <button type="button" data-f="dessert" role="tab">Desserts</button>
-    </div>
+    <div class="catbar" id="catbar" role="tablist" aria-label="Menu"></div>
     <p class="cat-note" id="catNote"></p>
     <div class="grid" id="grid"></div>
   </section>
@@ -136,6 +129,7 @@
 </main>
 
 <footer>
+  <img class="footer-mark" src="/favicon-192.png" width="64" height="64" alt="Rocco's">
   <p>Findon Rd · 336 Findon Rd<br>Grange Rd · 466 Grange Rd</p>
   <p><a class="phone-link" href="tel:0870784471"><svg class="phone-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .7-.3 1L6.6 10.8z"/></svg>7078 4471</a></p>
   <p id="footerNote">Sandbox demo · test cards only</p>
@@ -151,18 +145,16 @@
     <h2 id="pizzaTitle"></h2>
     <p class="pizza-price" id="pizzaPrice"></p>
     <p class="pizza-desc" id="pizzaDesc"></p>
-    <h3>Add or Remove</h3>
-    <p class="mod-help">Untick anything to leave it off. Tick an extra to add it.</p>
-    <ul class="mods" id="pizzaMods"></ul>
-    <p class="status" id="pizzaStatus"></p>
-    <div class="pizza-actions">
-      <div class="qtybar">
-        <button type="button" id="pizzaLess" aria-label="Fewer">−</button>
-        <output id="pizzaQtyOut">1</output>
-        <button type="button" id="pizzaMore" aria-label="More">+</button>
-      </div>
-      <button type="button" class="btn btn-yellow" id="pizzaAdd">Add to order</button>
+    <div id="pizzaMods"></div>
+  </div>
+  <p class="status" id="pizzaStatus"></p>
+  <div class="pizza-actions">
+    <div class="qtybar">
+      <button type="button" id="pizzaLess" aria-label="Fewer">−</button>
+      <output id="pizzaQtyOut">1</output>
+      <button type="button" id="pizzaMore" aria-label="More">+</button>
     </div>
+    <button type="button" class="btn btn-yellow" id="pizzaAdd">Add to order</button>
   </div>
 </aside>
 

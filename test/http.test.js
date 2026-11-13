@@ -84,7 +84,7 @@ test('the site serves the v3 page, local menu, and photos without a token', asyn
     const current = await (await fetch(`${base}/api/menu`)).json();
     assert.equal(current.source, 'local');
     assert.equal(current.items.filter((item) => item.category === 'pizza').length, 14);
-    assert.equal(current.items.find((item) => item.sku === 'ROCCO-03').priceCents, 2000);
+    assert.equal(current.items.find((item) => item.sku === 'ROCCO-03').priceCents, 1800);
     const photo = await fetch(`${base}/images/products/15_Roccos_Nutella_Bomb.jpg`);
     assert.equal(photo.status, 200);
     assert.match(photo.headers.get('content-type'), /image\/jpeg/);

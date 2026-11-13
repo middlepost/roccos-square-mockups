@@ -8,14 +8,14 @@ const { brand, menu } = loadBrand('roccos', new URL('..', import.meta.url).pathn
 test('an empty catalog plans creates, and a second plan updates in place', () => {
   const first = planCatalog(menu, [], { currency: 'AUD', brand });
   assert.ok(first.objects.every((object) => String(object.id).startsWith('#')));
-  assert.equal(first.objects.filter((object) => object.type === 'ITEM').length, 23);
+  assert.equal(first.objects.filter((object) => object.type === 'ITEM').length, 21);
   assert.equal(first.objects.filter((object) => object.type === 'MODIFIER_LIST').length, 7);
-  assert.equal(first.imageJobs.length, 15);
-  const sausageLists = first.objects.filter((object) => object.modifier_list_data?.name === 'Italian sausage');
-  assert.equal(sausageLists.length, 1);
+  assert.equal(first.imageJobs.length, 19);
+  const flavourLists = first.objects.filter((object) => object.modifier_list_data?.name === 'More Flavour');
+  assert.equal(flavourLists.length, 1);
   const son = first.objects.find((object) => object.item_data?.variations?.[0]?.item_variation_data?.sku === 'ROCCO-01');
   assert.equal(son.item_data.variations[0].item_variation_data.price_money.amount, 2800);
-  assert.equal(son.item_data.modifier_list_info.length, 7); // every pizza now offers the full Extras list
+  assert.equal(son.item_data.modifier_list_info.length, 7);
   assert.ok(son.item_data.food_and_beverage_details.dietary_preferences.some((pref) => pref.custom_name === 'CONTAINS_NUTS'));
 
   const existing = [
@@ -27,15 +27,15 @@ test('an empty catalog plans creates, and a second plan updates in place', () =>
     },
     {
       type: 'MODIFIER_LIST',
-      id: 'ML_SAUSAGE',
+      id: 'ML_CUT',
       version: 4,
       modifier_list_data: {
-        name: 'Italian sausage',
+        name: 'Cut My Pizza Please',
         modifiers: [{
           type: 'MODIFIER',
-          id: 'MOD_SAUSAGE',
+          id: 'MOD_CUT',
           version: 2,
-          modifier_data: { name: 'Italian sausage', price_money: { amount: 300, currency: 'AUD' } },
+          modifier_data: { name: 'Please Cut Pizza into 4', price_money: { amount: 0, currency: 'AUD' } },
         }],
       },
     },
@@ -62,11 +62,11 @@ test('an empty catalog plans creates, and a second plan updates in place', () =>
   assert.deepEqual(updatedSon.item_data.image_ids, ['IMG_01']);
   assert.equal(updatedSon.item_data.variations[0].id, 'VAR_01');
   assert.equal(updatedSon.item_data.variations[0].version, 8);
-  assert.equal(updatedSon.item_data.modifier_list_info[0].modifier_list_id, 'ML_SAUSAGE');
-  const list = second.objects.find((object) => object.modifier_list_data?.name === 'Italian sausage');
-  assert.equal(list.id, 'ML_SAUSAGE');
+  assert.equal(updatedSon.item_data.modifier_list_info[0].modifier_list_id, 'ML_CUT');
+  const list = second.objects.find((object) => object.modifier_list_data?.name === 'Cut My Pizza Please');
+  assert.equal(list.id, 'ML_CUT');
   assert.equal(list.version, 4);
-  assert.equal(list.modifier_list_data.modifiers[0].id, 'MOD_SAUSAGE');
+  assert.equal(list.modifier_list_data.modifiers[0].id, 'MOD_CUT');
   assert.equal(second.imageJobs.some((job) => job.sku === 'ROCCO-01'), false);
   assert.equal(second.imageJobs.some((job) => job.sku === 'ROCCO-02'), true);
   const fresh = second.objects.find((object) => object.item_data?.variations?.[0]?.item_variation_data?.sku === 'ROCCO-02');
@@ -111,7 +111,7 @@ test('a Square price wins over the local copy', () => {
   ];
   const view = menuFromCatalog(objects, menu, brand);
   assert.equal(view.source, 'square');
-  assert.equal(view.items.find((entry) => entry.sku === 'ROCCO-03').priceCents, 2000);
+  assert.equal(view.items.find((entry) => entry.sku === 'ROCCO-03').priceCents, 1800);
   const item = view.items.find((entry) => entry.sku === 'ROCCO-02');
   assert.equal(item.priceCents, 2100);
   assert.equal(item.description, 'Updated in Square');
@@ -120,5 +120,6 @@ test('a Square price wins over the local copy', () => {
   assert.equal(item.modifiers[0].id, 'MOD_PROS');
   assert.equal(item.modifiers[0].priceCents, 700);
   assert.equal(item.vegetarian, true);
-  assert.equal(item.number, 2);
+  assert.equal(item.number, 8);
+  assert.ok(item.groups.some((group) => group.name === 'More Protein'));
 });

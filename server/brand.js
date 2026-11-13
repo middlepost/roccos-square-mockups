@@ -43,8 +43,22 @@ export function presentLocalItem(item) {
     alcohol: Boolean(item.alcohol),
     toConfirm: Boolean(item.toConfirm) || /^to confirm/i.test(item.description || ''),
     imageUrl: item.image ? `/images/products/${item.image}` : null,
-    ingredients: item.category === 'pizza' ? pizzaIngredients(item) : [],
+    menuCategory: item.menuCategory || null,
+    ingredients: item.category === 'pizza' && !(item.groups || []).length ? pizzaIngredients(item) : (item.ingredients || []),
     variationId: null,
+    groups: (item.groups || []).map((group) => ({
+      id: String(group.id),
+      name: group.name,
+      required: Boolean(group.required),
+      forceMin: group.forceMin || 0,
+      forceMax: group.forceMax || 0,
+      allowQuantity: Boolean(group.allowQuantity),
+      options: (group.options || []).map((opt) => ({
+        key: String(opt.key),
+        name: opt.name,
+        priceCents: opt.priceCents,
+      })),
+    })),
     modifiers: (item.modifiers || []).map((mod) => ({
       key: mod.key,
       name: mod.name,
@@ -61,6 +75,7 @@ export function presentLocalMenu(menu) {
     source: 'local',
     currency: menu.currency || 'AUD',
     notice: menu.notice || null,
+    categories: menu.categories || [],
     items,
   };
 }

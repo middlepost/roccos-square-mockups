@@ -1,812 +1,3350 @@
 {
   "currency": "AUD",
-  "updated": "2026-11-01",
-  "note": "Approved 1 Nov collection. Descriptions marked To confirm are placeholders from the brief, not final kitchen wording. 4 Nov: every pizza carries the full \"Make it yours\" extras list from the current roccopizza.com.au menu; alcohol is dine-in only.",
+  "updated": "2026-11-13",
+  "note": "GloriaFood / Foodbooking pickup menu, captured 13 Nov 2026. Findon and Grange returned the same items, prices, and option groups. Findon: https://www.foodbooking.com/ordering/?restaurant_uid=4abd2cdb-9a5e-461b-8daa-fd3d5755a3ba (widget embed on https://www.roccopizza.com.au/, company 865b1b19-5d92-4f41-960b-b33312b337f7, restaurant 4abd2cdb-9a5e-461b-8daa-fd3d5755a3ba). Grange: https://www.foodbooking.com/ordering/?restaurant_uid=d3d3cfed-1767-4d18-9360-bad84d5ed60d (restaurant d3d3cfed-1767-4d18-9360-bad84d5ed60d). Menu payload: https://www.foodbooking.com/api/cart/init. Beer and wine are not on this menu; the soft-drinks category says they are at the front counter. No option group is marked required.",
+  "categories": [
+    {
+      "id": "dough",
+      "name": "DOUGH BALLS PIZZA/BREAD",
+      "description": "72 hr SOURDOUGH / 280g each"
+    },
+    {
+      "id": "drinks",
+      "name": "SOFT DRINKS",
+      "description": "beer/wine available at front counter"
+    },
+    {
+      "id": "cheesy-garlic",
+      "name": "1. CHEESY GARLIC PIZZA",
+      "description": ""
+    },
+    {
+      "id": "margherita",
+      "name": "2. MARGHERITA",
+      "description": ""
+    },
+    {
+      "id": "sopressa",
+      "name": "3. SOPRESSA SALAME",
+      "description": ""
+    },
+    {
+      "id": "vegetariana",
+      "name": "4. VEGETARIANA",
+      "description": ""
+    },
+    {
+      "id": "funghi",
+      "name": "5. FUNGHI MUSHROOM",
+      "description": ""
+    },
+    {
+      "id": "smoked-ham",
+      "name": "6. SMOKED HAM & MUSHROOM",
+      "description": ""
+    },
+    {
+      "id": "patata",
+      "name": "7. PATATA & CIPOLLA",
+      "description": ""
+    },
+    {
+      "id": "salsiccia",
+      "name": "8. SALSICCIA - ITALIAN SAUSAGE",
+      "description": ""
+    },
+    {
+      "id": "middle-child",
+      "name": "9. THE MIDDLE CHILD - HONEY SALAME",
+      "description": ""
+    },
+    {
+      "id": "super-salame",
+      "name": "10. SUPER SALAME",
+      "description": ""
+    },
+    {
+      "id": "honey-pesto",
+      "name": "11. HONEY PESTO CHICKEN - NEW PIZZA",
+      "description": ""
+    },
+    {
+      "id": "number-1-son",
+      "name": "12. NUMBER 1 SON - GARLIC PRAWNS",
+      "description": ""
+    },
+    {
+      "id": "carnivores",
+      "name": "13. CARNIVORES LOVE MEAT",
+      "description": ""
+    },
+    {
+      "id": "prosciutto",
+      "name": "14. PROSCIUTTO & BURRATA",
+      "description": ""
+    },
+    {
+      "id": "nutella",
+      "name": "15. THE NUTELLA BOMB - DESSERT",
+      "description": ""
+    }
+  ],
   "items": [
     {
-      "sku": "ROCCO-01",
+      "sku": "ROCCO-DB01",
       "number": 1,
-      "name": "Number 1 Son",
-      "priceCents": 2800,
-      "category": "pizza",
+      "name": "4 DOUGHBALLS Fresh",
+      "description": "4 fresh sourdough balls - 72 hr fermentation with the \"Mother\"",
+      "priceCents": 1099,
+      "category": "side",
+      "menuCategory": "dough",
       "vegetarian": false,
-      "containsNuts": true,
-      "toConfirm": false,
-      "description": "Large garlic prawns (12), baby spinach, fior di latte mozzarella, basil pesto (contains nuts, light).",
-      "image": "01_Roccos_Number_1_Son.jpg",
-      "modifiers": [
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
+      "containsNuts": false,
+      "groups": []
     },
     {
-      "sku": "ROCCO-02",
+      "sku": "ROCCO-DB02",
       "number": 2,
-      "name": "Margherita",
-      "priceCents": 2000,
-      "category": "pizza",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Mutti Italian sauce, fior di latte mozzarella, fresh basil, herbs.",
-      "image": "02_Roccos_Margherita.jpg",
-      "modifiers": [
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-03",
-      "number": 3,
-      "name": "Cheesy Garlic",
-      "priceCents": 2000,
-      "category": "pizza",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "House-made garlic sauce, fior di latte mozzarella, baby spinach.",
-      "image": "03_Roccos_Cheesy_Garlic.jpg",
-      "modifiers": [
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-04",
-      "number": 4,
-      "name": "Vegetariana",
-      "priceCents": 2200,
-      "category": "pizza",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Roasted red capsicum, baby spinach, garlic mushrooms, kalamata olives, Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "04_Roccos_Vegetariana.jpg",
-      "modifiers": [
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-05",
-      "number": 5,
-      "name": "Smoked Ham & Mushroom",
-      "priceCents": 2200,
-      "category": "pizza",
+      "name": "6 DOUGHBALLS Frozen - Defrost in 2hrs",
+      "description": "6 frozen sourdough balls - 72 hr fermentation with the \"Mother\"",
+      "priceCents": 1099,
+      "category": "side",
+      "menuCategory": "dough",
       "vegetarian": false,
       "containsNuts": false,
-      "toConfirm": false,
-      "description": "Smoked leg ham, garlic mushrooms, Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "05_Roccos_Smoked_Ham_and_Mushroom.jpg",
-      "modifiers": [
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-06",
-      "number": 6,
-      "name": "Funghi Mushroom",
-      "priceCents": 2200,
-      "category": "pizza",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Garlic parsley mushrooms, baby spinach, fior di latte mozzarella, house-made garlic sauce.",
-      "image": "06_Roccos_Funghi_Mushroom.jpg",
-      "modifiers": [
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-07",
-      "number": 7,
-      "name": "Sopressa Salame",
-      "priceCents": 2200,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": false,
-      "toConfirm": true,
-      "description": "To confirm — sopressa salame, chilli salsa, Mutti Italian sauce, fior di latte mozzarella. Assumed from the previous Hot Salame description.",
-      "image": "07_Roccos_Sopressa_Salame.jpg",
-      "modifiers": [
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-08",
-      "number": 8,
-      "name": "Patata e Cipolla",
-      "priceCents": 2200,
-      "category": "pizza",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Roasted garlic herb potato slices, caramelised onion, fior di latte mozzarella, baby spinach.",
-      "image": "08_Roccos_Patata_e_Cipolla.jpg",
-      "modifiers": [
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-09",
-      "number": 9,
-      "name": "Salsiccia – Italian Sausage",
-      "priceCents": 2200,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Roasted Italian sausage, Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "09_Roccos_Salsiccia_Italian_Sausage.jpg",
-      "modifiers": [
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-10",
-      "number": 10,
-      "name": "Middle Child – Honey Salame",
-      "priceCents": 2400,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": true,
-      "toConfirm": false,
-      "description": "Sopressa salame, house-made hot honey (mild), kalamata olives, basil pesto (contains nuts), Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "10_Roccos_Middle_Child.jpg",
-      "modifiers": [
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-11",
-      "number": 11,
-      "name": "Super Salame",
-      "priceCents": 2400,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Traditional sopressa salame, garlic mushrooms, kalamata olives, roasted red capsicum, Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "11_Roccos_Super_Salame.jpg",
-      "modifiers": [
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-12",
-      "number": 12,
-      "name": "Honey Pesto Chicken",
-      "priceCents": 2600,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": true,
-      "toConfirm": false,
-      "description": "Italian tomato, fior di latte mozzarella, roast chicken, roasted red capsicum, mild hot honey, basil pesto (contains nuts).",
-      "image": "12_Roccos_Honey_Pesto_Chicken.jpg",
-      "modifiers": [
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-13",
-      "number": 13,
-      "name": "Prosciutto e Burrata",
-      "priceCents": 2800,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Cured prosciutto, smashed burrata mozzarella, shaved parmesan, baby leaves, Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "13_Roccos_Prosciutto_e_Burrata.jpg",
-      "modifiers": [
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-14",
-      "number": 14,
-      "name": "Carnivores Love Meat",
-      "priceCents": 2800,
-      "category": "pizza",
-      "vegetarian": false,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Roasted leg ham, Italian sausage, sopressa salame, Mutti Italian sauce, fior di latte mozzarella.",
-      "image": "14_Roccos_Carnivores_Love_Meat.jpg",
-      "modifiers": [
-        {
-          "key": "hot-honey",
-          "name": "Hot honey",
-          "priceCents": 100
-        },
-        {
-          "key": "chilli-salsa",
-          "name": "Chilli salsa",
-          "priceCents": 100
-        },
-        {
-          "key": "pineapple",
-          "name": "Pineapple",
-          "priceCents": 100
-        },
-        {
-          "key": "anchovy",
-          "name": "Anchovy",
-          "priceCents": 200
-        },
-        {
-          "key": "sausage",
-          "name": "Italian sausage",
-          "priceCents": 300
-        },
-        {
-          "key": "chicken",
-          "name": "Chicken",
-          "priceCents": 400
-        },
-        {
-          "key": "prosciutto",
-          "name": "Prosciutto",
-          "priceCents": 600
-        }
-      ]
-    },
-    {
-      "sku": "ROCCO-15",
-      "number": 15,
-      "name": "Nutella Bomb",
-      "priceCents": 1800,
-      "category": "dessert",
-      "vegetarian": false,
-      "containsNuts": true,
-      "toConfirm": false,
-      "description": "Half-circle calzone stuffed with Nutella cream, powdered sugar.",
-      "image": "15_Roccos_Nutella_Bomb.jpg",
-      "modifiers": []
-    },
-    {
-      "sku": "ROCCO-DR01",
-      "number": 101,
-      "name": "Peroni",
-      "priceCents": 890,
-      "category": "drinks",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Italian beer.",
-      "modifiers": [],
-      "alcohol": true,
-      "dineInOnly": true
-    },
-    {
-      "sku": "ROCCO-DR02",
-      "number": 102,
-      "name": "Hahn Super Dry",
-      "priceCents": 1090,
-      "category": "drinks",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "",
-      "modifiers": [],
-      "alcohol": true,
-      "dineInOnly": true
-    },
-    {
-      "sku": "ROCCO-DR03",
-      "number": 103,
-      "name": "Stone & Wood",
-      "priceCents": 1090,
-      "category": "drinks",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "",
-      "modifiers": [],
-      "alcohol": true,
-      "dineInOnly": true
-    },
-    {
-      "sku": "ROCCO-DR04",
-      "number": 104,
-      "name": "Large glass of wine, Shiraz or Pinot Grigio",
-      "priceCents": 1090,
-      "category": "drinks",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "Shiraz or Pinot Grigio.",
-      "modifiers": [],
-      "alcohol": true,
-      "dineInOnly": true
-    },
-    {
-      "sku": "ROCCO-DR05",
-      "number": 105,
-      "name": "J Squire Ginger Beer",
-      "priceCents": 1090,
-      "category": "drinks",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
-      "description": "",
-      "modifiers": [],
-      "alcohol": true,
-      "dineInOnly": true
+      "groups": []
     },
     {
       "sku": "ROCCO-DR06",
-      "number": 106,
-      "name": "Still mineral water",
-      "priceCents": 290,
-      "category": "drinks",
-      "vegetarian": true,
-      "containsNuts": false,
-      "toConfirm": false,
+      "number": 3,
+      "name": "NU Natural Still Water",
       "description": "",
-      "modifiers": []
+      "priceCents": 300,
+      "category": "drinks",
+      "menuCategory": "drinks",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [],
+      "image": "drinks/still-water.jpg"
     },
     {
       "sku": "ROCCO-DR07",
-      "number": 107,
-      "name": "Soft drink cans",
-      "priceCents": 390,
+      "number": 4,
+      "name": "Soft Drink Cans",
+      "description": "Coke / Coke No Sugar / Fanta / Sprite",
+      "priceCents": 400,
       "category": "drinks",
-      "vegetarian": true,
+      "menuCategory": "drinks",
+      "vegetarian": false,
       "containsNuts": false,
-      "toConfirm": false,
-      "description": "",
-      "modifiers": []
+      "groups": [],
+      "image": "drinks/soft-drink-can.jpg"
     },
     {
       "sku": "ROCCO-DR08",
-      "number": 108,
-      "name": "San Pellegrino or juice",
-      "priceCents": 490,
+      "number": 5,
+      "name": "San Pellegrino Italian Sodas",
+      "description": "Chinotto / Aranciata / Sparkling Water 500ml",
+      "priceCents": 500,
       "category": "drinks",
+      "menuCategory": "drinks",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [],
+      "image": "drinks/san-pellegrino.jpg"
+    },
+    {
+      "sku": "ROCCO-DR09",
+      "number": 6,
+      "name": "Mountain Fresh Juice 400ml Bottle",
+      "description": "Tropical Fruit",
+      "priceCents": 600,
+      "category": "drinks",
+      "menuCategory": "drinks",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [],
+      "image": "drinks/tropical-juice.jpg"
+    },
+    {
+      "sku": "ROCCO-03",
+      "number": 7,
+      "name": "CHEESY GARLIC (v)",
+      "description": "house garlic sauce, fior di latte mozzarella, baby leaves,  - Add italian sausage $3 / garlic mushrooms $2",
+      "priceCents": 1800,
+      "category": "pizza",
+      "menuCategory": "cheesy-garlic",
       "vegetarian": true,
       "containsNuts": false,
-      "toConfirm": false,
-      "description": "",
-      "modifiers": []
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "03_Roccos_Cheesy_Garlic.jpg"
+    },
+    {
+      "sku": "ROCCO-02",
+      "number": 8,
+      "name": "MARGHERITA (v)",
+      "description": "Mutti italian sauce, fior di latte mozzarella, basil, fresh herbs - Add chicken $4 / prosciutto $5",
+      "priceCents": 2000,
+      "category": "pizza",
+      "menuCategory": "margherita",
+      "vegetarian": true,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "02_Roccos_Margherita.jpg"
+    },
+    {
+      "sku": "ROCCO-07",
+      "number": 9,
+      "name": "SOPRESSA SALAME",
+      "description": "traditional sopressa salame, Mutti italian sauce, fior di latte mozzarella - add kalamata olives $2 / hot honey $1",
+      "priceCents": 2200,
+      "category": "pizza",
+      "menuCategory": "sopressa",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "07_Roccos_Sopressa_Salame.jpg"
+    },
+    {
+      "sku": "ROCCO-04",
+      "number": 10,
+      "name": "VEGETARIANA (V)",
+      "description": "marinated mushrooms, roasted red peppers, baby spinach, Kalamata olives, Mutti italian sauce, fior di latte mozzarella - Add chicken $4",
+      "priceCents": 2200,
+      "category": "pizza",
+      "menuCategory": "vegetariana",
+      "vegetarian": true,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "04_Roccos_Vegetariana.jpg"
+    },
+    {
+      "sku": "ROCCO-06",
+      "number": 11,
+      "name": "FUNGHI (v)",
+      "description": "garlic-parsley mushrooms, baby spinach, fior di latte mozzarella - Add italian sausage $3",
+      "priceCents": 2200,
+      "category": "pizza",
+      "menuCategory": "funghi",
+      "vegetarian": true,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "06_Roccos_Funghi_Mushroom.jpg"
+    },
+    {
+      "sku": "ROCCO-05",
+      "number": 12,
+      "name": "SMOKED HAM & MUSHROOMS",
+      "description": "smoked leg ham, garlic mushrooms, Mutti Italian sauce, fior di latte mozzarella - add pineapple $1",
+      "priceCents": 2200,
+      "category": "pizza",
+      "menuCategory": "smoked-ham",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "05_Roccos_Smoked_Ham_and_Mushroom.jpg"
+    },
+    {
+      "sku": "ROCCO-08",
+      "number": 13,
+      "name": "PATATA & CIPOLLA (v)",
+      "description": "garlic-parsley potato and onion slices, fior di latte mozzarella, fresh herbs, baby spinach - Add italian sausage $3",
+      "priceCents": 2200,
+      "category": "pizza",
+      "menuCategory": "patata",
+      "vegetarian": true,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "08_Roccos_Patata_e_Cipolla.jpg"
+    },
+    {
+      "sku": "ROCCO-09",
+      "number": 14,
+      "name": "SALSICCIA - ITALIAN SAUSAGE",
+      "description": "roasted italian sausage, Mutti italian sauce, fior di latte mozzarella, herbs - Add chilli salsa $1 / garlic mushrooms $2",
+      "priceCents": 2200,
+      "category": "pizza",
+      "menuCategory": "salsiccia",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "09_Roccos_Salsiccia_Italian_Sausage.jpg"
+    },
+    {
+      "sku": "ROCCO-10",
+      "number": 15,
+      "name": "MIDDLE CHILD",
+      "description": "sopressa salame, italian sauce, fior di latte mozzarella, Kalamata olives, hot honey (mild), basil pesto (contains nuts) - Add chilli salsa $1 / garlic mushrooms $2",
+      "priceCents": 2400,
+      "category": "pizza",
+      "menuCategory": "middle-child",
+      "vegetarian": false,
+      "containsNuts": true,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "10_Roccos_Middle_Child.jpg"
+    },
+    {
+      "sku": "ROCCO-11",
+      "number": 16,
+      "name": "SUPER SALAME",
+      "description": "sopressa salame, marinated mushrooms, roasted red capsicum, black Kalamata olives, Italian sauce, fior di latte mozzarella - Add anchovies $2 / pineapple $1",
+      "priceCents": 2400,
+      "category": "pizza",
+      "menuCategory": "super-salame",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        }
+      ],
+      "image": "11_Roccos_Super_Salame.jpg"
+    },
+    {
+      "sku": "ROCCO-12",
+      "number": 17,
+      "name": "HONEY PESTO CHICKEN",
+      "description": "roast chicken, roasted red capsicum, mild hot honey, basil pesto (nuts), Mutti Italian tomato, fior di latte mozzarella, fresh basil - Add baby spinach $1",
+      "priceCents": 2600,
+      "category": "pizza",
+      "menuCategory": "honey-pesto",
+      "vegetarian": false,
+      "containsNuts": true,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        }
+      ],
+      "image": "12_Roccos_Honey_Pesto_Chicken.jpg"
+    },
+    {
+      "sku": "ROCCO-01",
+      "number": 18,
+      "name": "NUMBER 1 SON",
+      "description": "large garlic prawns, baby spinach, fior di latte mozzarella, basil pesto - Add italian sausage $3",
+      "priceCents": 2800,
+      "category": "pizza",
+      "menuCategory": "number-1-son",
+      "vegetarian": false,
+      "containsNuts": true,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        }
+      ],
+      "image": "01_Roccos_Number_1_Son.jpg"
+    },
+    {
+      "sku": "ROCCO-14",
+      "number": 19,
+      "name": "CARNIVORES LOVE MEAT",
+      "description": "smoked leg ham, roasted italian sausage, traditional sopressa salame, italian sauce, fior di latte mozzarella - Add chicken $4 / prosciutto $5",
+      "priceCents": 2800,
+      "category": "pizza",
+      "menuCategory": "carnivores",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        }
+      ],
+      "image": "14_Roccos_Carnivores_Love_Meat.jpg"
+    },
+    {
+      "sku": "ROCCO-13",
+      "number": 20,
+      "name": "PROSCIUTTO & BURRATA",
+      "description": "cured prosciutto, fior di latte mozzarella, pomodoro sauce, \nbaby leaves, shaved parmesan, smashed burrata mozzarella - Add hot honey $1",
+      "priceCents": 2800,
+      "category": "pizza",
+      "menuCategory": "prosciutto",
+      "vegetarian": false,
+      "containsNuts": false,
+      "groups": [
+        {
+          "id": "4668335",
+          "name": "Cut My Pizza Please",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "36413836",
+              "name": "Please Cut Pizza into 4",
+              "priceCents": 0
+            }
+          ]
+        },
+        {
+          "id": "2570213",
+          "name": "More Flavour",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846794",
+              "name": "PINEAPPLE",
+              "priceCents": 100
+            },
+            {
+              "key": "37846795",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16434864",
+              "name": "HOT HONEY",
+              "priceCents": 100
+            },
+            {
+              "key": "37766621",
+              "name": "CHILLI SALSA",
+              "priceCents": 100
+            },
+            {
+              "key": "40117691",
+              "name": "TRUFFLE OIL",
+              "priceCents": 100
+            },
+            {
+              "key": "37766622",
+              "name": "BASIL PESTO (contains nuts)",
+              "priceCents": 100
+            },
+            {
+              "key": "37846751",
+              "name": "BABY SPINACH",
+              "priceCents": 200
+            },
+            {
+              "key": "37846793",
+              "name": "ITALIAN ANCHOVIES",
+              "priceCents": 200
+            },
+            {
+              "key": "39064976",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "2390024",
+          "name": "More Cheese",
+          "required": false,
+          "forceMin": 2,
+          "forceMax": 0,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "38353528",
+              "name": "SHAVED PARMESAN",
+              "priceCents": 200
+            },
+            {
+              "key": "37766626",
+              "name": "SMASHED BURRATA MOZZARELLA",
+              "priceCents": 400
+            }
+          ]
+        },
+        {
+          "id": "1635935",
+          "name": "More Protein",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "8994112",
+              "name": "ITALIAN ANCHOVY",
+              "priceCents": 200
+            },
+            {
+              "key": "19698455",
+              "name": "SMOKED LEG HAM",
+              "priceCents": 300
+            },
+            {
+              "key": "8994117",
+              "name": "SOPRESSA SALAME",
+              "priceCents": 300
+            },
+            {
+              "key": "37766625",
+              "name": "HOUSE ITALIAN SAUSAGE",
+              "priceCents": 300
+            },
+            {
+              "key": "8994119",
+              "name": "ROAST CHICKEN",
+              "priceCents": 400
+            },
+            {
+              "key": "8994120",
+              "name": "GARLIC PRAWNS",
+              "priceCents": 600
+            },
+            {
+              "key": "37766620",
+              "name": "PROSCIUTTO",
+              "priceCents": 600
+            }
+          ]
+        },
+        {
+          "id": "1635936",
+          "name": "More Veg",
+          "required": false,
+          "forceMin": 0,
+          "forceMax": 0,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26571177",
+              "name": "BABY SPINACH",
+              "priceCents": 100
+            },
+            {
+              "key": "16386930",
+              "name": "ROASTED RED PEPPERS",
+              "priceCents": 200
+            },
+            {
+              "key": "8994122",
+              "name": "KALAMATA OLIVES",
+              "priceCents": 200
+            },
+            {
+              "key": "16386931",
+              "name": "GARLIC MUSHROOMS",
+              "priceCents": 200
+            }
+          ]
+        },
+        {
+          "id": "4822990",
+          "name": "Vegan Mozzarella",
+          "required": false,
+          "forceMin": 1,
+          "forceMax": 1,
+          "allowQuantity": false,
+          "options": [
+            {
+              "key": "37846785",
+              "name": "Swap for VEGAN MOZZARELLA",
+              "priceCents": 300
+            }
+          ]
+        },
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "13_Roccos_Prosciutto_e_Burrata.jpg"
+    },
+    {
+      "sku": "ROCCO-15",
+      "number": 21,
+      "name": "NUTELLA BOMB (v)",
+      "description": "folded calzone stuffed with choc-hazelnut Nutella cream, sprinkled with powdered sugar - Serves 3/4",
+      "priceCents": 1800,
+      "category": "dessert",
+      "menuCategory": "nutella",
+      "vegetarian": true,
+      "containsNuts": true,
+      "groups": [
+        {
+          "id": "3558979",
+          "name": "DRINKS",
+          "required": false,
+          "forceMin": 4,
+          "forceMax": 4,
+          "allowQuantity": true,
+          "options": [
+            {
+              "key": "26304858",
+              "name": "StIll Mineral Water",
+              "priceCents": 300
+            },
+            {
+              "key": "26304859",
+              "name": "Cans - Coke/Coke No Sugar/Fanta/Sprite",
+              "priceCents": 400
+            },
+            {
+              "key": "26328366",
+              "name": "San Pellegrino - Chinotto/Aranciata/Sparkling Water",
+              "priceCents": 450
+            },
+            {
+              "key": "26304861",
+              "name": "TROPICAL JUICE BOTTLE",
+              "priceCents": 550
+            }
+          ]
+        }
+      ],
+      "image": "15_Roccos_Nutella_Bomb.jpg"
     }
   ]
 }

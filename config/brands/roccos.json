@@ -118,7 +118,8 @@
   "categories": {
     "pizza": "Pizzas",
     "dessert": "Dessert",
-    "drinks": "Drinks"
+    "drinks": "Drinks",
+    "side": "Sides"
   },
   "locations": [
     {

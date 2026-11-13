@@ -32,11 +32,36 @@ export function percentOffCents(subtotalCents, percent) {
 }
 
 /**
+ * GloriaFood marks a group required, or not, and stores force_min / force_max.
+ * force_max of 0 means there is no maximum. A minimum is only enforced when the
+ * group is required: on this menu every group is optional, and the widget lets
+ * a pizza through with nothing ticked.
+ */
+export function groupLimits(group) {
+  const required = Boolean(group?.required);
+  const forceMin = Number.isInteger(group?.forceMin) ? group.forceMin : 0;
+  const forceMax = Number.isInteger(group?.forceMax) ? group.forceMax : 0;
+  return {
+    min: required ? Math.max(1, forceMin) : 0,
+    max: forceMax > 0 ? forceMax : null,
+    allowQuantity: Boolean(group?.allowQuantity),
+  };
+}
+
+function findOption(item, key) {
+  for (const group of item.groups || []) {
+    const option = (group.options || []).find((entry) => entry.key === key);
+    if (option) return { group, option };
+  }
+  return null;
+}
+
+/**
  * Price a cart from the menu. Client prices are ignored.
- * lines: { type:'item', sku, qty, modifierKeys[], removed[] }
+ * lines: { type:'item', sku, qty, modifierKeys[], options:[{key, qty}], removed[] }
  * offer: { percent, minPizzas, name, enabled } or null.
  * Once the cart has minPizzas pizzas (by quantity), percent comes off the whole order.
- * Drinks, desserts and extras do not count toward that number, and they are still discounted.
+ * Drinks, desserts, dough balls and extras do not count toward that number, and they are still discounted.
  */
 export function priceCart(items, offer, lines, currency = 'AUD') {
   if (!Array.isArray(lines) || lines.length === 0) {
@@ -122,11 +147,49 @@ function priceItem(bySku, line, currency) {
   if (new Set(removed.map((name) => name.toLowerCase())).size !== removed.length) {
     throw new PriceError(`Remove the duplicate topping on ${item.name}.`);
   }
-  const extra = modifiers.reduce((sum, mod) => sum + mod.priceCents, 0);
+  const requestedOptions = Array.isArray(line.options) ? line.options : [];
+  const seenOptions = new Set();
+  const selections = requestedOptions.map((entry) => {
+    const key = String(entry?.key || '');
+    if (!key || seenOptions.has(key)) throw new PriceError(`Remove the duplicate add-on on ${item.name}.`);
+    seenOptions.add(key);
+    const found = findOption(item, key);
+    if (!found) throw new PriceError(`${item.name} does not have that add-on.`);
+    const limits = groupLimits(found.group);
+    const qtyChosen = entry.qty == null ? 1 : Number(entry.qty);
+    if (!Number.isInteger(qtyChosen) || qtyChosen < 1 || qtyChosen > 20) {
+      throw new PriceError(`Check the quantity for ${found.option.name}.`);
+    }
+    if (!limits.allowQuantity && qtyChosen !== 1) {
+      throw new PriceError(`${found.option.name} can only be chosen once.`);
+    }
+    return { ...found, qty: qtyChosen };
+  });
+  for (const group of item.groups || []) {
+    const limits = groupLimits(group);
+    const count = selections
+      .filter((sel) => sel.group.id === group.id)
+      .reduce((sum, sel) => sum + sel.qty, 0);
+    if (count < limits.min) throw new PriceError(`Choose ${limits.min} from ${group.name}.`);
+    if (limits.max != null && count > limits.max) {
+      throw new PriceError(`Choose at most ${limits.max} from ${group.name}.`);
+    }
+  }
+  const optionMods = selections.map((sel) => ({
+    key: sel.option.key,
+    name: sel.qty > 1 ? `${sel.option.name} x${sel.qty}` : sel.option.name,
+    priceCents: sel.option.priceCents * sel.qty,
+    id: null,
+  }));
+  const extra = modifiers.reduce((sum, mod) => sum + mod.priceCents, 0)
+    + optionMods.reduce((sum, mod) => sum + mod.priceCents, 0);
   const unitCents = item.priceCents + extra;
   const addDetail = modifiers.length ? `+ ${modifiers.map((mod) => mod.name).join(', ')}` : '';
+  const optionDetail = selections
+    .map((sel) => (sel.qty > 1 ? `${sel.option.name} x${sel.qty}` : sel.option.name))
+    .join(' · ');
   const cutDetail = removed.length ? `No ${removed.join(', ')}` : '';
-  const detail = [addDetail, cutDetail].filter(Boolean).join(' · ');
+  const detail = [addDetail, optionDetail, cutDetail].filter(Boolean).join(' · ');
   return {
     type: 'item',
     sku: item.sku,
@@ -138,12 +201,15 @@ function priceItem(bySku, line, currency) {
     detail,
     removed,
     variationId: item.variationId || null,
-    modifiers: modifiers.map((mod) => ({
-      key: mod.key,
-      name: mod.name,
-      priceCents: mod.priceCents,
-      id: mod.id || null,
-    })),
+    modifiers: [
+      ...modifiers.map((mod) => ({
+        key: mod.key,
+        name: mod.name,
+        priceCents: mod.priceCents,
+        id: mod.id || null,
+      })),
+      ...optionMods,
+    ],
     currency,
   };
 }
