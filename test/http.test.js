@@ -262,13 +262,17 @@ test('checkout creates a sandbox order and payment, and refuses a mismatched tot
   });
 });
 
-test('a changed Square catalog price is what checkout charges', async () => {
+test('a stale Square catalog price does not change what checkout charges', async () => {
   const square = {
     async listCatalog() {
       return [{
         type: 'CATEGORY',
         id: 'CAT',
         category_data: { name: 'Pizzas' },
+      }, {
+        type: 'CATEGORY',
+        id: 'CAT_DRINKS',
+        category_data: { name: 'Drinks' },
       }, {
         type: 'ITEM',
         id: 'ITEM',
@@ -283,22 +287,37 @@ test('a changed Square catalog price is what checkout charges', async () => {
             item_variation_data: { sku: 'ROCCO-02', price_money: { amount: 2100, currency: 'AUD' } },
           }],
         },
+      }, {
+        type: 'ITEM',
+        id: 'BEER',
+        item_data: {
+          name: 'Peroni',
+          category_id: 'CAT_DRINKS',
+          categories: [{ id: 'CAT_DRINKS' }],
+          variations: [{
+            id: 'VAR_BEER',
+            item_variation_data: { sku: 'ROCCO-DR01', price_money: { amount: 890, currency: 'AUD' } },
+          }],
+        },
       }];
     },
     async createOrder(order) {
-      assert.equal(order.line_items[0].catalog_object_id, 'VAR');
-      assert.equal(order.line_items[0].base_price_money, undefined);
-      return { order: { id: 'ORDER3', total_money: { amount: 2100, currency: 'AUD' } } };
+      assert.equal(order.line_items[0].catalog_object_id, undefined);
+      assert.equal(order.line_items[0].base_price_money.amount, 2000);
+      return { order: { id: 'ORDER3', total_money: { amount: 2000, currency: 'AUD' } } };
     },
     async createPayment(payment) {
-      assert.equal(payment.amount_money.amount, 2100);
+      assert.equal(payment.amount_money.amount, 2000);
       return { payment: { id: 'PAY3', status: 'COMPLETED', receipt_url: null } };
     },
   };
   await withServer(square, async (base) => {
     const current = await (await fetch(`${base}/api/menu`)).json();
     assert.equal(current.source, 'square');
-    assert.equal(current.items.find((item) => item.sku === 'ROCCO-02').priceCents, 2100);
+    const margherita = current.items.find((item) => item.sku === 'ROCCO-02');
+    assert.equal(margherita.name, 'MARGHERITA (v)');
+    assert.equal(margherita.priceCents, 2000);
+    assert.equal(current.items.some((item) => /peroni|hahn|stone|shiraz|squire/i.test(item.name)), false);
     const response = await fetch(`${base}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -313,6 +332,6 @@ test('a changed Square catalog price is what checkout charges', async () => {
     });
     const body = await response.json();
     assert.equal(response.status, 200, JSON.stringify(body));
-    assert.equal(body.totalCents, 2100);
+    assert.equal(body.totalCents, 2000);
   });
 });

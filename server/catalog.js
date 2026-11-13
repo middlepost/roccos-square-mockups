@@ -316,26 +316,22 @@ export function menuFromCatalog(objects, localMenu, brand) {
   }
   const bySku = new Map(items.map((item) => [item.sku, item]));
   const merged = [];
-  const covered = new Set();
   for (const local of presentLocalMenu(localMenu).items) {
     const squareItem = bySku.get(local.sku);
     if (!squareItem) {
       merged.push(local);
       continue;
     }
-    covered.add(squareItem.sku);
+    const samePrice = squareItem.priceCents === local.priceCents;
     merged.push({
-      ...local,
       ...squareItem,
-      number: local.number ?? squareItem.number,
-      imageUrl: squareItem.imageUrl || local.imageUrl,
-      ingredients: local.ingredients?.length ? local.ingredients : (squareItem.ingredients || []),
+      ...local,
+      variationId: samePrice ? (squareItem.variationId || null) : null,
+      imageUrl: local.imageUrl || squareItem.imageUrl || null,
       menuCategory: local.menuCategory || null,
       groups: local.groups || [],
+      modifiers: local.modifiers || [],
     });
-  }
-  for (const squareItem of items) {
-    if (!covered.has(squareItem.sku)) merged.push(squareItem);
   }
   merged.sort((a, b) => (a.number ?? 999) - (b.number ?? 999) || a.name.localeCompare(b.name));
   return { source: 'square', currency, notice: null, categories: localMenu.categories || [], items: merged };

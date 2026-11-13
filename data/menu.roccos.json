@@ -100,7 +100,8 @@
       "menuCategory": "dough",
       "vegetarian": false,
       "containsNuts": false,
-      "groups": []
+      "groups": [],
+      "image": "dough-balls.jpg"
     },
     {
       "sku": "ROCCO-DB02",
@@ -112,7 +113,8 @@
       "menuCategory": "dough",
       "vegetarian": false,
       "containsNuts": false,
-      "groups": []
+      "groups": [],
+      "image": "dough-balls.jpg"
     },
     {
       "sku": "ROCCO-DR06",

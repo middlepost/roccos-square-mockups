@@ -9,7 +9,7 @@ let brand = boot?.brand || null;
 let square = boot?.square || null;
 let menu = { items: [], currency: 'AUD', source: 'local' };
 let lines = [];
-let tab = '';
+let tab = 'pizza';
 let pendingSku = null;
 let card = null;
 let giftCard = null;
@@ -138,30 +138,32 @@ function qtyOf(sku, modifierKeys) {
     .reduce((sum, line) => sum + line.qty, 0);
 }
 
-function renderCats() {
-  const cats = menu.categories || [];
-  if (!cats.some((cat) => cat.id === tab)) tab = cats[0]?.id || '';
-  const bar = $('#catbar');
-  if (!bar) return;
-  bar.innerHTML = cats.map((cat) => `
-    <button type="button" data-f="${esc(cat.id)}" role="tab" aria-selected="${cat.id === tab ? 'true' : 'false'}" class="${cat.id === tab ? 'active' : ''}">${esc(cat.name)}</button>`).join('');
+const MENU_GROUPS = [
+  ['pizza', 'Pizzas'],
+  ['side', 'Sides'],
+  ['drinks', 'Drinks'],
+  ['dessert', 'Desserts'],
+];
+
+function itemCard(item) {
+  const pizza = item.category === 'pizza' && !item.dineInOnly;
+  const label = item.dineInOnly ? '' : (pizza ? 'Add or remove' : 'Choose');
+  return `<article class="card menu-card${pizza ? ' pizza-card' : ''}" data-sku="${esc(item.sku)}" tabindex="0" role="button" aria-label="Customise ${esc(item.name)}">
+      <div class="photo"><img src="${esc(item.imageUrl || '')}" alt="${esc(item.name)}"></div>
+      <div class="body">
+        <h2>${esc(item.name)}</h2>
+        <div class="price">${money(item.priceCents)}</div>
+        ${item.description ? `<p class="desc">${esc(item.description)}</p>` : '<p class="desc"></p>'}
+        ${item.dineInOnly ? '<p class="dine">At the shop</p>' : `<span class="customise">${label}</span>`}
+      </div>
+    </article>`;
 }
 
 function renderReadMenu() {
-  const cats = menu.categories || [];
-  $('#readList').innerHTML = cats.map((cat) => {
-    const group = menu.items.filter((item) => item.menuCategory === cat.id);
+  $('#readList').innerHTML = MENU_GROUPS.map(([key, title]) => {
+    const group = menu.items.filter((item) => item.category === key);
     if (!group.length) return '';
-    return `
-    <section class="read-group">
-      <h2>${esc(cat.name)}</h2>
-      ${cat.description ? `<p class="cat-blurb">${esc(cat.description)}</p>` : ''}
-      ${group.map((item) => `
-        <button type="button" class="read-item" data-sku="${esc(item.sku)}" aria-label="Order ${esc(item.name)}">
-          <div class="read-top"><h3>${esc(item.name)}</h3><span>${money(item.priceCents)}</span></div>
-          ${item.description ? `<p>${esc(item.description)}</p>` : ''}
-        </button>`).join('')}
-    </section>`;
+    return `<section class="read-group"><h2>${esc(title)}</h2><div class="grid">${group.map(itemCard).join('')}</div></section>`;
   }).join('');
 }
 
@@ -176,32 +178,24 @@ function orderItem(sku) {
 function renderMenu() {
   const note = $('#catNote');
   const grid = $('#grid');
-  const cat = (menu.categories || []).find((entry) => entry.id === tab);
-  note.textContent = cat?.description || '';
+  if (tab === 'pizza') note.textContent = store ? `Pickup from ${locByKey(store)?.name || ''}. Tap a pizza to add or remove toppings.` : '';
+  else if (tab === 'drinks') note.textContent = 'Beer and wine are available at the front counter.';
+  else if (tab === 'side') note.textContent = '72 hr sourdough, 280g each.';
+  else note.textContent = '';
 
-  const items = menu.items.filter((item) => item.menuCategory === tab);
-  grid.innerHTML = items.map((item) => {
-    const qty = qtyOf(item.sku);
-    const controls = item.dineInOnly
-      ? '<p class="dine">At the shop</p>'
-      : `<span class="customise">${qty ? `${qty} in your order` : 'Choose'}</span>`;
-    return `<article class="card menu-card" data-sku="${esc(item.sku)}" tabindex="0" role="button" aria-label="Order ${esc(item.name)}">
-      ${item.imageUrl ? `<div class="photo"><img src="${esc(item.imageUrl)}" alt="${esc(item.name)}"></div>` : ''}
-      <div class="body">
-        <h2>${esc(item.name)}</h2>
-        <div class="price">${money(item.priceCents)}</div>
-        ${item.description ? `<p class="desc">${esc(item.description)}</p>` : '<p class="desc"></p>'}
-        ${controls}
-      </div>
-    </article>`;
-  }).join('') || '<p class="empty">Nothing in this category.</p>';
+  const items = menu.items.filter((item) => item.category === tab);
+  grid.innerHTML = items.map(itemCard).join('') || '<p class="empty">Nothing in this category.</p>';
 }
 
 $('#catbar').addEventListener('click', (event) => {
   const button = event.target.closest('button[data-f]');
   if (!button) return;
   tab = button.dataset.f;
-  $$('#catbar button').forEach((el) => el.classList.toggle('active', el === button));
+  $$('#catbar button').forEach((el) => {
+    const on = el === button;
+    el.classList.toggle('active', on);
+    el.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
   renderMenu();
 });
 
@@ -218,9 +212,16 @@ $('#grid').addEventListener('keydown', (event) => {
   openItem(card.dataset.sku);
 });
 $('#readList').addEventListener('click', (event) => {
-  const button = event.target.closest('button[data-sku]');
+  const button = event.target.closest('[data-sku]');
   if (!button) return;
   orderItem(button.dataset.sku);
+});
+$('#readList').addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  const card = event.target.closest('.menu-card');
+  if (!card) return;
+  event.preventDefault();
+  orderItem(card.dataset.sku);
 });
 
 function optionSignature(options) {
@@ -895,7 +896,6 @@ async function start() {
     lines.push({ type: 'item', key: 'ROCCO-02|', sku: 'ROCCO-02', qty: 2, modifierKeys: [] });
     lines.push({ type: 'item', key: 'ROCCO-DR07|', sku: 'ROCCO-DR07', qty: 1, modifierKeys: [] });
   }
-  renderCats();
   paintStores();
   renderCart();
   route();

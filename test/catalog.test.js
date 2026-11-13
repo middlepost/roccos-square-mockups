@@ -10,7 +10,7 @@ test('an empty catalog plans creates, and a second plan updates in place', () =>
   assert.ok(first.objects.every((object) => String(object.id).startsWith('#')));
   assert.equal(first.objects.filter((object) => object.type === 'ITEM').length, 21);
   assert.equal(first.objects.filter((object) => object.type === 'MODIFIER_LIST').length, 7);
-  assert.equal(first.imageJobs.length, 19);
+  assert.equal(first.imageJobs.length, 21);
   const flavourLists = first.objects.filter((object) => object.modifier_list_data?.name === 'More Flavour');
   assert.equal(flavourLists.length, 1);
   const son = first.objects.find((object) => object.item_data?.variations?.[0]?.item_variation_data?.sku === 'ROCCO-01');
@@ -73,9 +73,10 @@ test('an empty catalog plans creates, and a second plan updates in place', () =>
   assert.ok(String(fresh.id).startsWith('#'));
 });
 
-test('a Square price wins over the local copy', () => {
+test('the GloriaFood menu wins over a stale Square catalog', () => {
   const objects = [
     { type: 'CATEGORY', id: 'CAT_PIZZA', category_data: { name: 'Pizzas' } },
+    { type: 'CATEGORY', id: 'CAT_DRINKS', category_data: { name: 'Drinks' } },
     {
       type: 'MODIFIER_LIST',
       id: 'ML_PROS',
@@ -108,18 +109,51 @@ test('a Square price wins over the local copy', () => {
       },
     },
     { type: 'IMAGE', id: 'IMG', image_data: { url: 'https://example.test/margherita.jpg', name: '02' } },
+    {
+      type: 'ITEM',
+      id: 'ITEM_WATER',
+      item_data: {
+        name: 'Still mineral water',
+        category_id: 'CAT_DRINKS',
+        categories: [{ id: 'CAT_DRINKS' }],
+        variations: [{
+          id: 'VAR_WATER',
+          item_variation_data: { sku: 'ROCCO-DR06', price_money: { amount: 300, currency: 'AUD' } },
+        }],
+      },
+    },
+    {
+      type: 'ITEM',
+      id: 'ITEM_BEER',
+      item_data: {
+        name: 'Peroni',
+        category_id: 'CAT_DRINKS',
+        categories: [{ id: 'CAT_DRINKS' }],
+        variations: [{
+          id: 'VAR_BEER',
+          item_variation_data: { sku: 'ROCCO-DR01', price_money: { amount: 890, currency: 'AUD' } },
+        }],
+      },
+    },
   ];
   const view = menuFromCatalog(objects, menu, brand);
   assert.equal(view.source, 'square');
-  assert.equal(view.items.find((entry) => entry.sku === 'ROCCO-03').priceCents, 1800);
+  assert.equal(view.items.some((entry) => /peroni|hahn|stone|shiraz|squire/i.test(entry.name)), false);
+  assert.equal(view.items.some((entry) => entry.sku === 'ROCCO-DR01'), false);
   const item = view.items.find((entry) => entry.sku === 'ROCCO-02');
-  assert.equal(item.priceCents, 2100);
-  assert.equal(item.description, 'Updated in Square');
-  assert.equal(item.variationId, 'VAR_02');
-  assert.equal(item.imageUrl, 'https://example.test/margherita.jpg');
-  assert.equal(item.modifiers[0].id, 'MOD_PROS');
-  assert.equal(item.modifiers[0].priceCents, 700);
+  assert.equal(item.name, 'MARGHERITA (v)');
+  assert.equal(item.priceCents, 2000);
+  assert.notEqual(item.description, 'Updated in Square');
+  assert.equal(item.variationId, null);
+  assert.equal(item.imageUrl, '/images/products/02_Roccos_Margherita.jpg');
+  assert.equal(item.modifiers.length, 0);
   assert.equal(item.vegetarian, true);
   assert.equal(item.number, 8);
   assert.ok(item.groups.some((group) => group.name === 'More Protein'));
+  const water = view.items.find((entry) => entry.sku === 'ROCCO-DR06');
+  assert.equal(water.name, 'NU Natural Still Water');
+  assert.equal(water.priceCents, 300);
+  assert.equal(water.variationId, 'VAR_WATER');
+  assert.equal(water.imageUrl, '/images/products/drinks/still-water.jpg');
+  assert.equal(view.items.find((entry) => entry.sku === 'ROCCO-03').priceCents, 1800);
 });

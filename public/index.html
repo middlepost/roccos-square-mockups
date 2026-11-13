@@ -46,7 +46,12 @@
   </section>
 
   <section id="view-menu" class="view" hidden>
-    <div class="catbar" id="catbar" role="tablist" aria-label="Menu"></div>
+    <div class="catbar" id="catbar" role="tablist" aria-label="Menu">
+      <button type="button" class="active" data-f="pizza" role="tab" aria-selected="true">Pizzas</button>
+      <button type="button" data-f="side" role="tab" aria-selected="false">Sides</button>
+      <button type="button" data-f="drinks" role="tab" aria-selected="false">Drinks</button>
+      <button type="button" data-f="dessert" role="tab" aria-selected="false">Desserts</button>
+    </div>
     <p class="cat-note" id="catNote"></p>
     <div class="grid" id="grid"></div>
   </section>

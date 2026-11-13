@@ -80,7 +80,13 @@ test('the page is the simple order flow', () => {
   assert.match(html, /href="#gift"/);
   assert.match(css, /\.deal-strip \{[^}]*background:\s*#000/);
   assert.match(html, /id="catbar"/);
+  assert.match(html, /data-f="pizza"[^>]*>Pizzas/);
+  assert.match(html, /data-f="side"[^>]*>Sides/);
+  assert.match(html, /data-f="drinks"[^>]*>Drinks/);
+  assert.match(html, /data-f="dessert"[^>]*>Desserts/);
   assert.doesNotMatch(html, /data-f="extras"/);
+  assert.equal(menu.items.find((item) => item.sku === 'ROCCO-DB01').image, 'dough-balls.jpg');
+  assert.equal(menu.items.every((item) => item.image), true);
   assert.doesNotMatch(html, /rocco-family-hero/);
   assert.match(html, /id="pizzaMods"/);
   assert.match(html, /footer-mark/);
